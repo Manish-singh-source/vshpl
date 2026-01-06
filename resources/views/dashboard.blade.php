@@ -140,7 +140,7 @@
     <!-- Hero Section -->
     <div class="hero">
         <!-- Logo in top right -->
-        <img src="assets/logo1.png" class="logo" alt="Company Logo">
+        <img src="{{ asset('assets/logo1.png') }}" class="logo" alt="Company Logo">
         <div class="container">
             <div class="row justify-content-center">
                 <div class="col-12">
@@ -152,13 +152,15 @@
                                 <thead>
                                     <tr>
                                         <th>Full Name</th>
-                                        <th>House Number</th>
+                                        <th>Flat No</th>
                                         <th>Wing</th>
-                                        <th>Contact Number</th>
+                                        <th>Contact No</th>
                                         <th>Email</th>
                                         <th>Team Category</th>
                                         <th>Player Roles</th>
                                         <th>Agreement</th>
+                                        <th>Payment Status</th>
+                                        <th>Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -172,6 +174,12 @@
                                         <td>{{ $registration->team_category }}</td>
                                         <td>{{ $registration->player_roles }}</td>
                                         <td>{{ $registration->agreement ? 'Yes' : 'No' }}</td>
+                                        <td class="text-success">{{ $registration->payment }}</td>
+                                        <td>
+                                            <button class="btn btn-sm btn-outline-light edit-btn" data-id="{{ $registration->id }}" data-payment="{{ $registration->payment }}">
+                                                <i class="fas fa-edit" style="color: #000000;"></i>
+                                            </button>
+                                        </td>
                                     </tr>
                                     @endforeach
                                 </tbody>
@@ -181,11 +189,74 @@
                 </div>
             </div>
         </div>
+
+        <!-- Modal for updating payment status -->
+        <div class="modal fade" id="paymentModal" tabindex="-1" aria-labelledby="paymentModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="paymentModalLabel">Update Payment Status</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="paymentForm">
+                            <div class="mb-3">
+                                <label for="paymentStatus" class="form-label">Payment Status</label>
+                                <select class="form-select" id="paymentStatus" name="payment" required>
+                                    <option value="pending">Pending</option>
+                                    <option value="done">Done</option>
+                                </select>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary" id="savePayment">Save changes</button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
     <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
     <script src="https://cdn.datatables.net/2.3.6/js/dataTables.js"></script>
     <script>
         new DataTable('#example');
+
+        let currentId = null;
+
+        // Handle edit button click
+        $(document).on('click', '.edit-btn', function() {
+            currentId = $(this).data('id');
+            const currentPayment = $(this).data('payment');
+            $('#paymentStatus').val(currentPayment);
+            $('#paymentModal').modal('show');
+        });
+
+        // Handle save button click
+        $('#savePayment').on('click', function() {
+            const payment = $('#paymentStatus').val();
+            if (!currentId) return;
+
+            $.ajax({
+                url: '/vshpl/update-payment/' + currentId,
+                type: 'PUT',
+                data: {
+                    payment: payment,
+                    _token: '{{ csrf_token() }}'
+                },
+                success: function(response) {
+                    if (response.success) {
+                        $('#paymentModal').modal('hide');
+                        location.reload(); // Reload to show updated data
+                    } else {
+                        alert('Error: ' + response.message);
+                    }
+                },
+                error: function(xhr) {
+                    alert('Error updating payment status');
+                }
+            });
+        });
     </script>
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"

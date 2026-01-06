@@ -15,5 +15,6 @@ class Registration extends Model
         'team_category',
         'player_roles',
         'agreement',
+        'payment',
     ];
 }

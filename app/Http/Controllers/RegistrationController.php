@@ -60,4 +60,36 @@ class RegistrationController extends Controller
             ], 500);
         }
     }
+
+    public function updatePayment(Request $request, $id)
+    {
+        $validator = Validator::make($request->all(), [
+            'payment' => 'required|in:pending,done',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Validation failed',
+                'errors' => $validator->errors()
+            ], 422);
+        }
+
+        try {
+            $registration = Registration::findOrFail($id);
+            $registration->update(['payment' => $request->payment]);
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Payment status updated successfully!'
+            ]);
+        } catch (\Exception $e) {
+            Log::error('Update Payment Error: ' . $e->getMessage());
+
+            return response()->json([
+                'success' => false,
+                'message' => 'Error updating payment status'
+            ], 500);
+        }
+    }
 }
