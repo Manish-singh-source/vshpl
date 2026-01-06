@@ -450,6 +450,20 @@ $(document).ready(function() {
 
 });
 </script>
+<script>
+document.getElementById("fullName").addEventListener("input", function () {
+    this.value = this.value
+        .toLowerCase()
+        .replace(/\b\w/g, function (char) {
+            return char.toUpperCase();
+        });
+});
+</script>
+<script>
+document.getElementById("wing").addEventListener("input", function () {
+    this.value = this.value.toUpperCase();
+});
+</script>
 </body>
 
 </html>

@@ -15,7 +15,7 @@ class RegistrationController extends Controller
             'full_name' => 'required|string|max:255',
             'house_number' => 'required|string|max:255',
             'wing' => 'required|string|max:255',
-            'contact_number' => 'required|string|max:15',
+            'contact_number' => 'required|string|max:15|digits:10',
             'email' => 'nullable|email|max:255',
             'team_category' => 'required|string|in:Men,Women',
             'player_roles' => 'required|string',
