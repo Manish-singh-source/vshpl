@@ -174,7 +174,7 @@
                                         <td>{{ $registration->team_category }}</td>
                                         <td>{{ $registration->player_roles }}</td>
                                         <td>{{ $registration->agreement ? 'Yes' : 'No' }}</td>
-                                        <td class="text-success">{{ $registration->payment }}</td>
+                                        <td class="text-success">{{ ucfirst($registration->payment) }}</td>
                                         <td>
                                             <button class="btn btn-sm btn-outline-light edit-btn" data-id="{{ $registration->id }}" data-payment="{{ $registration->payment }}">
                                                 <i class="fas fa-edit" style="color: #000000;"></i>
