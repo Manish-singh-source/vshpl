@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>VSH Player Registration Form</title>
     <!-- Bootstrap 5 CDN -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
@@ -184,7 +185,7 @@
     <!-- Hero Section -->
     <div class="hero">
         <!-- Logo in top right -->
-        <img src="logo1.png"
+        <img src="assets/logo1.png"
             class="logo" alt="Company Logo">
         <div class="container mn">
             <div class="row justify-content-center">
@@ -192,7 +193,8 @@
                     <!-- Form Card -->
                     <div class="form-card">
                         <h2>Player Registration</h2>
-                        <form>
+                        <form action="/register" method="POST" id="registrationForm">
+                            @csrf
                             <!-- Nav tabs -->
                             <ul class="nav nav-tabs justify-content-center mb-4" id="registrationTabs" role="tablist">
                                 <li class="nav-item" role="presentation">
@@ -218,31 +220,31 @@
                                     aria-labelledby="basic-tab">
                                     <!-- Full Name -->
                                     <div class="mb-3">
-                                        <input type="text" class="form-control" id="fullName"
+                                        <input type="text" class="form-control" id="fullName" name="full_name"
                                             placeholder="Enter your full name" required>
                                     </div>
                                     <!-- Flat / House Number -->
                                     <div class="mb-3">
-                                        <input type="text" class="form-control" id="houseNumber"
+                                        <input type="text" class="form-control" id="houseNumber" name="house_number"
                                             placeholder="Enter your flat/house number" required>
                                     </div>
                                     <!-- Wing -->
                                     <div class="mb-3">
-                                        <input type="text" class="form-control" id="wing" placeholder="Enter your wing"
+                                        <input type="text" class="form-control" id="wing" name="wing" placeholder="Enter your wing"
                                             required>
                                     </div>
                                     <!-- Contact Number (Mobile) -->
                                     <div class="mb-3">
-                                        <input type="tel" class="form-control" id="contactNumber"
+                                        <input type="tel" class="form-control" id="contactNumber" name="contact_number"
                                             placeholder="Enter your mobile number" required>
                                     </div>
                                     <!-- Email ID (optional) -->
                                     <div class="mb-3">
-                                        <input type="email" class="form-control" id="email"
+                                        <input type="email" class="form-control" id="email" name="email"
                                             placeholder="Enter your email">
                                     </div>
-                                    <!-- Next Button for Mobile -->
-                                    <button class="btn btn-outline-light d-block d-md-none mt-3" id="nextToPlayer">
+                                    <!-- Next Button -->
+                                    <button class="btn btn-outline-light d-block mt-3" id="nextToPlayer">
                                         Next <i class="fas fa-arrow-right"></i>
                                     </button>
                                 </div>
@@ -252,14 +254,14 @@
                                     <div class="mb-3">
                                         <label class="form-label">Team Category</label>
                                         <div class="form-check">
-                                            <input class="form-check-input" type="radio" name="teamCategory" id="men"
+                                            <input class="form-check-input" type="radio" name="team_category" id="men"
                                                 value="Men" required>
                                             <label class="form-check-label" for="men">
                                                 Men
                                             </label>
                                         </div>
                                         <div class="form-check">
-                                            <input class="form-check-input" type="radio" name="teamCategory" id="women"
+                                            <input class="form-check-input" type="radio" name="team_category" id="women"
                                                 value="Women" required>
                                             <label class="form-check-label" for="women">
                                                 Women
@@ -298,8 +300,8 @@
                                             </label>
                                         </div>
                                     </div>
-                                    <!-- Mobile Navigation Buttons -->
-                                    <div class="d-block d-md-none mt-3 text-center">
+                                    <!-- Navigation Buttons -->
+                                    <div class="d-block mt-3 text-center">
                                         <button class="btn btn-outline-light me-2" id="prevToBasic">
                                             <i class="fas fa-arrow-left"></i> Previous
                                         </button>
@@ -314,22 +316,38 @@
                                     <!-- Agreement Checkbox -->
                                     <div class="mb-3">
                                         <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" id="agreement" required>
+                                            <input class="form-check-input" type="checkbox" id="agreement" name="agreement" required>
                                             <label class="form-check-label" for="agreement">
                                                 I agree to follow society and tournament rules
                                             </label>
                                         </div>
                                     </div>
-                                    <!-- Previous Button for Mobile -->
-                                    <button class="btn btn-outline-light d-block d-md-none mt-3 me-2" id="prevToPlayer">
+                                    <!-- Previous Button -->
+                                    <button class="btn btn-outline-light d-block mt-3 me-2" id="prevToPlayer">
                                         <i class="fas fa-arrow-left"></i> Previous
                                     </button>
                                     <!-- Submit Button -->
-                                    <button type="submit" id="registerBtn" class="btn-submit">Register</button>
+                                    <button type="button" id="registerBtn" class="btn-submit">Register</button>
                                 </div>
                             </div>
                         </form>
                     </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Thank You Modal -->
+    <div class="modal fade" id="thankYouModal" tabindex="-1" aria-labelledby="thankYouModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="thankYouModalLabel">Thank You!</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body text-center">
+                    <p>Thank you for registering!</p>
+                    <button class="btn btn-primary mt-3" id="showQrBtn">Proceed</button>
                 </div>
             </div>
         </div>
@@ -344,7 +362,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body text-center">
-                    <img src="qr.png" alt="QR Code" style="max-width: 200px;">
+                    <img src="assets/qr.png" alt="QR Code" style="max-width: 200px;">
                     <br>
                     <button class="btn btn-primary mt-3">Proceed</button>
                 </div>
@@ -356,36 +374,82 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
         crossorigin="anonymous"></script>
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // Next to Player
-            document.getElementById('nextToPlayer').addEventListener('click', function() {
-                document.getElementById('player-tab').click();
-            });
+        <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+<script>
+$(document).ready(function() {
 
-            // Previous to Basic
-            document.getElementById('prevToBasic').addEventListener('click', function() {
-                document.getElementById('basic-tab').click();
-            });
+    // Next to Player
+    $('#nextToPlayer').on('click', function() {
+        $('#player-tab').click();
+    });
 
-            // Next to Declaration
-            document.getElementById('nextToDeclaration').addEventListener('click', function() {
-                document.getElementById('declaration-tab').click();
-            });
+    // Previous to Basic
+    $('#prevToBasic').on('click', function() {
+        $('#basic-tab').click();
+    });
 
-            // Previous to Player
-            document.getElementById('prevToPlayer').addEventListener('click', function() {
-                document.getElementById('player-tab').click();
-            });
+    // Next to Declaration
+    $('#nextToDeclaration').on('click', function() {
+        $('#declaration-tab').click();
+    });
 
-            // Register Button Click
-            document.getElementById('registerBtn').addEventListener('click', function(e) {
-                e.preventDefault();
-                var modal = new bootstrap.Modal(document.getElementById('qrModal'));
-                modal.show();
-            });
+    // Previous to Player
+    $('#prevToPlayer').on('click', function() {
+        $('#player-tab').click();
+    });
+
+    // Register Button Click
+    $('#registerBtn').on('click', function(e) {
+        e.preventDefault();
+
+        // Collect form data
+        var formData = new FormData($('#registrationForm')[0]);
+
+        console.log(formData);
+
+        // Handle player roles
+        var roles = [];
+        $('input[name="roles"]:checked').each(function() {
+            roles.push($(this).val());
         });
-    </script>
+        formData.set('player_roles', roles.join(', '));
+
+        // Handle agreement
+        formData.set('agreement', $('#agreement').is(':checked') ? 1 : 0);
+
+        // Submit via AJAX
+        $.ajax({
+            url: '/register',
+            type: 'POST',
+            data: formData,
+            processData: false,
+            contentType: false,
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            success: function(data) {
+                console.log(data);
+                if (data.success) {
+                    var thankYouModal = new bootstrap.Modal($('#thankYouModal')[0]);
+                    thankYouModal.show();
+                }
+            },
+            error: function(err) {
+                console.error('Error:', err);
+            }
+        });
+    });
+
+    // Show QR Modal on Proceed
+    $('#showQrBtn').on('click', function() {
+        var thankYouModal = bootstrap.Modal.getInstance($('#thankYouModal')[0]);
+        thankYouModal.hide();
+        var qrModal = new bootstrap.Modal($('#qrModal')[0]);
+        qrModal.show();
+    });
+
+});
+</script>
 </body>
 
 </html>
