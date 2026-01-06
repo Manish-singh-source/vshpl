@@ -420,7 +420,7 @@ $(document).ready(function() {
 
         // Submit via AJAX
         $.ajax({
-            url: '/register',
+            url: '/vshpl/register',
             type: 'POST',
             data: formData,
             processData: false,
