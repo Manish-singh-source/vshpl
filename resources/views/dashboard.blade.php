@@ -179,6 +179,9 @@
                                             <button class="btn btn-sm btn-outline-light edit-btn" data-id="{{ $registration->id }}" data-payment="{{ $registration->payment }}">
                                                 <i class="fas fa-edit" style="color: #000000;"></i>
                                             </button>
+                                            <button class="btn btn-sm btn-outline-danger delete-btn ms-1" data-id="{{ $registration->id }}">
+                                                <i class="fas fa-trash"></i>
+                                            </button>
                                         </td>
                                     </tr>
                                     @endforeach
@@ -230,6 +233,30 @@
             const currentPayment = $(this).data('payment');
             $('#paymentStatus').val(currentPayment);
             $('#paymentModal').modal('show');
+        });
+
+        // Handle delete button click
+        $(document).on('click', '.delete-btn', function() {
+            const id = $(this).data('id');
+            if (confirm('Are you sure you want to delete this registration?')) {
+                $.ajax({
+                    url: '/vshpl/delete/' + id,
+                    type: 'DELETE',
+                    data: {
+                        _token: '{{ csrf_token() }}'
+                    },
+                    success: function(response) {
+                        if (response.success) {
+                            location.reload(); // Reload to show updated data
+                        } else {
+                            alert('Error: ' + response.message);
+                        }
+                    },
+                    error: function(xhr) {
+                        alert('Error deleting registration');
+                    }
+                });
+            }
         });
 
         // Handle save button click

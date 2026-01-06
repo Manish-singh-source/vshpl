@@ -15,4 +15,5 @@ Route::prefix('/vshpl')->group(function () {
 
     Route::post('/register', [RegistrationController::class, 'store']);
     Route::put('/update-payment/{id}', [RegistrationController::class, 'updatePayment']);
+    Route::delete('/delete/{id}', [RegistrationController::class, 'destroy']);
 });

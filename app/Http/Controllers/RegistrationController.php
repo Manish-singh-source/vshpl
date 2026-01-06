@@ -92,4 +92,24 @@ class RegistrationController extends Controller
             ], 500);
         }
     }
+
+    public function destroy($id)
+    {
+        try {
+            $registration = Registration::findOrFail($id);
+            $registration->delete();
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Registration deleted successfully!'
+            ]);
+        } catch (\Exception $e) {
+            Log::error('Delete Registration Error: ' . $e->getMessage());
+
+            return response()->json([
+                'success' => false,
+                'message' => 'Error deleting registration'
+            ], 500);
+        }
+    }
 }
