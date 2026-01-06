@@ -231,7 +231,8 @@
         $(document).on('click', '.edit-btn', function() {
             currentId = $(this).data('id');
             const currentPayment = $(this).data('payment');
-            $('#paymentStatus').val(currentPayment);
+            // $('#paymentStatus').val(currentPayment);
+            $('#paymentStatus option[value="' + currentPayment + '"]').prop('selected', true);
             console.log(currentPayment)
             $('#paymentModal').modal('show');
         });
