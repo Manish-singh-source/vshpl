@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard</title>
-     <link rel="icon" type="image/x-icon" href="assets/favicon.png">
+     <link rel="icon" type="image/x-icon" href="{{ asset('assets/favicon.png') }}">
     <!-- Bootstrap 5 CDN -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
@@ -151,6 +151,7 @@
                             <table id="example" class="table table-striped">
                                 <thead>
                                     <tr>
+                                        <th>Reservation Code</th>
                                         <th>Full Name</th>
                                         <th>Flat No</th>
                                         <th>Wing</th>
@@ -166,6 +167,7 @@
                                 <tbody>
                                     @foreach($registrations as $registration)
                                     <tr>
+                                        <td>{{ $registration->customer_code }}</td>
                                         <td>{{ $registration->full_name }}</td>
                                         <td>{{ $registration->house_number }}</td>
                                         <td>{{ $registration->wing }}</td>

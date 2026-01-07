@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>VSH Player Registration Form</title>
-    <link rel="icon" type="image/x-icon" href="assets/favicon.png">
+    <link rel="icon" type="image/x-icon" href="{{ asset('assets/favicon.png') }}">
     <!-- Bootstrap 5 CDN -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
@@ -186,7 +186,7 @@
     <!-- Hero Section -->
     <div class="hero">
         <!-- Logo in top right -->
-        <img src="assets/logo1.png"
+        <img src="{{ asset('assets/logo1.png') }}"
             class="logo" alt="Company Logo">
         <div class="container mn">
             <div class="row justify-content-center">
@@ -314,6 +314,8 @@
                                 <!-- Declaration Tab -->
                                 <div class="tab-pane fade" id="declaration" role="tabpanel"
                                     aria-labelledby="declaration-tab">
+                                    <!-- Error Messages -->
+                                    <div id="errorMessages" class="alert alert-danger" style="display:none;"></div>
                                     <!-- Agreement Checkbox -->
                                     <div class="mb-3">
                                         <div class="form-check">
@@ -348,7 +350,7 @@
                 </div>
                 <div class="modal-body text-center">
                     <p>Thank you for registering!</p>
-                    <button class="btn btn-primary mt-3" id="showQrBtn">Proceed</button>
+                    <p>Your Reservation code is: <b><span id="customerCode"></span></b></p>
                 </div>
             </div>
         </div>
@@ -429,13 +431,25 @@ $(document).ready(function() {
             },
             success: function(data) {
                 console.log(data);
+                $('#errorMessages').hide();
                 if (data.success) {
+                    $('#customerCode').text(data.customer_code);
                     var thankYouModal = new bootstrap.Modal($('#thankYouModal')[0]);
                     thankYouModal.show();
                 }
             },
             error: function(err) {
                 console.error('Error:', err);
+                if (err.status == 422) {
+                    var errors = err.responseJSON.errors;
+                    var errorHtml = '';
+                    for (var field in errors) {
+                        errorHtml += errors[field].join('<br>') + '<br>';
+                    }
+                    $('#errorMessages').html(errorHtml).show();
+                } else {
+                    $('#errorMessages').html('An error occurred. Please try again.').show();
+                }
             }
         });
     });

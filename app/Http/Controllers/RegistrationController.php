@@ -10,15 +10,18 @@ class RegistrationController extends Controller
 {
     public function store(Request $request)
     {
+
+
+
         // Validate input
         $validator = Validator::make($request->all(), [
             'full_name' => 'required|string|max:255',
             'house_number' => 'required|string|max:255',
             'wing' => 'required|string|max:255',
-            'contact_number' => 'required|string|max:15|digits:10',
+            'contact_number' => 'required|regex:/^[0-9]{10}$/',
             'email' => 'nullable|email|max:255',
             'team_category' => 'required|string|in:Men,Women',
-            'player_roles' => 'required|string',
+            'player_roles' => 'required|string|min:1',
             'agreement' => 'required|in:0,1',
         ]);
 
@@ -33,6 +36,7 @@ class RegistrationController extends Controller
         DB::beginTransaction();
         try {
             $registration = Registration::create([
+                'customer_code' => 'VSH' . str_pad(Registration::count() + 1, 4, '0', STR_PAD_LEFT),
                 'full_name' => $request->full_name,
                 'house_number' => $request->house_number,
                 'wing' => $request->wing,
@@ -48,7 +52,8 @@ class RegistrationController extends Controller
             return response()->json([
                 'success' => true,
                 'message' => 'Thank you for registering!',
-                'data' => $registration
+                'data' => $registration,
+                'customer_code' => $registration->customer_code
             ]);
         } catch (\Exception $e) {
             DB::rollBack();

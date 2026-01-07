@@ -13,6 +13,10 @@ Route::prefix('/vshpl')->group(function () {
         return view('dashboard', compact('registrations'));
     });
 
+    Route::get('/vendor-register', function () {
+        return view('vendor-register');
+    });
+
     Route::post('/register', [RegistrationController::class, 'store']);
     Route::put('/update-payment/{id}', [RegistrationController::class, 'updatePayment']);
     Route::delete('/delete/{id}', [RegistrationController::class, 'destroy']);
