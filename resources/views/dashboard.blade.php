@@ -162,6 +162,7 @@
                                         <th>Email</th>
                                         <th>Team Category</th>
                                         <th>Player Roles</th>
+                                        <th>T-Shirt Size</th>
                                         <th>Agreement</th>
                                         <th>Payment Status</th>
                                         <th>Action</th>
@@ -178,6 +179,7 @@
                                         <td>{{ $registration->email }}</td>
                                         <td>{{ $registration->team_category }}</td>
                                         <td>{{ $registration->player_roles }}</td>
+                                        <td>{{ $registration->tshirt_size }}</td>
                                         <td>{{ $registration->agreement ? 'Yes' : 'No' }}</td>
                                         <td class="text-success">{{ ucfirst($registration->payment) }}</td>
                                         <td>
