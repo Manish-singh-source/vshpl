@@ -19,6 +19,6 @@ Route::prefix('/vshpl')->group(function () {
 
     Route::get('/admin/export', [RegistrationController::class, 'export']);
     Route::post('/register', [RegistrationController::class, 'store']);
-    Route::put('/update-payment/{id}', [RegistrationController::class, 'updatePayment']);
+    Route::put('/update-registration/{id}', [RegistrationController::class, 'update']);
     Route::delete('/delete/{id}', [RegistrationController::class, 'destroy']);
 });

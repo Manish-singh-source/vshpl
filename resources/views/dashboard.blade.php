@@ -183,7 +183,7 @@
                                         <td>{{ $registration->agreement ? 'Yes' : 'No' }}</td>
                                         <td class="text-success">{{ ucfirst($registration->payment) }}</td>
                                         <td>
-                                            <button class="btn btn-sm btn-outline-light edit-btn" data-id="{{ $registration->id }}" data-payment="{{ $registration->payment }}">
+                                            <button class="btn btn-sm btn-outline-light edit-btn" data-id="{{ $registration->id }}" data-payment="{{ $registration->payment }}" data-tshirt_size="{{ $registration->tshirt_size }}">
                                                 <i class="fas fa-edit" style="color: #000000;"></i>
                                             </button>
                                             <button class="btn btn-sm btn-outline-danger delete-btn ms-1" data-id="{{ $registration->id }}">
@@ -200,16 +200,16 @@
             </div>
         </div>
 
-        <!-- Modal for updating payment status -->
-        <div class="modal fade" id="paymentModal" tabindex="-1" aria-labelledby="paymentModalLabel" aria-hidden="true">
+        <!-- Modal for updating details -->
+        <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="paymentModalLabel">Update Payment Status</h5>
+                        <h5 class="modal-title" id="editModalLabel">Update Details</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <form id="paymentForm">
+                        <form id="editForm">
                             <div class="mb-3">
                                 <label for="paymentStatus" class="form-label">Payment Status</label>
                                 <select class="form-select" id="paymentStatus" name="payment" required>
@@ -217,11 +217,22 @@
                                     <option value="done">Done</option>
                                 </select>
                             </div>
+                            <div class="mb-3">
+                                <label for="tshirtSize" class="form-label">T-Shirt Size</label>
+                                <select class="form-select" id="tshirtSize" name="tshirt_size" required>
+                                    <option value="XS">XS</option>
+                                    <option value="S">S</option>
+                                    <option value="M">M</option>
+                                    <option value="L">L</option>
+                                    <option value="XL">XL</option>
+                                    <option value="XXL">XXL</option>
+                                </select>
+                            </div>
                         </form>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary" id="savePayment">Save changes</button>
+                        <button type="button" class="btn btn-primary" id="saveChanges">Save changes</button>
                     </div>
                 </div>
             </div>
@@ -241,10 +252,11 @@
         $(document).on('click', '.edit-btn', function() {
             currentId = $(this).data('id');
             const currentPayment = $(this).data('payment');
-            // $('#paymentStatus').val(currentPayment);
-            $('#paymentStatus option[value="' + currentPayment + '"]').prop('selected', true);
-            console.log(currentPayment)
-            $('#paymentModal').modal('show');
+            const currentTshirtSize = $(this).data('tshirt_size');
+
+            $('#paymentStatus').val(currentPayment);
+            $('#tshirtSize').val(currentTshirtSize);
+            $('#editModal').modal('show');
         });
 
         // Handle delete button click
@@ -272,27 +284,29 @@
         });
 
         // Handle save button click
-        $('#savePayment').on('click', function() {
+        $('#saveChanges').on('click', function() {
             const payment = $('#paymentStatus').val();
+            const tshirt_size = $('#tshirtSize').val();
             if (!currentId) return;
 
             $.ajax({
-                url: '/vshpl/update-payment/' + currentId,
+                url: '/vshpl/update-registration/' + currentId,
                 type: 'PUT',
                 data: {
                     payment: payment,
+                    tshirt_size: tshirt_size,
                     _token: '{{ csrf_token() }}'
                 },
                 success: function(response) {
                     if (response.success) {
-                        $('#paymentModal').modal('hide');
+                        $('#editModal').modal('hide');
                         location.reload(); // Reload to show updated data
                     } else {
                         alert('Error: ' + response.message);
                     }
                 },
                 error: function(xhr) {
-                    alert('Error updating payment status');
+                    alert('Error updating registration');
                 }
             });
         });

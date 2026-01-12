@@ -68,10 +68,11 @@ class RegistrationController extends Controller
         }
     }
 
-    public function updatePayment(Request $request, $id)
+    public function update(Request $request, $id)
     {
         $validator = Validator::make($request->all(), [
-            'payment' => 'required|in:pending,done',
+            'payment' => 'sometimes|required|in:pending,done',
+            'tshirt_size' => 'sometimes|required|string|in:XS,S,M,L,XL,XXL',
         ]);
 
         if ($validator->fails()) {
@@ -84,18 +85,28 @@ class RegistrationController extends Controller
 
         try {
             $registration = Registration::findOrFail($id);
-            $registration->update(['payment' => $request->payment]);
+            
+            $validatedData = $validator->validated();
+
+            if (empty($validatedData)) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'No valid data provided for update.'
+                ], 422);
+            }
+
+            $registration->update($validatedData);
 
             return response()->json([
                 'success' => true,
-                'message' => 'Payment status updated successfully!'
+                'message' => 'Registration details updated successfully!'
             ]);
         } catch (\Exception $e) {
-            Log::error('Update Payment Error: ' . $e->getMessage());
+            Log::error('Update Registration Error: ' . $e->getMessage());
 
             return response()->json([
                 'success' => false,
-                'message' => 'Error updating payment status'
+                'message' => 'Error updating registration details'
             ], 500);
         }
     }
