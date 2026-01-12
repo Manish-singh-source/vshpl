@@ -146,7 +146,10 @@
                 <div class="col-12">
                     <!-- Table Card -->
                     <div class="table-card">
-                        <h2>Player Dashboard</h2>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <h2>Player Dashboard</h2>
+                            <a href="/vshpl/admin/export" class="btn btn-primary">Download as CSV</a>
+                        </div>
                         <div class="table-responsive">
                             <table id="example" class="table table-striped">
                                 <thead>
@@ -225,7 +228,10 @@
     <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
     <script src="https://cdn.datatables.net/2.3.6/js/dataTables.js"></script>
     <script>
-        new DataTable('#example');
+                new DataTable('#example', {
+            pageLength: 5
+        });
+
 
         let currentId = null;
 

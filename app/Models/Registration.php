@@ -15,6 +15,7 @@ class Registration extends Model
         'email',
         'team_category',
         'player_roles',
+        'tshirt_size',
         'agreement',
         'payment',
     ];

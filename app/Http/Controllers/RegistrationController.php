@@ -22,6 +22,7 @@ class RegistrationController extends Controller
             'email' => 'nullable|email|max:255',
             'team_category' => 'required|string|in:Men,Women',
             'player_roles' => 'required|string|min:1',
+            'tshirt_size' => 'required|string|in:XS,S,M,L,XL,XXL',
             'agreement' => 'required|in:0,1',
         ]);
 
@@ -44,6 +45,7 @@ class RegistrationController extends Controller
                 'email' => $request->email,
                 'team_category' => $request->team_category,
                 'player_roles' => $request->player_roles,
+                'tshirt_size' => $request->tshirt_size,
                 'agreement' => $request->agreement,
             ]);
 
@@ -116,5 +118,45 @@ class RegistrationController extends Controller
                 'message' => 'Error deleting registration'
             ], 500);
         }
+    }
+
+    public function export()
+    {
+        $registrations = Registration::all();
+        $fileName = "registrations.csv";
+        $headers = array(
+            "Content-type"        => "text/csv",
+            "Content-Disposition" => "attachment; filename=$fileName",
+            "Pragma"              => "no-cache",
+            "Cache-Control"       => "must-revalidate, post-check=0, pre-check=0",
+            "Expires"             => "0"
+        );
+
+        $columns = array('Reservation Code', 'Full Name', 'Flat No', 'Wing', 'Contact No', 'Email', 'Team Category', 'Player Roles', 'T-Shirt Size', 'Agreement', 'Payment Status');
+
+        $callback = function() use($registrations, $columns) {
+            $file = fopen('php://output', 'w');
+            fputcsv($file, $columns);
+
+            foreach ($registrations as $registration) {
+                $row['Reservation Code']  = $registration->customer_code;
+                $row['Full Name']    = $registration->full_name;
+                $row['Flat No']  = $registration->house_number;
+                $row['Wing']  = $registration->wing;
+                $row['Contact No']  = $registration->contact_number;
+                $row['Email']  = $registration->email;
+                $row['Team Category']  = $registration->team_category;
+                $row['Player Roles']  = $registration->player_roles;
+                $row['T-Shirt Size']  = $registration->tshirt_size;
+                $row['Agreement']  = $registration->agreement ? 'Yes' : 'No';
+                $row['Payment Status']  = ucfirst($registration->payment);
+
+                fputcsv($file, array($row['Reservation Code'], $row['Full Name'], $row['Flat No'], $row['Wing'], $row['Contact No'], $row['Email'], $row['Team Category'], $row['Player Roles'], $row['T-Shirt Size'], $row['Agreement'], $row['Payment Status']));
+            }
+
+            fclose($file);
+        };
+
+        return response()->stream($callback, 200, $headers);
     }
 }

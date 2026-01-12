@@ -271,35 +271,48 @@
                                     </div>
                                     <!-- Player Roles -->
                                     <div class="mb-3">
-                                        <label class="form-label">Player Roles (Select all that apply)</label>
+                                        <label class="form-label">Player Role</label>
                                         <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" id="batsman" name="roles"
-                                                value="Batsman">
+                                            <input class="form-check-input" type="radio" id="batsman" name="roles"
+                                                value="Batsman" required>
                                             <label class="form-check-label" for="batsman">
                                                 Batsman
                                             </label>
                                         </div>
                                         <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" id="bowler" name="roles"
-                                                value="Bowler">
+                                            <input class="form-check-input" type="radio" id="bowler" name="roles"
+                                                value="Bowler" required>
                                             <label class="form-check-label" for="bowler">
                                                 Bowler
                                             </label>
                                         </div>
                                         <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" id="allrounder" name="roles"
-                                                value="All-rounder">
+                                            <input class="form-check-input" type="radio" id="allrounder" name="roles"
+                                                value="All-rounder" required>
                                             <label class="form-check-label" for="allrounder">
                                                 All-rounder
                                             </label>
                                         </div>
                                         <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" id="wicketkeeper"
-                                                name="roles" value="Wicket-keeper">
+                                            <input class="form-check-input" type="radio" id="wicketkeeper"
+                                                name="roles" value="Wicket-keeper" required>
                                             <label class="form-check-label" for="wicketkeeper">
                                                 Wicket-keeper
                                             </label>
                                         </div>
+                                    </div>
+                                    <!-- T-Shirt Size -->
+                                    <div class="mb-3">
+                                        <label for="tshirt-size" class="form-label">T-Shirt Size</label>
+                                        <select id="tshirt-size" name="tshirt_size" class="form-select" required>
+                                            <option value="">Select size</option>
+                                            <option value="XS">XS</option>
+                                            <option value="S">S</option>
+                                            <option value="M">M</option>
+                                            <option value="L">L</option>
+                                            <option value="XL">XL</option>
+                                            <option value="XXL">XXL</option>
+                                        </select>
                                     </div>
                                     <!-- Navigation Buttons -->
                                     <div class="d-block mt-3 text-center">
