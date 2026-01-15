@@ -349,7 +349,7 @@
                     <!-- Footer -->
                     <footer class=" text-white text-center py-4">
                         <div class="container">
-                            <p class="mb-2">Phone: 123-456-7890 | 098-765-4321 | 111-222-3333 | 444-555-6666</p>
+                            {{-- <p class="mb-2">Phone: 123-456-7890 | 098-765-4321 | 111-222-3333 | 444-555-6666</p> --}}
                             <p class="mb-0"><a href="mailto:info@veenasmarthomes.com">info@veenasmarthomes.com</a> | <a href="https://veenasmarthomes.com/" target="_blank">www.veenasmarthomes.com</a></p>
                         </div>
                     </footer>
