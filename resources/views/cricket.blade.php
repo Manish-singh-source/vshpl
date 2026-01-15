@@ -325,7 +325,8 @@
                                     style="position: absolute; top: 10px; right: 10px; width: 50px; height: auto; z-index: 1;">
                                 <div class="card-body text-center">
                                     <h5 class="card-title fire-text">krishna basuri</h5>
-                                    <button class="btn btn-primary mt-2"><i class="fas fa-users"></i> My Team</button>
+                                    <button class="btn btn-primary mt-2" data-bs-toggle="modal"
+                                        data-bs-target="#teamModal"><i class="fas fa-users"></i> My Team</button>
                                 </div>
                             </div>
                         </div>
@@ -337,7 +338,8 @@
                                     style="position: absolute; top: 10px; right: 10px; width: 50px; height: auto; z-index: 1;">
                                 <div class="card-body text-center">
                                     <h5 class="card-title fire-text">karna kundal</h5>
-                                    <button class="btn btn-primary mt-2"><i class="fas fa-users"></i> My Team</button>
+                                    <button class="btn btn-primary mt-2" data-bs-toggle="modal"
+                                        data-bs-target="#teamModal"><i class="fas fa-users"></i> My Team</button>
                                 </div>
                             </div>
                         </div>
