@@ -28,7 +28,8 @@
         .nav-link {
             color: #fff;
         }
-        .nav-link:hover{
+
+        .nav-link:hover {
             color: #fff;
         }
 
@@ -172,13 +173,15 @@
                 top: 10px;
                 left: 10px;
             }
-            .mn{
+
+            .mn {
                 margin-top: 30px;
             }
         }
+
         label.form-check-label {
-    color: #fff;
-}
+            color: #fff;
+        }
     </style>
 </head>
 
@@ -186,15 +189,14 @@
     <!-- Hero Section -->
     <div class="hero">
         <!-- Logo in top right -->
-        <img src="{{ asset('assets/logo1.png') }}"
-            class="logo" alt="Company Logo">
+        <img src="{{ asset('assets/logo1.png') }}" class="logo" alt="Company Logo">
         <div class="container mn">
             <div class="row justify-content-center">
                 <div class="col-12 col-sm-10 col-md-8 col-lg-6">
                     <!-- Form Card -->
                     <div class="form-card">
                         <h2>Player Registration</h2>
-                        <form action="/register" method="POST" id="registrationForm">
+                        <form action="{{ route('register.registration') }}" method="POST" id="registrationForm" enctype="multipart/form-data">
                             @csrf
                             <!-- Nav tabs -->
                             <ul class="nav nav-tabs justify-content-center mb-4" id="registrationTabs" role="tablist">
@@ -219,6 +221,12 @@
                                 <!-- Basic Details Tab -->
                                 <div class="tab-pane fade show active" id="basic" role="tabpanel"
                                     aria-labelledby="basic-tab">
+                                    {{-- Profile Image --}}
+                                    <div class="mb-3">
+                                        <label for="profileImage" class="form-label">Profile Image</label>
+                                        <input type="file" class="form-control" id="profileImage" name="profile_image"
+                                            accept="image/*">
+                                    </div>
                                     <!-- Full Name -->
                                     <div class="mb-3">
                                         <input type="text" class="form-control" id="fullName" name="full_name"
@@ -231,13 +239,13 @@
                                     </div>
                                     <!-- Wing -->
                                     <div class="mb-3">
-                                        <input type="text" class="form-control" id="wing" name="wing" placeholder="Enter your wing"
-                                            required>
+                                        <input type="text" class="form-control" id="wing" name="wing"
+                                            placeholder="Enter your wing" required>
                                     </div>
                                     <!-- Contact Number (Mobile) -->
                                     <div class="mb-3">
-                                        <input type="tel" class="form-control" id="contactNumber" name="contact_number"
-                                            placeholder="Enter your mobile number" required>
+                                        <input type="tel" class="form-control" id="contactNumber"
+                                            name="contact_number" placeholder="Enter your mobile number" required>
                                     </div>
                                     <!-- Email ID (optional) -->
                                     <div class="mb-3">
@@ -250,20 +258,21 @@
                                     </button>
                                 </div>
                                 <!-- Player Information Tab -->
-                                <div class="tab-pane fade" id="player" role="tabpanel" aria-labelledby="player-tab">
+                                <div class="tab-pane fade" id="player" role="tabpanel"
+                                    aria-labelledby="player-tab">
                                     <!-- Team Category -->
                                     <div class="mb-3">
                                         <label class="form-label">Team Category</label>
                                         <div class="form-check">
-                                            <input class="form-check-input" type="radio" name="team_category" id="men"
-                                                value="Men" required>
+                                            <input class="form-check-input" type="radio" name="team_category"
+                                                id="men" value="Men" required>
                                             <label class="form-check-label" for="men">
                                                 Men
                                             </label>
                                         </div>
                                         <div class="form-check">
-                                            <input class="form-check-input" type="radio" name="team_category" id="women"
-                                                value="Women" required>
+                                            <input class="form-check-input" type="radio" name="team_category"
+                                                id="women" value="Women" required>
                                             <label class="form-check-label" for="women">
                                                 Women
                                             </label>
@@ -273,22 +282,22 @@
                                     <div class="mb-3">
                                         <label class="form-label">Player Role</label>
                                         <div class="form-check">
-                                            <input class="form-check-input" type="radio" id="batsman" name="roles"
-                                                value="Batsman" required>
+                                            <input class="form-check-input" type="radio" id="batsman"
+                                                name="roles" value="Batsman" required>
                                             <label class="form-check-label" for="batsman">
                                                 Batsman
                                             </label>
                                         </div>
                                         <div class="form-check">
-                                            <input class="form-check-input" type="radio" id="bowler" name="roles"
-                                                value="Bowler" required>
+                                            <input class="form-check-input" type="radio" id="bowler"
+                                                name="roles" value="Bowler" required>
                                             <label class="form-check-label" for="bowler">
                                                 Bowler
                                             </label>
                                         </div>
                                         <div class="form-check">
-                                            <input class="form-check-input" type="radio" id="allrounder" name="roles"
-                                                value="All-rounder" required>
+                                            <input class="form-check-input" type="radio" id="allrounder"
+                                                name="roles" value="All-rounder" required>
                                             <label class="form-check-label" for="allrounder">
                                                 All-rounder
                                             </label>
@@ -329,10 +338,27 @@
                                     aria-labelledby="declaration-tab">
                                     <!-- Error Messages -->
                                     <div id="errorMessages" class="alert alert-danger" style="display:none;"></div>
-                                    <!-- Agreement Checkbox -->
+                                    {{-- Sponsor Checkbox if yes then upload sponsor pdf --}}
                                     <div class="mb-3">
                                         <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" id="agreement" name="agreement" required>
+                                            <input class="form-check-input" type="checkbox" id="sponsor"
+                                                name="sponsor" required>
+                                            <label class="form-check-label" for="sponsor">
+                                                I am a sponsor
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="mb-3" style="display:none;" id="sponsorPdfDiv">
+                                        <label for="sponsorPdf" class="form-label">Sponsor PDF</label>
+                                        <input type="file" class="form-control" id="sponsorPdf" name="sponsor_pdf"
+                                            accept="application/pdf" required>
+                                    </div>
+
+                                    <!-- Agreement Checkbox -->
+                                    <div class="mb-3">
+                                        <div class="form-check">    
+                                            <input class="form-check-input" type="checkbox" id="agreement"
+                                                name="agreement" required>
                                             <label class="form-check-label" for="agreement">
                                                 I agree to follow society and tournament rules
                                             </label>
@@ -347,14 +373,21 @@
                                 </div>
                             </div>
                         </form>
+
+                        <hr>
+                        <br>
+                        <p style="color: #fff;">If you want to edit your player details, please click on the button below.</p>
+                        <a href="{{ route('edit-player-details') }}" class="btn btn-outline-light d-block mt-3">Edit Player Details</a>
                     </div>
                 </div>
             </div>
+
         </div>
     </div>
 
     <!-- Thank You Modal -->
-    <div class="modal fade" id="thankYouModal" tabindex="-1" aria-labelledby="thankYouModalLabel" aria-hidden="true">
+    <div class="modal fade" id="thankYouModal" tabindex="-1" aria-labelledby="thankYouModalLabel"
+        aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
@@ -387,110 +420,126 @@
 
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
-        crossorigin="anonymous"></script>
-        <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
-<script>
-$(document).ready(function() {
+        integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous">
+    </script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"
+        integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <script>
+        $(document).ready(function() {
 
-    // Next to Player
-    $('#nextToPlayer').on('click', function() {
-        $('#player-tab').click();
-    });
+            // Next to Player
+            $('#nextToPlayer').on('click', function() {
+                $('#player-tab').click();
+            });
 
-    // Previous to Basic
-    $('#prevToBasic').on('click', function() {
-        $('#basic-tab').click();
-    });
+            // Previous to Basic
+            $('#prevToBasic').on('click', function() {
+                $('#basic-tab').click();
+            });
 
-    // Next to Declaration
-    $('#nextToDeclaration').on('click', function() {
-        $('#declaration-tab').click();
-    });
+            // Next to Declaration
+            $('#nextToDeclaration').on('click', function() {
+                $('#declaration-tab').click();
+            });
 
-    // Previous to Player
-    $('#prevToPlayer').on('click', function() {
-        $('#player-tab').click();
-    });
+            // Previous to Player
+            $('#prevToPlayer').on('click', function() {
+                $('#player-tab').click();
+            });
 
-    // Register Button Click
-    $('#registerBtn').on('click', function(e) {
-        e.preventDefault();
+            // Register Button Click
+            $('#registerBtn').on('click', function(e) {
+                e.preventDefault();
 
-        // Collect form data
-        var formData = new FormData($('#registrationForm')[0]);
+                // Collect form data
+                var formData = new FormData($('#registrationForm')[0]);
 
-        console.log(formData);
+                console.log(formData);
 
-        // Handle player roles
-        var roles = [];
-        $('input[name="roles"]:checked').each(function() {
-            roles.push($(this).val());
-        });
-        formData.set('player_roles', roles.join(', '));
+                // Handle player roles
+                var roles = [];
+                $('input[name="roles"]:checked').each(function() {
+                    roles.push($(this).val());
+                });
+                formData.set('player_roles', roles.join(', '));
 
-        // Handle agreement
-        formData.set('agreement', $('#agreement').is(':checked') ? 1 : 0);
+                // Handle agreement
+                formData.set('agreement', $('#agreement').is(':checked') ? 1 : 0);
 
-        // Submit via AJAX
-        $.ajax({
-            url: '/vshpl/register',
-            type: 'POST',
-            data: formData,
-            processData: false,
-            contentType: false,
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            },
-            success: function(data) {
-                console.log(data);
-                $('#errorMessages').hide();
-                if (data.success) {
-                    $('#customerCode').text(data.customer_code);
-                    var thankYouModal = new bootstrap.Modal($('#thankYouModal')[0]);
-                    thankYouModal.show();
-                }
-            },
-            error: function(err) {
-                console.error('Error:', err);
-                if (err.status == 422) {
-                    var errors = err.responseJSON.errors;
-                    var errorHtml = '';
-                    for (var field in errors) {
-                        errorHtml += errors[field].join('<br>') + '<br>';
+                // Handle sponsor
+                formData.set('sponsor', $('#sponsor').is(':checked') ? 1 : 0);
+
+                // Submit via AJAX
+                $.ajax({
+                    url: '{{ route('register.registration') }}',
+                    type: 'POST',
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    success: function(data) {
+                        console.log(data);
+                        $('#errorMessages').hide();
+                        if (data.success) {
+                            $("#registrationForm")[0].reset();
+                            $('#profileImage').val('');
+                            $('#customerCode').text(data.customer_code);
+                            var thankYouModal = new bootstrap.Modal($('#thankYouModal')[0]);
+                            thankYouModal.show();
+                        }
+                    },
+                    error: function(err) {
+                        console.error('Error:', err);
+                        if (err.status == 422) {
+                            var errors = err.responseJSON.errors;
+                            var errorHtml = '';
+                            for (var field in errors) {
+                                errorHtml += errors[field].join('<br>') + '<br>';
+                            }
+                            $('#errorMessages').html(errorHtml).show();
+                        } else {
+                            $('#errorMessages').html('An error occurred. Please try again.')
+                                .show();
+                        }
                     }
-                    $('#errorMessages').html(errorHtml).show();
-                } else {
-                    $('#errorMessages').html('An error occurred. Please try again.').show();
-                }
+                });
+            });
+
+            // Show QR Modal on Proceed
+            $('#showQrBtn').on('click', function() {
+                var thankYouModal = bootstrap.Modal.getInstance($('#thankYouModal')[0]);
+                thankYouModal.hide();
+                var qrModal = new bootstrap.Modal($('#qrModal')[0]);
+                qrModal.show();
+            });
+
+        });
+    </script>
+    <script>
+        document.getElementById("fullName").addEventListener("input", function() {
+            this.value = this.value
+                .toLowerCase()
+                .replace(/\b\w/g, function(char) {
+                    return char.toUpperCase();
+                });
+        });
+    </script>
+    <script>
+        document.getElementById("wing").addEventListener("input", function() {
+            this.value = this.value.toUpperCase();
+        });
+
+        // if sponsor checkbox is checked then show sponsor pdf upload field
+        $(document).on('click', '#sponsor', function() {
+            if ($(this).is(':checked')) {
+                $('#sponsorPdfDiv').show();
+            } else {
+                $('#sponsorPdfDiv').hide();
             }
         });
-    });
-
-    // Show QR Modal on Proceed
-    $('#showQrBtn').on('click', function() {
-        var thankYouModal = bootstrap.Modal.getInstance($('#thankYouModal')[0]);
-        thankYouModal.hide();
-        var qrModal = new bootstrap.Modal($('#qrModal')[0]);
-        qrModal.show();
-    });
-
-});
-</script>
-<script>
-document.getElementById("fullName").addEventListener("input", function () {
-    this.value = this.value
-        .toLowerCase()
-        .replace(/\b\w/g, function (char) {
-            return char.toUpperCase();
-        });
-});
-</script>
-<script>
-document.getElementById("wing").addEventListener("input", function () {
-    this.value = this.value.toUpperCase();
-});
-</script>
+    </script>
 </body>
 
 </html>

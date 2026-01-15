@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Registration extends Model
 {
     protected $fillable = [
+        'profile_image',
         'customer_code',
         'full_name',
         'house_number',
@@ -18,5 +19,6 @@ class Registration extends Model
         'tshirt_size',
         'agreement',
         'payment',
+        'sponsor_pdf',
     ];
 }

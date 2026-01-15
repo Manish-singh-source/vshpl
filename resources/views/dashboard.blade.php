@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard</title>
-     <link rel="icon" type="image/x-icon" href="{{ asset('assets/favicon.png') }}">
+    <link rel="icon" type="image/x-icon" href="{{ asset('assets/favicon.png') }}">
     <!-- Bootstrap 5 CDN -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
@@ -148,12 +148,14 @@
                     <div class="table-card">
                         <div class="d-flex justify-content-between align-items-center">
                             <h2>Player Dashboard</h2>
-                            <a href="/vshpl/admin/export" class="btn btn-primary">Download as CSV</a>
+                            <a href="{{ route('export.registrations.list') }}" class="btn btn-primary">Download as
+                                CSV</a>
                         </div>
                         <div class="table-responsive">
                             <table id="example" class="table table-striped">
                                 <thead>
                                     <tr>
+                                        <th>Profile Image</th>
                                         <th>Reservation Code</th>
                                         <th>Full Name</th>
                                         <th>Flat No</th>
@@ -165,32 +167,57 @@
                                         <th>T-Shirt Size</th>
                                         <th>Agreement</th>
                                         <th>Payment Status</th>
+                                        <th>Sponsor PDF</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach($registrations as $registration)
-                                    <tr>
-                                        <td>{{ $registration->customer_code }}</td>
-                                        <td>{{ $registration->full_name }}</td>
-                                        <td>{{ $registration->house_number }}</td>
-                                        <td>{{ $registration->wing }}</td>
-                                        <td>{{ $registration->contact_number }}</td>
-                                        <td>{{ $registration->email }}</td>
-                                        <td>{{ $registration->team_category }}</td>
-                                        <td>{{ $registration->player_roles }}</td>
-                                        <td>{{ $registration->tshirt_size }}</td>
-                                        <td>{{ $registration->agreement ? 'Yes' : 'No' }}</td>
-                                        <td class="text-success">{{ ucfirst($registration->payment) }}</td>
-                                        <td>
-                                            <button class="btn btn-sm btn-outline-light edit-btn" data-id="{{ $registration->id }}" data-payment="{{ $registration->payment }}" data-tshirt_size="{{ $registration->tshirt_size }}">
-                                                <i class="fas fa-edit" style="color: #000000;"></i>
-                                            </button>
-                                            <button class="btn btn-sm btn-outline-danger delete-btn ms-1" data-id="{{ $registration->id }}">
-                                                <i class="fas fa-trash"></i>
-                                            </button>
-                                        </td>
-                                    </tr>
+                                    @foreach ($registrations as $registration)
+                                        <tr>
+                                            <td>
+                                                @if (str_contains($registration->profile_image, 'http') ||
+                                                        str_contains($registration->profile_image, 'https') ||
+                                                        $registration->profile_image == null)
+                                                    <img src="{{ Avatar::create($registration->full_name)->toBase64() }}"
+                                                        alt="Profile Image" width="50">
+                                                @else
+                                                    <img src="{{ asset($registration->profile_image) }}"
+                                                        alt="Profile Image" width="50" height="50"
+                                                        style="border-radius: 50%;">
+                                                @endif
+                                            </td>
+                                            <td>{{ $registration->customer_code }}</td>
+                                            <td>{{ $registration->full_name }}</td>
+                                            <td>{{ $registration->house_number }}</td>
+                                            <td>{{ $registration->wing }}</td>
+                                            <td>{{ $registration->contact_number }}</td>
+                                            <td>{{ $registration->email }}</td>
+                                            <td>{{ $registration->team_category }}</td>
+                                            <td>{{ $registration->player_roles }}</td>
+                                            <td>{{ $registration->tshirt_size }}</td>
+                                            <td>{{ $registration->agreement ? 'Yes' : 'No' }}</td>
+                                            <td class="text-success">{{ ucfirst($registration->payment) }}</td>
+                                            <td>
+                                                @if ($registration->sponsor_pdf)
+                                                    <a href="{{ asset($registration->sponsor_pdf) }}"
+                                                        target="_blank">View PDF</a>
+                                                @else
+                                                    No PDF
+                                                @endif
+                                            </td>
+                                            <td>
+                                                <button class="btn btn-sm btn-outline-light edit-btn"
+                                                    data-id="{{ $registration->id }}"
+                                                    data-payment="{{ $registration->payment }}"
+                                                    data-tshirt_size="{{ $registration->tshirt_size }}">
+                                                    <i class="fas fa-edit" style="color: #000000;"></i>
+                                                </button>
+                                                <button class="btn btn-sm btn-outline-danger delete-btn ms-1"
+                                                    data-id="{{ $registration->id }}">
+                                                    <i class="fas fa-trash"></i>
+                                                </button>
+                                            </td>
+                                        </tr>
                                     @endforeach
                                 </tbody>
                             </table>
@@ -240,9 +267,13 @@
     </div>
     <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
     <script src="https://cdn.datatables.net/2.3.6/js/dataTables.js"></script>
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous">
+    </script>
     <script>
-                new DataTable('#example', {
-            pageLength: 5
+        new DataTable('#example', {
+            pageLength: 5,
         });
 
 
@@ -264,7 +295,7 @@
             const id = $(this).data('id');
             if (confirm('Are you sure you want to delete this registration?')) {
                 $.ajax({
-                    url: '/vshpl/delete/' + id,
+                    url: `/vshpl/delete/${id}`,
                     type: 'DELETE',
                     data: {
                         _token: '{{ csrf_token() }}'
@@ -290,7 +321,7 @@
             if (!currentId) return;
 
             $.ajax({
-                url: '/vshpl/update-registration/' + currentId,
+                url: `/vshpl/update-registration/${currentId}`,
                 type: 'PUT',
                 data: {
                     payment: payment,
@@ -311,12 +342,6 @@
             });
         });
     </script>
-    <!-- Bootstrap JS -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
-        crossorigin="anonymous"></script>
-
-
 </body>
 
 </html>
