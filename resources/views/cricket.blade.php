@@ -372,7 +372,7 @@
                     <div class="row">
                         <div class="col-md-6 text-center">
                             <h6>Team Captain</h6>
-                            <img src="{{ asset('assets/cricket/Team.png') }}" class="img-fluid" alt="Team Captain" style="max-width: 200px;">
+                            <img src="{{ asset('assets/cricket/team.png') }}" class="img-fluid" alt="Team Captain" style="max-width: 200px;">
                         </div>
                         <div class="col-md-6">
                             <h6>Team Members</h6>
