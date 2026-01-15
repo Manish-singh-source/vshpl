@@ -142,7 +142,7 @@
             top: 20px;
             left: 20px;
             width: 100px;
-            border-radius: 5px;
+            border-radius:5px;
             height: auto;
             z-index: 3;
             filter: drop-shadow(0 2px 5px rgba(0, 0, 0, 0.3));
@@ -268,13 +268,12 @@
             text-shadow: 0 0 10px rgba(255, 69, 0, 0.8), 0 0 20px rgba(255, 69, 0, 0.6);
             font-weight: bold;
             font-size: 1.2rem;
+            text-transform: uppercase;
         }
-
-        .kj {
+        .kj{
             z-index: 1;
         }
-
-        a {
+        a{
             text-decoration: none;
             color: #fff;
         }
@@ -299,7 +298,7 @@
                                     alt="Logo"
                                     style="position: absolute; top: 10px; right: 10px; width: 50px; height: auto; z-index: 1;">
                                 <div class="card-body text-center">
-                                    <h5 class="card-title fire-text">Bhishma</h5>
+                                    <h5 class="card-title fire-text">bhishma pratigya</h5>
                                     <button class="btn btn-primary mt-2" data-bs-toggle="modal"
                                         data-bs-target="#teamModal"><i class="fas fa-users"></i> My Team</button>
                                 </div>
@@ -312,7 +311,7 @@
                                     alt="Logo"
                                     style="position: absolute; top: 10px; right: 10px; width: 50px; height: auto; z-index: 1;">
                                 <div class="card-body text-center">
-                                    <h5 class="card-title fire-text">Arjun</h5>
+                                    <h5 class="card-title fire-text">arjun lakshya</h5>
                                     <button class="btn btn-primary mt-2" data-bs-toggle="modal"
                                         data-bs-target="#teamModal"><i class="fas fa-users"></i> My Team</button>
                                 </div>
@@ -320,24 +319,24 @@
                         </div>
                         <div style="margin-right: 15px;">
                             <div class="card player-card shadow" style="position: relative;">
-                                <img src="{{ asset('assets/cricket/p1.png') }}" class="card-img-top" alt="Player Image">
+                                <img src="{{ asset('assets/cricket/p3.png') }}" class="card-img-top" alt="Player Image">
                                 <img src="https://sportspundit.com/system/data/8430/new_logo/1088-mumbai-indians.webp?1662030661"
                                     alt="Logo"
                                     style="position: absolute; top: 10px; right: 10px; width: 50px; height: auto; z-index: 1;">
                                 <div class="card-body text-center">
-                                    <h5 class="card-title fire-text">Krishna</h5>
+                                    <h5 class="card-title fire-text">krishna basuri</h5>
                                     <button class="btn btn-primary mt-2"><i class="fas fa-users"></i> My Team</button>
                                 </div>
                             </div>
                         </div>
                         <div>
                             <div class="card player-card shadow" style="position: relative;">
-                                <img src="{{ asset('assets/cricket/p2.png') }}" class="card-img-top" alt="Player Image">
+                                <img src="{{ asset('assets/cricket/p4.png') }}" class="card-img-top" alt="Player Image">
                                 <img src="https://sportspundit.com/system/data/8430/new_logo/1088-mumbai-indians.webp?1662030661"
                                     alt="Logo"
                                     style="position: absolute; top: 10px; right: 10px; width: 50px; height: auto; z-index: 1;">
                                 <div class="card-body text-center">
-                                    <h5 class="card-title fire-text">Karna</h5>
+                                    <h5 class="card-title fire-text">karna kundal</h5>
                                     <button class="btn btn-primary mt-2"><i class="fas fa-users"></i> My Team</button>
                                 </div>
                             </div>
@@ -349,8 +348,7 @@
                     <footer class=" text-white text-center py-4">
                         <div class="container">
                             <p class="mb-2">Phone: 123-456-7890 | 098-765-4321 | 111-222-3333 | 444-555-6666</p>
-                            <p class="mb-0"><a href="mailto:info@veenasmarthomes.com">info@veenasmarthomes.com</a> |
-                                <a href="https://veenasmarthomes.com/" target="_blank">www.veenasmarthomes.com</a></p>
+                            <p class="mb-0"><a href="mailto:info@veenasmarthomes.com">info@veenasmarthomes.com</a> | <a href="https://veenasmarthomes.com/" target="_blank">www.veenasmarthomes.com</a></p>
                         </div>
                     </footer>
                 </div>
@@ -374,58 +372,58 @@
                     <div class="row">
                         <div class="col-md-6 text-center">
                             <h6>Team Captain</h6>
-                            <img src="Team.png" class="img-fluid" alt="Team Captain" style="max-width: 200px;">
+                            <img src="{{ asset('assets/cricket/Team.png') }}" class="img-fluid" alt="Team Captain" style="max-width: 200px;">
                         </div>
                         <div class="col-md-6">
                             <h6>Team Members</h6>
                             <div class="row">
                                 <div class="col-4 mb-3 text-center">
-                                    <img src="p1.png" class="rounded-circle" style="width: 50px; height: 50px;"
+                                    <img src="{{ asset('assets/cricket/p1.png') }}" class="rounded-circle" style="width: 50px; height: 50px;"
                                         alt="Player">
                                     <p class="mt-2" style="font-size: 14px;">Player 1</p>
                                 </div>
                                 <div class="col-4 mb-3 text-center">
-                                    <img src="p2.png" class="rounded-circle" style="width: 50px; height: 50px;"
+                                    <img src="{{ asset('assets/cricket/p2.png') }}" class="rounded-circle" style="width: 50px; height: 50px;"
                                         alt="Player">
                                     <p class="mt-2" style="font-size: 14px;">Player 2</p>
                                 </div>
                                 <div class="col-4 mb-3 text-center">
-                                    <img src="p1.png" class="rounded-circle" style="width: 50px; height: 50px;"
+                                    <img src="{{ asset('assets/cricket/p1.png') }}" class="rounded-circle" style="width: 50px; height: 50px;"
                                         alt="Player">
                                     <p class="mt-2" style="font-size: 14px;">Player 3</p>
                                 </div>
                                 <div class="col-4 mb-3 text-center">
-                                    <img src="p2.png" class="rounded-circle" style="width: 50px; height: 50px;"
+                                    <img src="{{ asset('assets/cricket/p2.png') }}" class="rounded-circle" style="width: 50px; height: 50px;"
                                         alt="Player">
                                     <p class="mt-2" style="font-size: 14px;">Player 4</p>
                                 </div>
                                 <div class="col-4 mb-3 text-center">
-                                    <img src="p1.png" class="rounded-circle" style="width: 50px; height: 50px;"
+                                    <img src="{{ asset('assets/cricket/p1.png') }}" class="rounded-circle" style="width: 50px; height: 50px;"
                                         alt="Player">
                                     <p class="mt-2" style="font-size: 14px;">Player 5</p>
                                 </div>
                                 <div class="col-4 mb-3 text-center">
-                                    <img src="p2.png" class="rounded-circle" style="width: 50px; height: 50px;"
+                                    <img src="{{ asset('assets/cricket/p2.png') }}" class="rounded-circle" style="width: 50px; height: 50px;"
                                         alt="Player">
                                     <p class="mt-2" style="font-size: 14px;">Player 6</p>
                                 </div>
                                 <div class="col-4 mb-3 text-center">
-                                    <img src="p1.png" class="rounded-circle" style="width: 50px; height: 50px;"
+                                    <img src="{{ asset('assets/cricket/p1.png') }}" class="rounded-circle" style="width: 50px; height: 50px;"
                                         alt="Player">
                                     <p class="mt-2" style="font-size: 14px;">Player 7</p>
                                 </div>
                                 <div class="col-4 mb-3 text-center">
-                                    <img src="p2.png" class="rounded-circle" style="width: 50px; height: 50px;"
+                                    <img src="{{ asset('assets/cricket/p2.png') }}" class="rounded-circle" style="width: 50px; height: 50px;"
                                         alt="Player">
                                     <p class="mt-2" style="font-size: 14px;">Player 8</p>
                                 </div>
                                 <div class="col-4 mb-3 text-center">
-                                    <img src="p1.png" class="rounded-circle" style="width: 50px; height: 50px;"
+                                    <img src="{{ asset('assets/cricket/p1.png') }}" class="rounded-circle" style="width: 50px; height: 50px;"
                                         alt="Player">
                                     <p class="mt-2" style="font-size: 14px;">Player 9</p>
                                 </div>
                                 <div class="col-4 mb-3 text-center">
-                                    <img src="p2.png" class="rounded-circle" style="width: 50px; height: 50px;"
+                                    <img src="{{ asset('assets/cricket/p2.png') }}" class="rounded-circle" style="width: 50px; height: 50px;"
                                         alt="Player">
                                     <p class="mt-2" style="font-size: 14px;">Player 10</p>
                                 </div>
@@ -440,17 +438,18 @@
     <!-- jQuery, Bootstrap and Slick JS -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous">
-    </script>
+        integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
+        crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
     <script>
-        $(document).ready(function() {
+        $(document).ready(function () {
             $('.player-slider').slick({
                 slidesToShow: 4,
                 slidesToScroll: 1,
                 autoplay: true,
                 autoplaySpeed: 2000,
-                responsive: [{
+                responsive: [
+                    {
                         breakpoint: 992,
                         settings: {
                             slidesToShow: 2,
