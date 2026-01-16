@@ -33,3 +33,6 @@ Route::prefix('/vshpl')->group(function () {
 Route::get('/cricket', function () {
         return view('cricket');
 });
+Route::get('/', function () {
+    return view('home');
+});
