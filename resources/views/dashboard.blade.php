@@ -34,7 +34,7 @@
 
         /* Hero section: Full-screen with background image and overlay */
         .hero {
-            height: 100vh;
+            min-height: 100vh;
             background-image: url('https://www.shutterstock.com/image-photo/generate-image-background-inspired-by-600nw-2600403503.jpg');
             background-size: cover;
             background-position: center;

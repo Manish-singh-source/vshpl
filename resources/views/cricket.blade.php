@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>VSH Cricket Premier League</title>
-    <link rel="icon" type="image/x-icon" href="favicon.png">
+    <link rel="icon" type="image/x-icon" href="{{ asset('assets/favicon.png') }}">
     <!-- Bootstrap 5 CDN -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
@@ -284,7 +284,7 @@
     <!-- Hero Section -->
     <div class="hero">
         <!-- Logo in top right -->
-        <img src="{{ asset('assets/cricket/logo1.jpeg') }}" class="logo" alt="Company Logo">
+        <img src="{{ asset('assets/cricket/png.png') }}" class="logo" alt="Company Logo">
         <!-- Animated Cricket Elements -->
 
         <div class="container mn">
@@ -294,7 +294,7 @@
                         <div style="margin-right: 15px;">
                             <div class="card player-card shadow" style="position: relative;">
                                 <img src="{{ asset('assets/cricket/p1.png') }}" class="card-img-top" alt="Player Image">
-                                <img src="https://sportspundit.com/system/data/8430/new_logo/1088-mumbai-indians.webp?1662030661"
+                                <img src="{{ asset('assets/cricket/teml.png') }}"
                                     alt="Logo"
                                     style="position: absolute; top: 10px; right: 10px; width: 50px; height: auto; z-index: 1;">
                                 <div class="card-body text-center">
@@ -307,7 +307,7 @@
                         <div style="margin-right: 15px;">
                             <div class="card player-card shadow" style="position: relative;">
                                 <img src="{{ asset('assets/cricket/p2.png') }}" class="card-img-top" alt="Player Image">
-                                <img src="https://sportspundit.com/system/data/8430/new_logo/1088-mumbai-indians.webp?1662030661"
+                                <img src="{{ asset('assets/cricket/teml.png') }}"
                                     alt="Logo"
                                     style="position: absolute; top: 10px; right: 10px; width: 50px; height: auto; z-index: 1;">
                                 <div class="card-body text-center">
@@ -320,7 +320,7 @@
                         <div style="margin-right: 15px;">
                             <div class="card player-card shadow" style="position: relative;">
                                 <img src="{{ asset('assets/cricket/p3.png') }}" class="card-img-top" alt="Player Image">
-                                <img src="https://sportspundit.com/system/data/8430/new_logo/1088-mumbai-indians.webp?1662030661"
+                                <img src="{{ asset('assets/cricket/teml.png') }}"
                                     alt="Logo"
                                     style="position: absolute; top: 10px; right: 10px; width: 50px; height: auto; z-index: 1;">
                                 <div class="card-body text-center">
@@ -333,7 +333,7 @@
                         <div>
                             <div class="card player-card shadow" style="position: relative;">
                                 <img src="{{ asset('assets/cricket/p4.png') }}" class="card-img-top" alt="Player Image">
-                                <img src="https://sportspundit.com/system/data/8430/new_logo/1088-mumbai-indians.webp?1662030661"
+                                <img src="{{ asset('assets/cricket/teml.png') }}"
                                     alt="Logo"
                                     style="position: absolute; top: 10px; right: 10px; width: 50px; height: auto; z-index: 1;">
                                 <div class="card-body text-center">
