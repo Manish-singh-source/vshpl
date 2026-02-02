@@ -94,7 +94,7 @@ class RegistrationController extends Controller
         // Validate input
         $validator = Validator::make($request->all(), [
             'group_name' => 'required|string|max:255',
-            'user_name' => 'required|string|max:255',
+            'user_name' => 'required|unique:teams,user_name|string|max:255',
             'profile_image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg',
         ]);
 
