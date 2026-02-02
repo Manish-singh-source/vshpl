@@ -415,7 +415,7 @@
                                     <div class="col-md-3">
                                         <div class="text-center">
                                             <button type="submit" class="btn btn-submit w-100" style="background: linear-gradient(135deg, #374778 0%, #2a3a5c 100%); border-radius: 10px; padding: 0.75rem; font-size: 1rem; font-weight: 600; color: white; margin-top: 10px;">
-                                                <i class="fas fa-check-circle me-2"></i>Join
+                                                <i class="fas fa-check-circle me-2"></i>Add ME!
                                             </button>
                                         </div>
                                     </div>
@@ -445,20 +445,20 @@
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="teamModal1Label">HANUMANJI KI SENA - Team Members</h5>
+                    <h5 class="modal-title" id="teamModal1Label">HANUMANJI KI SENA - Team Player</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     <div class="row">
                         <div class="col-md-4 text-center">
-                            <h6>Team Captain</h6>
-                            <img src="{{ asset('assets/cricket/Untitled design (41).png') }}" class="img-fluid" alt="Team Captain" style="max-width: 150px; border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.2);">
-                            <p class="mt-2" style="color: #374778; font-weight: 500;">Team Leader</p>
+                            <h6>Team Sponsor</h6>
+                            <img src="{{ asset('assets/cricket/Untitled design (41).png') }}" class="img-fluid" alt="Team Sponsor" style="max-width: 150px; border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.2);">
+                            <p class="mt-2" style="color: #374778; font-weight: 500;"></p>
                         </div>
                         <div class="col-md-8">
-                            <h6>Team Members</h6>
+                            <h6>Team Player</h6>
                             <div class="row" id="teamMembers1">
-                                <!-- Team members will be loaded here dynamically -->
+                                <!-- Team Player will be loaded here dynamically -->
                                 <div class="col-12 text-center py-4">
                                     <div class="spinner-border text-primary" role="status">
                                         <span class="visually-hidden">Loading...</span>
@@ -477,20 +477,20 @@
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="teamModal2Label">ARJUN LAKSHYA - Team Members</h5>
+                    <h5 class="modal-title" id="teamModal2Label">ARJUN LAKSHYA - Team Player</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     <div class="row">
                         <div class="col-md-4 text-center">
-                            <h6>Team Captain</h6>
-                            <img src="{{ asset('assets/cricket/Untitled design 42.png') }}" class="img-fluid" alt="Team Captain" style="max-width: 150px; border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.2);">
-                            <p class="mt-2" style="color: #374778; font-weight: 500;">Team Leader</p>
+                            <h6>Team Sponsor</h6>
+                            <img src="{{ asset('assets/cricket/Untitled design 42.png') }}" class="img-fluid" alt="Team Sponsor" style="max-width: 150px; border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.2);">
+                            <p class="mt-2" style="color: #374778; font-weight: 500;"></p>
                         </div>
                         <div class="col-md-8">
-                            <h6>Team Members</h6>
+                            <h6>Team Player</h6>
                             <div class="row" id="teamMembers2">
-                                <!-- Team members will be loaded here dynamically -->
+                                <!-- Team Player will be loaded here dynamically -->
                                 <div class="col-12 text-center py-4">
                                     <div class="spinner-border text-primary" role="status">
                                         <span class="visually-hidden">Loading...</span>
@@ -509,20 +509,20 @@
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="teamModal3Label">VANAR SENA - Team Members</h5>
+                    <h5 class="modal-title" id="teamModal3Label">VANAR SENA - Team Player</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     <div class="row">
                         <div class="col-md-4 text-center">
-                            <h6>Team Captain</h6>
-                            <img src="{{ asset('assets/cricket/Untitled design (43).png') }}" class="img-fluid" alt="Team Captain" style="max-width: 150px; border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.2);">
-                            <p class="mt-2" style="color: #374778; font-weight: 500;">Team Leader</p>
+                            <h6>Team Sponsor</h6>
+                            <img src="{{ asset('assets/cricket/Untitled design (43).png') }}" class="img-fluid" alt="Team Sponsor" style="max-width: 150px; border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.2);">
+                            <p class="mt-2" style="color: #374778; font-weight: 500;"></p>
                         </div>
                         <div class="col-md-8">
-                            <h6>Team Members</h6>
+                            <h6>Team Player</h6>
                             <div class="row" id="teamMembers3">
-                                <!-- Team members will be loaded here dynamically -->
+                                <!-- Team Player will be loaded here dynamically -->
                                 <div class="col-12 text-center py-4">
                                     <div class="spinner-border text-primary" role="status">
                                         <span class="visually-hidden">Loading...</span>
@@ -541,20 +541,20 @@
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="teamModal4Label">KRISHNA AVENGERS - Team Members</h5>
+                    <h5 class="modal-title" id="teamModal4Label">KRISHNA AVENGERS - Team Player</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     <div class="row">
                         <div class="col-md-4 text-center">
-                            <h6>Team Captain</h6>
-                            <img src="{{ asset('assets/cricket/Untitled design (44).png') }}" class="img-fluid" alt="Team Captain" style="max-width: 150px; border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.2);">
-                            <p class="mt-2" style="color: #374778; font-weight: 500;">Team Leader</p>
+                            <h6>Team Sponsor</h6>
+                            <img src="{{ asset('assets/cricket/Untitled design (44).png') }}" class="img-fluid" alt="Team Sponsor" style="max-width: 150px; border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.2);">
+                            <p class="mt-2" style="color: #374778; font-weight: 500;"></p>
                         </div>
                         <div class="col-md-8">
-                            <h6>Team Members</h6>
+                            <h6>Team Player</h6>
                             <div class="row" id="teamMembers4">
-                                <!-- Team members will be loaded here dynamically -->
+                                <!-- Team Player will be loaded here dynamically -->
                                 <div class="col-12 text-center py-4">
                                     <div class="spinner-border text-primary" role="status">
                                         <span class="visually-hidden">Loading...</span>
@@ -609,7 +609,7 @@
             // Show loading spinner
             teamMembersContainer.html('<div class="col-12 text-center py-4"><div class="spinner-border text-primary" role="status"><span class="visually-hidden">Loading...</span></div></div>');
             
-            // Fetch team members from server
+            // Fetch Team Player from server
             $.ajax({
                 url: '{{ route("team.members") }}',
                 type: 'GET',
@@ -634,7 +634,7 @@
                     }
                 },
                 error: function() {
-                    teamMembersContainer.html('<div class="col-12 text-center py-4"><p class="text-danger">Error loading team members.</p></div>');
+                    teamMembersContainer.html('<div class="col-12 text-center py-4"><p class="text-danger">Error loading Team Player.</p></div>');
                 }
             });
         });
