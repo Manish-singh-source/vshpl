@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Laravolt\Avatar\Avatar;
 use App\Models\Registration;
+use App\Models\Team;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\{DB, Log, Validator};
 use Illuminate\Support\Str;
@@ -84,6 +85,74 @@ class RegistrationController extends Controller
             return response()->json([
                 'success' => false,
                 'message' => 'Error: ' . $e->getMessage()
+            ], 500);
+        }
+    }
+
+    public function storeTeam(Request $request)
+    {
+        // Validate input
+        $validator = Validator::make($request->all(), [
+            'group_name' => 'required|string|max:255',
+            'user_name' => 'required|string|max:255',
+            'profile_image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Validation failed',
+                'errors' => $validator->errors()
+            ], 422);
+        }
+
+        try {
+            $profilePath = null;
+            if ($request->hasFile('profile_image') && $request->file('profile_image')->isValid()) {
+                $file = $request->file('profile_image');
+                $filename = time() . '.' . $file->getClientOriginalExtension();
+                $file->move(public_path('uploads/profile_images'), $filename);
+                $profilePath = 'uploads/profile_images/' . $filename;
+            }
+
+            $team = Team::create([
+                'group_name' => $request->group_name,
+                'user_name' => $request->user_name,
+                'profile_image' => $profilePath,
+            ]);
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Successfully joined the team!',
+                'data' => $team
+            ]);
+        } catch (\Exception $e) {
+            Log::error('Team Store Error: ' . $e->getMessage());
+
+            return response()->json([
+                'success' => false,
+                'message' => 'Error: ' . $e->getMessage()
+            ], 500);
+        }
+    }
+
+    public function getTeamMembers(Request $request)
+    {
+        $groupName = $request->group_name;
+        
+        try {
+            $teamMembers = Team::where('group_name', $groupName)->get();
+            
+            return response()->json([
+                'success' => true,
+                'data' => $teamMembers
+            ]);
+        } catch (\Exception $e) {
+            Log::error('Get Team Members Error: ' . $e->getMessage());
+            
+            return response()->json([
+                'success' => false,
+                'message' => 'Error fetching team members'
             ], 500);
         }
     }

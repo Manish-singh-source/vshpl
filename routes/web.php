@@ -31,8 +31,11 @@ Route::prefix('/vshpl')->group(function () {
 });
 
 Route::get('/cricket', function () {
-        return view('cricket');
+        $teams = \App\Models\Team::all();
+        return view('cricket', compact('teams'));
 });
+Route::post('/cricket/join', [RegistrationController::class, 'storeTeam'])->name('team.join');
+Route::get('/cricket/team-members', [RegistrationController::class, 'getTeamMembers'])->name('team.members');
 Route::get('/', function () {
     return view('home');
 });
