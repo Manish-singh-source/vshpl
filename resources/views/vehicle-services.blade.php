@@ -267,7 +267,7 @@
 
     <!-- Logo Section -->
     <div class="logo-container">
-        <img src="{{ asset('assets/favicon.png') }}" alt="VSHPL Logo" class="logo">
+        <img src="{{ asset('assets/main.png') }}" alt="VSHPL Logo" class="logo">
     </div>
 
     <!-- Main Content -->

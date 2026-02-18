@@ -47,6 +47,15 @@ Route::get('/vehicle-services', function () {
 Route::post('/vehicle-services', [VehicleServiceController::class, 'store'])->name('vehicle.services.store');
 Route::get('/vehicle-services/admin', [VehicleServiceController::class, 'index'])->name('vehicle.services.admin');
 Route::delete('/vehicle-services/{vehicleService}', [VehicleServiceController::class, 'destroy'])->name('vehicle.services.destroy');
+Route::get('/holi', function () {
+    return view('holi');
+})->name('holi');
+Route::post('/holi', [App\Http\Controllers\HoliVehicleController::class, 'store'])->name('holi.store');
+Route::get('/holi/admin', [App\Http\Controllers\HoliVehicleController::class, 'admin'])->name('holi.admin');
+Route::delete('/holi/{holiVehicle}', [App\Http\Controllers\HoliVehicleController::class, 'destroy'])->name('holi.destroy');
+Route::get('/debug-holi', function () {
+    return response()->json(App\Models\HoliVehicle::all(), 200, ['Content-Type' => 'application/json; charset=utf-8'], JSON_PRETTY_PRINT);
+});
 
 Route::get('/', function () {
     return view('home');
