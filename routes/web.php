@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\RegistrationController;
+use App\Http\Controllers\VehicleServiceController;
 
 Route::prefix('/vshpl')->group(function () {
     Route::get('/', function () {
@@ -43,6 +44,9 @@ Route::get('/cricket/team-members', [RegistrationController::class, 'getTeamMemb
 Route::get('/vehicle-services', function () {
     return view('vehicle-services');
 })->name('vehicle.services');
+Route::post('/vehicle-services', [VehicleServiceController::class, 'store'])->name('vehicle.services.store');
+Route::get('/vehicle-services/admin', [VehicleServiceController::class, 'index'])->name('vehicle.services.admin');
+Route::delete('/vehicle-services/{vehicleService}', [VehicleServiceController::class, 'destroy'])->name('vehicle.services.destroy');
 
 Route::get('/', function () {
     return view('home');
