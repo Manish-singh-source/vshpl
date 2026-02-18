@@ -28,6 +28,10 @@ Route::prefix('/vshpl')->group(function () {
     Route::get('/admin/export', [RegistrationController::class, 'export'])->name('export.registrations.list');
     Route::put('/update-registration/{id}', [RegistrationController::class, 'update'])->name('update.registration');
     Route::delete('/delete/{id}', [RegistrationController::class, 'destroy'])->name('delete.registration');
+    
+    Route::get('/vehicle-services', function () {
+        return view('vehicle-services');
+    })->name('vshpl.vehicle.services');
 });
 
 Route::get('/cricket', function () {
@@ -36,6 +40,10 @@ Route::get('/cricket', function () {
 });
 Route::post('/cricket/join', [RegistrationController::class, 'storeTeam'])->name('team.join');
 Route::get('/cricket/team-members', [RegistrationController::class, 'getTeamMembers'])->name('team.members');
+Route::get('/vehicle-services', function () {
+    return view('vehicle-services');
+})->name('vehicle.services');
+
 Route::get('/', function () {
     return view('home');
 });
