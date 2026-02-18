@@ -193,8 +193,8 @@
     <div class="container">
         <!-- Header -->
         <div class="header">
-            <h1>Vehicle Services Admin</h1>
-            <p>Manage Vehicle Service Registrations</p>
+            <h1>Vehicle Details</h1>
+            <p>Manage Vehicle  Registrations</p>
         </div>
 
         <!-- Success Message -->
@@ -251,8 +251,8 @@
                 </div>
             @else
                 <div class="empty-state">
-                    <h3>No Vehicle Service Registrations Found</h3>
-                    <p>There are currently no vehicle service registrations in the database.</p>
+                    <h3>No Vehicle  Registrations Found</h3>
+                    <p>There are currently no vehicle  registrations in the database.</p>
                 </div>
             @endif
         </div>

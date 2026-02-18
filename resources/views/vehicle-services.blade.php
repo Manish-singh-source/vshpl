@@ -27,8 +27,8 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: linear-gradient(rgba(10, 25, 47, 0.85), rgba(15, 32, 63, 0.88)), 
-                        url('https://s.alicdn.com/@sc02/kf/Hcd47f16faa5a4474b4c53aff9257adf6o.jpg') center/cover;
+            background: linear-gradient(rgba(10, 25, 47, 0.62), rgba(15, 32, 63, 0.66)), 
+                        url('https://housing-images.n7net.in/4f2250e8/7447c915f230fc0358675273b38911e2/v0/medium/veena_smart_homes-kandivali_west-mumbai-veena_developers.jpeg') center/cover;
             z-index: -1;
             animation: fadeIn 0.8s ease-in;
         }
