@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Holi Vehicle Entry</title>
-    <link rel="icon" href="{{ asset('assets/favicon.png') }}" type="image/png">
+    <title>Vehicle Registration Veena Smart Homes</title>
+    <link rel="icon" href="{{ asset('assets/main.png') }}" type="image/png">
     <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -342,7 +342,8 @@
             <div id="toast" class="toast">Registration captured in frontend demo mode.</div>
 
             <div class="title">
-                <h2>Vehicle Services</h2>
+                <h2>Vehicle Registration</h2>
+                <p class="form-subtitle">Register Your Vehicle for Building Parking</p>
             </div>
 
             <form id="holiVehicleForm" action="{{ route('holi.store') }}" method="post" novalidate>

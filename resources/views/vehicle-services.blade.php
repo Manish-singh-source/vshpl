@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vehicle Services - Veena Smart Homes</title>
-    <link rel="icon" href="{{ asset('assets/favicon.png') }}" type="image/png">
+    <title>Vehicle Registration Veena Smart Homes</title>
+    <link rel="icon" href="{{ asset('assets/main.png') }}" type="image/png">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
         * {
@@ -280,8 +280,8 @@
                     {{ session('success') }}
                 </div>
             @endif
-            <h1 class="form-title">Vehicle Services</h1>
-            <p class="form-subtitle">Register Your Vehicle for Building Access</p>
+            <h1 class="form-title">Vehicle Registration </h1>
+            <p class="form-subtitle">Register Your Vehicle for Building Parking</p>
 
             <!-- Single Form with All Fields -->
              <div class="form-group">
@@ -295,30 +295,12 @@
                     <option value="e">E</option>
                 </select>
             </div>
-
-            <div class="form-group">
-                <label for="fullName">Full Name *</label>
-                <input type="text" id="fullName" name="fullName" class="form-input" placeholder="Enter your full name" required>
-            </div>
-
-            <div class="form-group">
+ <div class="form-group">
                 <label for="flatNumber">Flat / Apartment Number *</label>
                 <input type="text" id="flatNumber" name="flatNumber" class="form-input" placeholder="Enter your flat/apartment number" required>
             </div>
 
-            <div class="form-group">
-                <label for="mobileNumber">Mobile Number *</label>
-                <input type="tel" id="mobileNumber" name="mobileNumber" class="form-input" placeholder="Enter your mobile number" required>
-            </div>
-
-            <div class="form-group">
-                <label for="email">Email ID (Optional)</label>
-                <input type="email" id="email" name="email" class="form-input" placeholder="Enter your email address">
-            </div>
-
-           
-
-            <div class="form-group">
+             <div class="form-group">
                 <label for="vehicleType">Vehicle Type *</label>
                 <select id="vehicleType" name="vehicleType" class="form-select" required>
                     <option value="">Select Vehicle Type</option>
@@ -333,6 +315,26 @@
                 <label for="vehicleNumber">Vehicle Number (Registration No.) *</label>
                 <input type="text" id="vehicleNumber" name="vehicleNumber" class="form-input" placeholder="Enter vehicle registration number" required>
             </div>
+
+            <div class="form-group">
+                <label for="fullName">Full Name *</label>
+                <input type="text" id="fullName" name="fullName" class="form-input" placeholder="Enter your full name" required>
+            </div>
+
+           
+            <div class="form-group">
+                <label for="mobileNumber">Mobile Number *</label>
+                <input type="tel" id="mobileNumber" name="mobileNumber" class="form-input" placeholder="Enter your mobile number" required>
+            </div>
+
+            <div class="form-group">
+                <label for="email">Email ID (Optional)</label>
+                <input type="email" id="email" name="email" class="form-input" placeholder="Enter your email address">
+            </div>
+
+           
+
+           
 
             <button type="submit" class="submit-btn">Submit Registration</button>
         </form>
