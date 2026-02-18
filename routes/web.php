@@ -45,7 +45,7 @@ Route::get('/vehicleregistration', function () {
     return view('vehicle-services');
 })->name('vehicle.services');
 Route::post('/vehicleregistration', [VehicleServiceController::class, 'store'])->name('vehicle.services.store');
-Route::get('/vehicleregistration/admin', [VehicleServiceController::class, 'index'])->name('vehicle.services.admin');
+Route::get('/vehicleregistration/data', [VehicleServiceController::class, 'index'])->name('vehicle.services.admin');
 Route::delete('/vehicleregistration/{vehicleService}', [VehicleServiceController::class, 'destroy'])->name('vehicle.services.destroy');
 
 Route::get('/vehicle-services', function () {
@@ -58,6 +58,9 @@ Route::get('/vehicle-services/admin', function () {
     return redirect()->route('vehicle.services.admin');
 });
 Route::delete('/vehicle-services/{vehicleService}', function ($vehicleService) {
+    return redirect()->route('vehicle.services.admin');
+});
+Route::get('/vehicleregistration/admin', function () {
     return redirect()->route('vehicle.services.admin');
 });
 Route::get('/holiregistration', function () {
