@@ -30,7 +30,7 @@ Route::prefix('/vshpl')->group(function () {
     Route::put('/update-registration/{id}', [RegistrationController::class, 'update'])->name('update.registration');
     Route::delete('/delete/{id}', [RegistrationController::class, 'destroy'])->name('delete.registration');
     
-    Route::get('/vehicle-services', function () {
+    Route::get('/vehicleregistration', function () {
         return view('vehicle-services');
     })->name('vshpl.vehicle.services');
 });
@@ -41,18 +41,44 @@ Route::get('/cricket', function () {
 });
 Route::post('/cricket/join', [RegistrationController::class, 'storeTeam'])->name('team.join');
 Route::get('/cricket/team-members', [RegistrationController::class, 'getTeamMembers'])->name('team.members');
-Route::get('/vehicle-services', function () {
+Route::get('/vehicleregistration', function () {
     return view('vehicle-services');
 })->name('vehicle.services');
-Route::post('/vehicle-services', [VehicleServiceController::class, 'store'])->name('vehicle.services.store');
-Route::get('/vehicle-services/admin', [VehicleServiceController::class, 'index'])->name('vehicle.services.admin');
-Route::delete('/vehicle-services/{vehicleService}', [VehicleServiceController::class, 'destroy'])->name('vehicle.services.destroy');
-Route::get('/holi', function () {
+Route::post('/vehicleregistration', [VehicleServiceController::class, 'store'])->name('vehicle.services.store');
+Route::get('/vehicleregistration/admin', [VehicleServiceController::class, 'index'])->name('vehicle.services.admin');
+Route::delete('/vehicleregistration/{vehicleService}', [VehicleServiceController::class, 'destroy'])->name('vehicle.services.destroy');
+
+Route::get('/vehicle-services', function () {
+    return redirect()->route('vehicle.services');
+});
+Route::post('/vehicle-services', function () {
+    return redirect()->route('vehicle.services');
+});
+Route::get('/vehicle-services/admin', function () {
+    return redirect()->route('vehicle.services.admin');
+});
+Route::delete('/vehicle-services/{vehicleService}', function ($vehicleService) {
+    return redirect()->route('vehicle.services.admin');
+});
+Route::get('/holiregistration', function () {
     return view('holi');
 })->name('holi');
-Route::post('/holi', [App\Http\Controllers\HoliVehicleController::class, 'store'])->name('holi.store');
-Route::get('/holi/admin', [App\Http\Controllers\HoliVehicleController::class, 'admin'])->name('holi.admin');
-Route::delete('/holi/{holiVehicle}', [App\Http\Controllers\HoliVehicleController::class, 'destroy'])->name('holi.destroy');
+Route::post('/holiregistration', [App\Http\Controllers\HoliVehicleController::class, 'store'])->name('holi.store');
+Route::get('/holiregistration/admin', [App\Http\Controllers\HoliVehicleController::class, 'admin'])->name('holi.admin');
+Route::delete('/holiregistration/{holiVehicle}', [App\Http\Controllers\HoliVehicleController::class, 'destroy'])->name('holi.destroy');
+
+Route::get('/holi', function () {
+    return redirect()->route('holi');
+});
+Route::post('/holi', function () {
+    return redirect()->route('holi');
+});
+Route::get('/holi/admin', function () {
+    return redirect()->route('holi.admin');
+});
+Route::delete('/holi/{holiVehicle}', function ($holiVehicle) {
+    return redirect()->route('holi.admin');
+});
 Route::get('/debug-holi', function () {
     return response()->json(App\Models\HoliVehicle::all(), 200, ['Content-Type' => 'application/json; charset=utf-8'], JSON_PRETTY_PRINT);
 });
