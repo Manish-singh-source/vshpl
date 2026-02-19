@@ -340,6 +340,11 @@
 
         <section class="form-card">
             <div id="toast" class="toast">Registration captured in frontend demo mode.</div>
+            @if($errors->any())
+                <div style="margin-bottom: 1rem; padding: 0.82rem 1rem; border-radius: 12px; background: linear-gradient(90deg, #ffe4e4, #fff0f0); border: 1px solid #ef9a9a; font-weight: 700; color: #b71c1c; text-align: center;">
+                    {{ $errors->first() }}
+                </div>
+            @endif
 
             <div class="title">
                 <h2>Vehicle Registration</h2>
@@ -362,6 +367,11 @@
                     </div>
 
                     <div class="field">
+                        <label for="flatNumber">Flat / Apartment Number *</label>
+                        <input type="text" id="flatNumber" name="flatNumber" class="input" placeholder="Enter your flat/apartment number" required>
+                    </div>
+
+                    <div class="field">
                         <label for="vehicleType">Vehicle Type *</label>
                         <select id="vehicleType" name="vehicleType" class="select" required>
                             <option value="">Select Vehicle Type</option>
@@ -372,15 +382,20 @@
                         </select>
                     </div>
 
+                      <div class="field">
+                        <label for="vehicleNumber">Vehicle Number (Registration No.) *</label>
+                        <input type="text" id="vehicleNumber" name="vehicleNumber" class="input" placeholder="Enter vehicle registration number" value="{{ old('vehicleNumber') }}" required>
+                        @error('vehicleNumber')
+                            <small style="color: #b71c1c; font-weight: 700;">{{ $message }}</small>
+                        @enderror
+                    </div>
+                    
                     <div class="field full">
                         <label for="fullName">Full Name *</label>
                         <input type="text" id="fullName" name="fullName" class="input" placeholder="Enter your full name" required>
                     </div>
 
-                    <div class="field">
-                        <label for="flatNumber">Flat / Apartment Number *</label>
-                        <input type="text" id="flatNumber" name="flatNumber" class="input" placeholder="Enter your flat/apartment number" required>
-                    </div>
+                    
 
                     <div class="field">
                         <label for="mobileNumber">Mobile Number *</label>
@@ -392,10 +407,7 @@
                         <input type="email" id="email" name="email" class="input" placeholder="Enter your email address">
                     </div>
 
-                    <div class="field">
-                        <label for="vehicleNumber">Vehicle Number (Registration No.) *</label>
-                        <input type="text" id="vehicleNumber" name="vehicleNumber" class="input" placeholder="Enter vehicle registration number" required>
-                    </div>
+                  
                 </div>
 
                 <button type="submit" class="submit">Celebrate & Submit</button>

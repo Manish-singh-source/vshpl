@@ -28,7 +28,9 @@ class HoliVehicleController extends Controller
             'flatNumber' => 'required|string|max:255',
             'mobileNumber' => 'required|string|max:20',
             'email' => 'nullable|email|max:255',
-            'vehicleNumber' => 'required|string|max:255',
+            'vehicleNumber' => 'required|string|max:255|unique:holi_vehicles,vehicle_number',
+        ], [
+            'vehicleNumber.unique' => 'This vehicle number is already registered. Please enter a unique vehicle number.',
         ]);
 
         HoliVehicle::create([

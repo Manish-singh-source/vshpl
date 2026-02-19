@@ -28,7 +28,9 @@ class VehicleServiceController extends Controller
             'mobileNumber' => 'required|string|max:255',
             'email' => 'nullable|email|max:255',
             'vehicleType' => 'required|string|max:255',
-            'vehicleNumber' => 'required|string|max:255',
+            'vehicleNumber' => 'required|string|max:255|unique:vehicle_services,vehicle_number',
+        ], [
+            'vehicleNumber.unique' => 'This vehicle number is already registered. Please enter a unique vehicle number.',
         ]);
 
         VehicleService::create([

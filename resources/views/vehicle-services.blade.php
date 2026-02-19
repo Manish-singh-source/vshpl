@@ -280,6 +280,11 @@
                     {{ session('success') }}
                 </div>
             @endif
+            @if($errors->any())
+                <div style="background: rgba(244, 67, 54, 0.85); color: white; padding: 1rem; border-radius: 12px; margin-bottom: 1.5rem; text-align: center; font-weight: 600;">
+                    {{ $errors->first() }}
+                </div>
+            @endif
             <h1 class="form-title">Vehicle Registration </h1>
             <p class="form-subtitle">Register Your Vehicle for Building Parking</p>
 
@@ -313,7 +318,12 @@
 
             <div class="form-group">
                 <label for="vehicleNumber">Vehicle Number (Registration No.) *</label>
-                <input type="text" id="vehicleNumber" name="vehicleNumber" class="form-input" placeholder="Enter vehicle registration number" required>
+                <input type="text" id="vehicleNumber" name="vehicleNumber" class="form-input" placeholder="Enter vehicle registration number" value="{{ old('vehicleNumber') }}" required>
+                @error('vehicleNumber')
+                    <small style="color: #ffb3b3; display: block; margin-top: 0.5rem; font-weight: 600;">
+                        {{ $message }}
+                    </small>
+                @enderror
             </div>
 
             <div class="form-group">
