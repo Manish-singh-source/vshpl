@@ -53,4 +53,45 @@ class HoliVehicleController extends Controller
 
         return redirect()->route('holi.admin')->with('success', 'Registration deleted successfully!');
     }
+
+    /**
+     * Export Holi vehicle registrations to CSV.
+     */
+    public function export()
+    {
+        $holiVehicles = HoliVehicle::all();
+        $fileName = "holi-vehicle-registrations.csv";
+        $headers = array(
+            "Content-type"        => "text/csv",
+            "Content-Disposition" => "attachment; filename=$fileName",
+            "Pragma"              => "no-cache",
+            "Cache-Control"       => "must-revalidate, post-check=0, pre-check=0",
+            "Expires"             => "0"
+        );
+
+        $columns = array('ID', 'Wing', 'Full Name', 'Flat Number', 'Mobile Number', 'Email', 'Vehicle Type', 'Vehicle Number', 'Created At');
+
+        $callback = function () use ($holiVehicles, $columns) {
+            $file = fopen('php://output', 'w');
+            fputcsv($file, $columns);
+
+            foreach ($holiVehicles as $holiVehicle) {
+                $row['ID']  = $holiVehicle->id;
+                $row['Wing']  = strtoupper($holiVehicle->wing);
+                $row['Full Name']  = $holiVehicle->full_name;
+                $row['Flat Number']  = $holiVehicle->flat_number;
+                $row['Mobile Number']  = $holiVehicle->mobile_number;
+                $row['Email']  = $holiVehicle->email ?? 'N/A';
+                $row['Vehicle Type']  = ucfirst($holiVehicle->vehicle_type);
+                $row['Vehicle Number']  = $holiVehicle->vehicle_number;
+                $row['Created At']  = $holiVehicle->created_at->format('d-m-Y H:i');
+
+                fputcsv($file, array($row['ID'], $row['Wing'], $row['Full Name'], $row['Flat Number'], $row['Mobile Number'], $row['Email'], $row['Vehicle Type'], $row['Vehicle Number'], $row['Created At']));
+            }
+
+            fclose($file);
+        };
+
+        return response()->stream($callback, 200, $headers);
+    }
 }

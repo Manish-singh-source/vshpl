@@ -47,6 +47,7 @@ Route::get('/vehicleregistration', function () {
 Route::post('/vehicleregistration', [VehicleServiceController::class, 'store'])->name('vehicle.services.store');
 Route::get('/vehicleregistration/data', [VehicleServiceController::class, 'index'])->name('vehicle.services.admin');
 Route::delete('/vehicleregistration/{vehicleService}', [VehicleServiceController::class, 'destroy'])->name('vehicle.services.destroy');
+Route::get('/vehicleregistration/export', [VehicleServiceController::class, 'export'])->name('export.vehicle.services');
 
 Route::get('/vehicle-services', function () {
     return redirect()->route('vehicle.services');
@@ -67,8 +68,9 @@ Route::get('/holiregistration', function () {
     return view('holi');
 })->name('holi');
 Route::post('/holiregistration', [App\Http\Controllers\HoliVehicleController::class, 'store'])->name('holi.store');
-Route::get('/holiregistration/admin', [App\Http\Controllers\HoliVehicleController::class, 'admin'])->name('holi.admin');
+Route::get('/holiregistration/data', [App\Http\Controllers\HoliVehicleController::class, 'admin'])->name('holi.admin');
 Route::delete('/holiregistration/{holiVehicle}', [App\Http\Controllers\HoliVehicleController::class, 'destroy'])->name('holi.destroy');
+Route::get('/holiregistration/export', [App\Http\Controllers\HoliVehicleController::class, 'export'])->name('export.holi.vehicles');
 
 Route::get('/holi', function () {
     return redirect()->route('holi');
@@ -76,7 +78,11 @@ Route::get('/holi', function () {
 Route::post('/holi', function () {
     return redirect()->route('holi');
 });
-Route::get('/holi/admin', function () {
+Route::get('/holi/data', function () {
+    return redirect()->route('holi.admin');
+});
+
+Route::get('/holiregistration/admin', function () {
     return redirect()->route('holi.admin');
 });
 Route::delete('/holi/{holiVehicle}', function ($holiVehicle) {
