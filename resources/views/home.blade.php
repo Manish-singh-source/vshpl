@@ -141,7 +141,7 @@
 
             .column1 {
                 height: 50vh;
-                padding-top: 100px!important;
+                padding-top: 100px !important;
                 padding-bottom: 100px;
             }
 
@@ -158,6 +158,53 @@
             text-decoration: none;
             color: white;
         }
+
+        .site-credit {
+            position: fixed;
+            right: 12px;
+            bottom: 10px;
+            z-index: 20;
+            font-size: 12px;
+            color: #1f2a44;
+            background: rgba(255, 255, 255, 0.78);
+            border: 1px solid rgba(255, 255, 255, 0.95);
+            padding: 6px 11px 5px;
+            border-radius: 12px;
+            backdrop-filter: blur(4px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.18);
+            font-weight: 500;
+            line-height: 1.2;
+        }
+
+        .site-credit a {
+            color: #036;
+            font-weight: 700;
+            text-decoration: none;
+        }
+
+        .site-credit .tagline {
+            display: block;
+            margin-top: 4px;
+            padding-top: 4px;
+            border-top: 1px solid rgba(0, 51, 102, 0.25);
+            font-size: 9px;
+            font-weight: 700;
+            color: #036;
+            letter-spacing: .7px;
+            text-transform: uppercase;
+            background: linear-gradient(1deg, #036 0%, #00d0ff 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        @media (max-width: 768px) {
+            .site-credit {
+                font-size: 11px;
+                right: 8px;
+                bottom: 8px;
+            }
+        }
     </style>
 </head>
 
@@ -167,19 +214,22 @@
     </div>
     <div class="container ">
         <div class="column"
-            style="background-image: url('https://www.shutterstock.com/image-photo/generate-image-background-inspired-by-600nw-2600403503.jpg');">
-            <h1>Register as a Cricket Player</h1>
-            <p>Register now to join our cricket community and showcase your skills. Be part of exciting matches,
-                tournaments, and a growing network of cricket enthusiasts.</p>
-            <button><a href="https://veenasmarthomes.com/vshpl" target="_blank">Register Now</a> </button>
+            style="background-image: url('https://t4.ftcdn.net/jpg/10/33/79/25/360_F_1033792563_Ulsd6x24CQKcztYySpupwIQofgPHcmL1.jpg');">
+            <h1>Celebrate Holi With Us</h1>
+            <p>Join us for a vibrant Holi celebration filled with colors, music, and endless fun. Create beautiful
+                memories with your friends and enjoy the festival in its purest joy.</p>
+            <button><a href="https://veenasmarthomes.com/vshpl" target="_blank">Let's Play Holi</a> </button>
         </div>
-        <div class="column column1"
-            style="background-image: url('https://www.shutterstock.com/image-photo/neon-3d-image-cricket-stadium-600nw-2588682129.jpg');">
+        <div class="column column1" style="background-image: url('assets/team.jpg');">
             <h1>Join Our Sponsor Team</h1>
             <p>Be a valued member of our sponsor team, ready to respond whenever needed. Collaborate, learn, and make an
                 impact.</p>
             <button> <a href="https://veenasmarthomes.com/cricket" target="_blank">Join Now</a></button>
         </div>
+    </div>
+    <div class="site-credit">
+        Designed by <a href="https://technofra.com/" target="_blank">Technofra</a>
+        <span class="tagline">Web Presence &amp; Branding</span>
     </div>
 </body>
 

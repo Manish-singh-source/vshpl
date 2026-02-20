@@ -95,3 +95,13 @@ Route::get('/debug-holi', function () {
 Route::get('/', function () {
     return view('home');
 });
+Route::get('/holicelebration', function () {
+    return view('holicelebration');
+});
+Route::get('/holicelebration1', function () {
+    return view('holicelebration1');
+});
+
+Route::get('/test', function () {
+    return view('test');
+});

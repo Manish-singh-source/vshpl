@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -182,6 +182,53 @@
         label.form-check-label {
             color: #fff;
         }
+    
+        .site-credit {
+            position: fixed;
+            right: 12px;
+            bottom: 10px;
+            z-index: 20;
+            font-size: 12px;
+            color: #1f2a44;
+            background: rgba(255, 255, 255, 0.78);
+            border: 1px solid rgba(255, 255, 255, 0.95);
+            padding: 6px 11px 5px;
+            border-radius: 12px;
+            backdrop-filter: blur(4px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.18);
+            font-weight: 500;
+            line-height: 1.2;
+        }
+
+        .site-credit a {
+            color: #036;
+            font-weight: 700;
+            text-decoration: none;
+        }
+
+        .site-credit .tagline {
+            display: block;
+            margin-top: 4px;
+            padding-top: 4px;
+            border-top: 1px solid rgba(0, 51, 102, 0.25);
+            font-size: 9px;
+            font-weight: 700;
+            color: #036;
+            letter-spacing: .7px;
+            text-transform: uppercase;
+            background: linear-gradient(90deg, #036 0%, #00d0ff 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        @media (max-width: 768px) {
+            .site-credit {
+                font-size: 11px;
+                right: 8px;
+                bottom: 8px;
+            }
+        }
     </style>
 </head>
 
@@ -217,6 +264,11 @@
         </div>
     </div>
 
+    <div class="site-credit">
+        Designed by <a href="https://technofra.com/" target="_blank">Technofra</a>
+        <span class="tagline">Web Presence &amp; Branding</span>
+    </div>
 </body>
 
 </html>
+
