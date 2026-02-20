@@ -64,40 +64,16 @@ Route::delete('/vehicle-services/{vehicleService}', function ($vehicleService) {
 Route::get('/vehicleregistration/admin', function () {
     return redirect()->route('vehicle.services.admin');
 });
-Route::get('/holiregistration', function () {
-    return view('holi');
-})->name('holi');
-Route::post('/holiregistration', [App\Http\Controllers\HoliVehicleController::class, 'store'])->name('holi.store');
-Route::get('/holiregistration/data', [App\Http\Controllers\HoliVehicleController::class, 'admin'])->name('holi.admin');
-Route::delete('/holiregistration/{holiVehicle}', [App\Http\Controllers\HoliVehicleController::class, 'destroy'])->name('holi.destroy');
-Route::get('/holiregistration/export', [App\Http\Controllers\HoliVehicleController::class, 'export'])->name('export.holi.vehicles');
-
-Route::get('/holi', function () {
-    return redirect()->route('holi');
-});
-Route::post('/holi', function () {
-    return redirect()->route('holi');
-});
-Route::get('/holi/data', function () {
-    return redirect()->route('holi.admin');
-});
-
-Route::get('/holiregistration/admin', function () {
-    return redirect()->route('holi.admin');
-});
-Route::delete('/holi/{holiVehicle}', function ($holiVehicle) {
-    return redirect()->route('holi.admin');
-});
-Route::get('/debug-holi', function () {
-    return response()->json(App\Models\HoliVehicle::all(), 200, ['Content-Type' => 'application/json; charset=utf-8'], JSON_PRETTY_PRINT);
-});
-
 Route::get('/', function () {
     return view('home');
 });
 Route::get('/holicelebration', function () {
     return view('holicelebration');
 });
+Route::post('/holicelebration', [App\Http\Controllers\HoliCelebrationController::class, 'store'])->name('holicelebration.store');
+Route::get('/holicelebration/data', [App\Http\Controllers\HoliCelebrationController::class, 'index'])->name('holicelebration.data');
+Route::get('/holicelebration/screenshot/{holiCelebration}', [App\Http\Controllers\HoliCelebrationController::class, 'screenshot'])->name('holicelebration.screenshot');
+Route::get('/holicelebration/export', [App\Http\Controllers\HoliCelebrationController::class, 'export'])->name('holicelebration.export');
 Route::get('/holicelebration1', function () {
     return view('holicelebration1');
 });

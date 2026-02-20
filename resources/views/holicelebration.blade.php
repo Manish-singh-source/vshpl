@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>Holi Celebration 2026 Registration</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -558,7 +559,7 @@
         .holi-play-btn {
             display: inline-block;
             margin-top: 1.2rem;
-            padding: 1rem 2.5rem;
+            padding: 0.78rem 2rem;
             font-family: 'Baloo 2', cursive;
             font-size: 1.35rem;
             font-weight: 700;
@@ -575,6 +576,16 @@
             letter-spacing: 1.2px;
             position: relative;
             overflow: hidden;
+        }
+
+        .holi-play-btn .sub-text {
+            display: block;
+            font-size: 0.72rem;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 600;
+            letter-spacing: 0.4px;
+            margin-top: 2px;
+            text-transform: none;
         }
 
         .holi-play-btn::before {
@@ -793,7 +804,7 @@
                 <div class="timer-box"><b id="seconds">00</b><span>Seconds</span></div>
             </section>
 
-            <button class="holi-play-btn" id="openHoliFormBtn">Let's Play Holi</button>
+            <button class="holi-play-btn" id="openHoliFormBtn">Let's Play Holi <span class="sub-text">together.</span></button>
         </header>
 
         <footer>
@@ -827,7 +838,8 @@
                 <p>Join us for a colorful celebration & fill in your details</p>
             </div>
 
-            <form id="quickHoliForm" class="holi-quick-form" novalidate>
+            <form id="quickHoliForm" class="holi-quick-form" action="{{ route('holicelebration.store') }}" method="POST" enctype="multipart/form-data" novalidate>
+                @csrf
                 <div class="form-grid">
                     <fieldset class="form-group radio-wrap full">
                         <legend>I will be part of the Holi Celebration *</legend>
@@ -851,32 +863,39 @@
                                     <option value="D">D</option>
                                     <option value="E">E</option>
                                 </select>
-                                <small class="error" data-error-for="quickWing"></small>
+                                <small class="error" data-error-for="wing"></small>
                             </div>
 
                             <div class="form-group">
                                 <input class="field" type="text" id="quickFlatNumber" name="flatNumber" placeholder=" " required>
                                 <label class="floating" for="quickFlatNumber">Flat Number *</label>
-                                <small class="error" data-error-for="quickFlatNumber"></small>
+                                <small class="error" data-error-for="flatNumber"></small>
                             </div>
 
                             <div class="form-group">
                                 <input class="field" type="text" id="quickFullName" name="fullName" placeholder=" " required>
                                 <label class="floating" for="quickFullName">Name *</label>
-                                <small class="error" data-error-for="quickFullName"></small>
+                                <small class="error" data-error-for="fullName"></small>
                             </div>
 
                             <div class="form-group">
                                 <input class="field" type="tel" id="quickMobileNumber" name="mobileNumber" placeholder=" " required>
                                 <label class="floating" for="quickMobileNumber">Mobile Number *</label>
-                                <small class="error" data-error-for="quickMobileNumber"></small>
+                                <small class="error" data-error-for="mobileNumber"></small>
                             </div>
 
                             <div class="form-group">
-                                <input class="field" type="number" id="quickCoupons" name="coupons" min="1" max="10" placeholder=" " required>
+                                <input class="field" type="email" id="quickEmail" name="email" placeholder=" ">
+                                <label class="floating" for="quickEmail">Email ID</label>
+                                <small class="error" data-error-for="email"></small>
+                            </div>
+
+                            <div class="form-group">
+                                <input class="field" type="number" id="quickCoupons" name="coupons" min="1" max="20" placeholder=" " required>
                                 <label class="floating" for="quickCoupons">Number of Coupons *</label>
                                 <small class="price-note">Price: Rs. 300 per coupon</small>
-                                <small class="error" data-error-for="quickCoupons"></small>
+                                <small class="price-note" id="totalAmountDisplay">Total Amount: Rs. 0</small>
+                                <small class="error" data-error-for="coupons"></small>
                             </div>
 
                             <fieldset class="form-group radio-wrap full">
@@ -933,6 +952,7 @@
         const openHoliFormBtn = document.getElementById('openHoliFormBtn');
         const closeHoliFormBtn = document.getElementById('closeHoliFormBtn');
         const quickHoliForm = document.getElementById('quickHoliForm');
+        const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
 
         const errorMap = {
             participationStatus: 'Please choose whether you are in or out.',
@@ -940,7 +960,8 @@
             fullName: 'Please enter your name.',
             flatNumber: 'Please enter your flat number.',
             mobileNumber: 'Please enter a valid 10-digit mobile number.',
-            coupons: 'Please enter number of coupons between 1 and 10.',
+            email: 'Please enter a valid email address.',
+            coupons: 'Please enter number of coupons between 1 and 20.',
             paymentMode: 'Please select payment mode.',
             paymentScreenshot: 'Please upload payment screenshot for online payment.',
             paymentDone: 'Please confirm payment is done for online mode.'
@@ -999,6 +1020,8 @@
         const paymentScreenshotInput = document.getElementById('paymentScreenshot');
         const paymentDoneInput = document.getElementById('paymentDone');
         const paymentModeInputs = quickHoliForm.querySelectorAll('input[name="paymentMode"]');
+        const couponsInput = document.getElementById('quickCoupons');
+        const totalAmountDisplay = document.getElementById('totalAmountDisplay');
 
         function updatePaymentSection() {
             const participationStatus = quickHoliForm.querySelector('input[name="participationStatus"]:checked');
@@ -1020,11 +1043,28 @@
             setError('paymentDone', '');
         }
 
+        function updateTotalAmount() {
+            const coupons = Number(couponsInput.value);
+            const total = Number.isNaN(coupons) || coupons < 1 ? 0 : coupons * 300;
+            totalAmountDisplay.textContent = `Total Amount: Rs. ${total}`;
+        }
+
         participationInputs.forEach((radio) => {
             radio.addEventListener('change', () => {
                 participationDetails.style.display = radio.value === 'IN' ? 'block' : 'none';
                 setError('participationStatus', '');
                 if (radio.value === 'OUT') {
+                    quickHoliForm.querySelector('#quickWing').value = '';
+                    quickHoliForm.querySelector('#quickFlatNumber').value = '';
+                    quickHoliForm.querySelector('#quickFullName').value = '';
+                    quickHoliForm.querySelector('#quickMobileNumber').value = '';
+                    quickHoliForm.querySelector('#quickEmail').value = '';
+                    quickHoliForm.querySelector('#quickCoupons').value = '';
+                    paymentModeInputs.forEach((input) => {
+                        input.checked = false;
+                    });
+                    paymentDoneInput.checked = false;
+                    paymentScreenshotInput.value = '';
                     quickHoliForm.querySelectorAll('.error').forEach((el) => {
                         if (el.dataset.errorFor !== 'participationStatus') {
                             el.textContent = '';
@@ -1032,6 +1072,7 @@
                     });
                 }
                 updatePaymentSection();
+                updateTotalAmount();
             });
         });
 
@@ -1041,6 +1082,9 @@
             });
         });
 
+        couponsInput.addEventListener('input', updateTotalAmount);
+        updateTotalAmount();
+
         // Quick Holi Form Validation and Submit
         quickHoliForm.addEventListener('submit', async (e) => {
             e.preventDefault();
@@ -1049,6 +1093,7 @@
             const fullName = quickHoliForm.querySelector('#quickFullName').value.trim();
             const flatNumber = quickHoliForm.querySelector('#quickFlatNumber').value.trim();
             const mobileNumber = quickHoliForm.querySelector('#quickMobileNumber').value.trim();
+            const email = quickHoliForm.querySelector('#quickEmail').value.trim();
             const coupons = Number(quickHoliForm.querySelector('#quickCoupons').value);
             const participationStatus = quickHoliForm.querySelector('input[name="participationStatus"]:checked');
             const paymentMode = quickHoliForm.querySelector('input[name="paymentMode"]:checked');
@@ -1065,27 +1110,32 @@
 
             if (participationStatus && participationStatus.value === 'IN') {
                 if (!wing) {
-                    quickHoliForm.querySelector('[data-error-for="quickWing"]').textContent = errorMap.wing;
+                    quickHoliForm.querySelector('[data-error-for="wing"]').textContent = errorMap.wing;
                     isValid = false;
                 }
 
                 if (!fullName) {
-                    quickHoliForm.querySelector('[data-error-for="quickFullName"]').textContent = errorMap.fullName;
+                    quickHoliForm.querySelector('[data-error-for="fullName"]').textContent = errorMap.fullName;
                     isValid = false;
                 }
 
                 if (!flatNumber) {
-                    quickHoliForm.querySelector('[data-error-for="quickFlatNumber"]').textContent = errorMap.flatNumber;
+                    quickHoliForm.querySelector('[data-error-for="flatNumber"]').textContent = errorMap.flatNumber;
                     isValid = false;
                 }
 
                 if (!/^\d{10}$/.test(mobileNumber)) {
-                    quickHoliForm.querySelector('[data-error-for="quickMobileNumber"]').textContent = errorMap.mobileNumber;
+                    quickHoliForm.querySelector('[data-error-for="mobileNumber"]').textContent = errorMap.mobileNumber;
                     isValid = false;
                 }
 
-                if (Number.isNaN(coupons) || coupons < 1 || coupons > 10) {
-                    quickHoliForm.querySelector('[data-error-for="quickCoupons"]').textContent = errorMap.coupons;
+                if (email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+                    quickHoliForm.querySelector('[data-error-for="email"]').textContent = errorMap.email;
+                    isValid = false;
+                }
+
+                if (Number.isNaN(coupons) || coupons < 1 || coupons > 20) {
+                    quickHoliForm.querySelector('[data-error-for="coupons"]').textContent = errorMap.coupons;
                     isValid = false;
                 }
 
@@ -1107,15 +1157,44 @@
 
             if (!isValid) return;
 
-            // Close modal and reset
-            closeHoliForm();
-            quickHoliForm.reset();
-            participationDetails.style.display = 'none';
-            updatePaymentSection();
-            
-            // Show success popup
-            createConfetti();
-            popup.classList.add('active');
+            const formData = new FormData(quickHoliForm);
+            formData.append('totalAmount', String(Number.isNaN(coupons) ? 0 : coupons * 300));
+
+            try {
+                const response = await fetch(quickHoliForm.action, {
+                    method: 'POST',
+                    headers: {
+                        'X-CSRF-TOKEN': csrfToken,
+                        'Accept': 'application/json'
+                    },
+                    body: formData
+                });
+
+                if (response.ok) {
+                    closeHoliForm();
+                    quickHoliForm.reset();
+                    participationDetails.style.display = 'none';
+                    updatePaymentSection();
+                    updateTotalAmount();
+                    createConfetti();
+                    popup.classList.add('active');
+                    return;
+                }
+
+                if (response.status === 422) {
+                    const data = await response.json();
+                    const errors = data.errors || {};
+                    Object.keys(errors).forEach((field) => {
+                        const message = Array.isArray(errors[field]) ? errors[field][0] : errors[field];
+                        setError(field, message);
+                    });
+                    return;
+                }
+
+                alert('Something went wrong. Please try again.');
+            } catch (error) {
+                alert('Unable to submit form right now. Please try again.');
+            }
         });
 
         function setError(name, message) {
