@@ -427,6 +427,25 @@
             -webkit-text-fill-color: transparent;
         }
 
+        .music-toggle {
+            position: fixed;
+            left: 12px;
+            bottom: 10px;
+            z-index: 21;
+            width: 42px;
+            height: 42px;
+            border: 1px solid rgba(255, 255, 255, 0.95);
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.86);
+            color: #036;
+            font-size: 18px;
+            cursor: pointer;
+            display: grid;
+            place-items: center;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.18);
+            backdrop-filter: blur(4px);
+        }
+
         .socials {
             margin: .45rem 0;
             display: flex;
@@ -730,6 +749,14 @@
                 right: 8px;
                 bottom: 8px;
             }
+
+            .music-toggle {
+                left: 8px;
+                bottom: 8px;
+                width: 38px;
+                height: 38px;
+                font-size: 16px;
+            }
         }
         canvas {
 	position: fixed;
@@ -889,11 +916,17 @@
         Designed by <a href="https://technofra.com/" target="_blank">Technofra</a>
         <span class="tagline">Web Presence &amp; Branding</span>
     </div>
+    <audio id="bgMusic" loop preload="auto">
+        <source src="{{ asset('assets/letsplay.mpeg') }}" type="audio/mpeg">
+    </audio>
+    <button id="musicToggle" class="music-toggle" type="button" aria-label="Toggle background music">🔊</button>
 
     <script>
         const popup = document.getElementById('successPopup');
         const closePopup = document.getElementById('closePopup');
         const confettiLayer = document.getElementById('confettiLayer');
+        const bgMusic = document.getElementById('bgMusic');
+        const musicToggle = document.getElementById('musicToggle');
         
         // Holi Form Modal Elements
         const holiFormModal = document.getElementById('holiFormModal');
@@ -926,6 +959,33 @@
 
         openHoliFormBtn.addEventListener('click', openHoliForm);
         closeHoliFormBtn.addEventListener('click', closeHoliForm);
+
+        bgMusic.volume = 0.35;
+
+        function setMusicIcon() {
+            musicToggle.textContent = bgMusic.paused ? '🔇' : '🔊';
+            musicToggle.setAttribute('aria-label', bgMusic.paused ? 'Turn on background music' : 'Turn off background music');
+        }
+
+        function tryAutoPlayMusic() {
+            bgMusic.play().then(setMusicIcon).catch(() => setMusicIcon());
+        }
+
+        tryAutoPlayMusic();
+
+        document.addEventListener('click', function firstInteractionStartMusic() {
+            if (bgMusic.paused) tryAutoPlayMusic();
+            document.removeEventListener('click', firstInteractionStartMusic);
+        }, { once: true });
+
+        musicToggle.addEventListener('click', () => {
+            if (bgMusic.paused) {
+                bgMusic.play().then(setMusicIcon).catch(() => setMusicIcon());
+                return;
+            }
+            bgMusic.pause();
+            setMusicIcon();
+        });
 
         holiFormModal.addEventListener('click', (e) => {
             if (e.target === holiFormModal) {
