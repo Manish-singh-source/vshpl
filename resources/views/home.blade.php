@@ -210,15 +210,15 @@
 
 <body>
     <div class="header">
-        <img src="{{ asset('assets/png.png') }}" alt="Logo" class="logo">
+        <img src="{{ asset('assets/main.png') }}" alt="Logo" class="logo">
     </div>
-    <div class="container ">
+    <div class="container">
         <div class="column"
             style="background-image: url('https://t4.ftcdn.net/jpg/10/33/79/25/360_F_1033792563_Ulsd6x24CQKcztYySpupwIQofgPHcmL1.jpg');">
             <h1>Celebrate Holi With Us</h1>
             <p>Join us for a vibrant Holi celebration filled with colors, music, and endless fun. Create beautiful
                 memories with your friends and enjoy the festival in its purest joy.</p>
-            <button><a href="https://veenasmarthomes.com//holicelebration" target="_blank">Let's Play Holi</a> </button>
+            <button><a href="https://veenasmarthomes.com/holicelebration" target="_blank">Let's Play Holi</a> </button>
         </div>
         <div class="column column1" style="background-image: url('assets/team.jpg');">
             <h1>Join Our Sponsor Team</h1>
