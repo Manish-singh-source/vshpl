@@ -177,4 +177,11 @@ class HoliCelebrationController extends Controller
 
         return response()->stream($callback, 200, $headers);
     }
+
+    public function destroy(HoliCelebration $holiCelebration)
+    {
+        $holiCelebration->delete();
+
+        return redirect()->route('holicelebration.data')->with('success', 'Record deleted successfully.');
+    }
 }

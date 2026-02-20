@@ -72,6 +72,7 @@ Route::get('/holicelebration', function () {
 });
 Route::post('/holicelebration', [App\Http\Controllers\HoliCelebrationController::class, 'store'])->name('holicelebration.store');
 Route::get('/holicelebration/data', [App\Http\Controllers\HoliCelebrationController::class, 'index'])->name('holicelebration.data');
+Route::delete('/holicelebration/{holiCelebration}', [App\Http\Controllers\HoliCelebrationController::class, 'destroy'])->name('holicelebration.destroy');
 Route::get('/holicelebration/screenshot/{holiCelebration}', [App\Http\Controllers\HoliCelebrationController::class, 'screenshot'])->name('holicelebration.screenshot');
 Route::get('/holicelebration/export', [App\Http\Controllers\HoliCelebrationController::class, 'export'])->name('holicelebration.export');
 Route::get('/holicelebration1', function () {

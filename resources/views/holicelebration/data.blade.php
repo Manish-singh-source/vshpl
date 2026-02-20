@@ -34,6 +34,12 @@
                     </div>
                 </div>
 
+                @if(session('success'))
+                    <div class="alert alert-success py-2">
+                        {{ session('success') }}
+                    </div>
+                @endif
+
                 <div class="table-responsive">
                     <table class="table table-bordered table-striped align-middle mb-0">
                         <thead class="table-dark">
@@ -50,6 +56,7 @@
                                 <th>Payment Done</th>
                                 <th>Screenshot</th>
                                 <th>Created At</th>
+                                <th>Action</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -73,10 +80,17 @@
                                         @endif
                                     </td>
                                     <td>{{ $record->created_at?->format('d-m-Y H:i') }}</td>
+                                    <td>
+                                        <form action="{{ route('holicelebration.destroy', $record) }}" method="POST" onsubmit="return confirm('Are you sure you want to delete this record?');">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                                        </form>
+                                    </td>
                                 </tr>
                             @empty
                                 <tr>
-                                    <td colspan="12" class="text-center">No records found.</td>
+                                    <td colspan="13" class="text-center">No records found.</td>
                                 </tr>
                             @endforelse
                         </tbody>
