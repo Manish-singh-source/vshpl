@@ -218,7 +218,7 @@
             <h1>Celebrate Holi With Us</h1>
             <p>Join us for a vibrant Holi celebration filled with colors, music, and endless fun. Create beautiful
                 memories with your friends and enjoy the festival in its purest joy.</p>
-            <button><a href="https://veenasmarthomes.com/vshpl" target="_blank">Let's Play Holi</a> </button>
+            <button><a href="https://veenasmarthomes.com//holicelebration" target="_blank">Let's Play Holi</a> </button>
         </div>
         <div class="column column1" style="background-image: url('assets/team.jpg');">
             <h1>Join Our Sponsor Team</h1>

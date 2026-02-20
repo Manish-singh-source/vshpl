@@ -51,7 +51,7 @@ Route::get('/vehicleregistration/export', [VehicleServiceController::class, 'exp
 
 Route::get('/vehicle-services', function () {
     return redirect()->route('vehicle.services');
-});
+}); 
 Route::post('/vehicle-services', function () {
     return redirect()->route('vehicle.services');
 });
