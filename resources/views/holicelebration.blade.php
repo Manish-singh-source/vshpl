@@ -867,6 +867,9 @@
                                 <input class="field" type="file" id="paymentScreenshot" name="paymentScreenshot" accept="image/*">
                                 <label class="floating" for="paymentScreenshot">Upload Payment Screenshot *</label>
                                 <small class="error" data-error-for="paymentScreenshot"></small>
+                            </div>
+
+                            <div class="form-group full">
                                 <label class="chip" style="margin-top: .35rem;">
                                     <input type="checkbox" id="paymentDone" name="paymentDone">
                                     Payment Done
@@ -953,7 +956,6 @@
             paymentScreenshotInput.required = false;
             paymentScreenshotInput.value = '';
             paymentDoneInput.required = false;
-            paymentDoneInput.checked = false;
             setError('paymentScreenshot', '');
             setError('paymentDone', '');
         }
