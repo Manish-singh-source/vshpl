@@ -110,6 +110,17 @@
         transform: scale(1.05);
     }
 
+    /* Hide video controls in gallery thumbnails */
+    .image-box video::-webkit-media-controls {
+        display: none !important;
+    }
+    .image-box video::-moz-media-controls {
+        display: none !important;
+    }
+    .image-box video::-webkit-media-controls-enclosure {
+        display: none !important;
+    }
+
     .video-icon {
         position: absolute;
         top: 50%;
@@ -274,8 +285,7 @@
 
         button {
             font-size: 14px;
-            padding: 10px 12px;
-            width: 100%;
+            padding: 10px 12px;            
         }
 
         .nav {
@@ -324,8 +334,7 @@
 
         button {
             font-size: 12px;
-            padding: 8px 10px;
-            width: 100%;
+            padding: 8px 10px;            
             text-align: center;
         }
 
@@ -367,7 +376,7 @@
 
 <body>
 
-    <h1 class="title">Player Album</h1>
+    <h1 class="title">Modern Gallery</h1>
 
     <div class="buttons">
         <button onclick="filterImages('all')">All</button>
@@ -378,176 +387,176 @@
     </div>
 
     <div class="gallery">
-        <div class="image-box children">
-            <img src="{{ asset('/assets/players/c1.png') }}" onclick="openLightbox(0)">
+        <div class="image-box children" onclick="openLightbox(this)">
+            <img src="{{ asset('/assets/players/c1.png') }}">
         </div>
-        <div class="image-box children">
-            <img src="{{ asset('/assets/players/c2.png') }}" onclick="openLightbox(1)">
+        <div class="image-box children" onclick="openLightbox(this)">
+            <img src="{{ asset('/assets/players/c2.png') }}">
         </div>
-        <div class="image-box children">
-            <img src="{{ asset('/assets/players/c3.png') }}" onclick="openLightbox(1)">
+        <div class="image-box children" onclick="openLightbox(this)">
+            <img src="{{ asset('/assets/players/c3.png') }}">
         </div>
-        <div class="image-box children">
-            <img src="{{ asset('/assets/players/c4.png') }}" onclick="openLightbox(1)">
+        <div class="image-box children" onclick="openLightbox(this)">
+            <img src="{{ asset('/assets/players/c4.png') }}">
         </div>
-        <div class="image-box children">
-            <img src="{{ asset('/assets/players/c5.png') }}" onclick="openLightbox(1)">
+        <div class="image-box children" onclick="openLightbox(this)">
+            <img src="{{ asset('/assets/players/c5.png') }}">
         </div>
-        <div class="image-box children">
-            <img src="{{ asset('/assets/players/c6.png') }}" onclick="openLightbox(1)">
+        <div class="image-box children" onclick="openLightbox(this)">
+            <img src="{{ asset('/assets/players/c6.png') }}">
         </div>
-        <div class="image-box children">
-            <img src="{{ asset('/assets/players/c7.png') }}" onclick="openLightbox(1)">
+        <div class="image-box children" onclick="openLightbox(this)">
+            <img src="{{ asset('/assets/players/c7.png') }}">
         </div>
-        <div class="image-box children">
-            <img src="{{ asset('/assets/players/c8.png') }}" onclick="openLightbox(1)">
+        <div class="image-box children" onclick="openLightbox(this)">
+            <img src="{{ asset('/assets/players/c8.png') }}">
         </div>
-        <div class="image-box children">
-            <img src="{{ asset('/assets/players/c9.png') }}" onclick="openLightbox(2)">
+        <div class="image-box children" onclick="openLightbox(this)">
+            <img src="{{ asset('/assets/players/c9.png') }}">
         </div>
-        <div class="image-box children">
-            <img src="{{ asset('/assets/players/c10.png') }}" onclick="openLightbox(3)">
+        <div class="image-box children" onclick="openLightbox(this)">
+            <img src="{{ asset('/assets/players/c10.png') }}">
         </div>
-        <div class="image-box younger">
-            <img src="{{ asset('/assets/players/y1.png') }}" onclick="openLightbox(4)">
+        <div class="image-box younger" onclick="openLightbox(this)">
+            <img src="{{ asset('/assets/players/y1.png') }}">
         </div>
-        <div class="image-box younger">
-            <img src="{{ asset('/assets/players/y2.png') }}" onclick="openLightbox(4)">
+        <div class="image-box younger" onclick="openLightbox(this)">
+            <img src="{{ asset('/assets/players/y2.png') }}">
         </div>
-        <div class="image-box younger">
-            <img src="{{ asset('/assets/players/y3.png') }}" onclick="openLightbox(4)">
+        <div class="image-box younger" onclick="openLightbox(this)">
+            <img src="{{ asset('/assets/players/y3.png') }}">
         </div>
-        <div class="image-box younger">
-            <img src="{{ asset('/assets/players/y4.png') }}" onclick="openLightbox(4)">
+        <div class="image-box younger" onclick="openLightbox(this)">
+            <img src="{{ asset('/assets/players/y4.png') }}">
         </div>
-        <div class="image-box younger">
-            <img src="{{ asset('/assets/players/y5.png') }}" onclick="openLightbox(4)">
+        <div class="image-box younger" onclick="openLightbox(this)">
+            <img src="{{ asset('/assets/players/y5.png') }}">
         </div>
-        <div class="image-box younger">
-            <img src="{{ asset('/assets/players/y6.png') }}" onclick="openLightbox(4)">
+        <div class="image-box younger" onclick="openLightbox(this)">
+            <img src="{{ asset('/assets/players/y6.png') }}">
         </div>
-        <div class="image-box younger">
-            <img src="{{ asset('/assets/players/y7.png') }}" onclick="openLightbox(4)">
+        <div class="image-box younger" onclick="openLightbox(this)">
+            <img src="{{ asset('/assets/players/y7.png') }}">
         </div>
-        <div class="image-box younger">
-            <img src="{{ asset('/assets/players/y8.png') }}" onclick="openLightbox(4)">
+        <div class="image-box younger" onclick="openLightbox(this)">
+            <img src="{{ asset('/assets/players/y8.png') }}">
         </div>
-        <div class="image-box younger">
-            <img src="{{ asset('/assets/players/y9.png') }}" onclick="openLightbox(4)">
+        <div class="image-box younger" onclick="openLightbox(this)">
+            <img src="{{ asset('/assets/players/y9.png') }}">
         </div>
-        <div class="image-box younger">
-            <img src="{{ asset('/assets/players/y10.png') }}" onclick="openLightbox(4)">
+        <div class="image-box younger" onclick="openLightbox(this)">
+            <img src="{{ asset('/assets/players/y10.png') }}">
         </div>
-        <div class="image-box younger">
-            <img src="{{ asset('/assets/players/y11.png') }}" onclick="openLightbox(4)">
+        <div class="image-box younger" onclick="openLightbox(this)">
+            <img src="{{ asset('/assets/players/y11.png') }}">
         </div>
-        <div class="image-box younger">
-            <img src="{{ asset('/assets/players/y12.png') }}" onclick="openLightbox(4)">
+        <div class="image-box younger" onclick="openLightbox(this)">
+            <img src="{{ asset('/assets/players/y12.png') }}">
         </div>
-        <div class="image-box younger">
-            <img src="{{ asset('/assets/players/y13.png') }}" onclick="openLightbox(4)">
+        <div class="image-box younger" onclick="openLightbox(this)">
+            <img src="{{ asset('/assets/players/y13.png') }}">
         </div>
-        <div class="image-box younger">
-            <img src="{{ asset('/assets/players/y14.png') }}" onclick="openLightbox(4)">
+        <div class="image-box younger" onclick="openLightbox(this)">
+            <img src="{{ asset('/assets/players/y14.png') }}">
         </div>
-        <div class="image-box younger">
-            <img src="{{ asset('/assets/players/y15.png') }}" onclick="openLightbox(4)">
+        <div class="image-box younger" onclick="openLightbox(this)">
+            <img src="{{ asset('/assets/players/y15.png') }}">
         </div>
-        <div class="image-box younger">
-            <img src="{{ asset('/assets/players/y16.png') }}" onclick="openLightbox(4)">
+        <div class="image-box younger" onclick="openLightbox(this)">
+            <img src="{{ asset('/assets/players/y16.png') }}">
         </div>
-        <div class="image-box younger">
-            <img src="{{ asset('/assets/players/y17.png') }}" onclick="openLightbox(4)">
+        <div class="image-box younger" onclick="openLightbox(this)">
+            <img src="{{ asset('/assets/players/y17.png') }}">
         </div>
-        <div class="image-box younger">
-            <img src="{{ asset('/assets/players/y18.png') }}" onclick="openLightbox(4)">
+        <div class="image-box younger" onclick="openLightbox(this)">
+            <img src="{{ asset('/assets/players/y18.png') }}">
         </div>
-        <div class="image-box younger">
-            <img src="{{ asset('/assets/players/y19.png') }}" onclick="openLightbox(4)">
+        <div class="image-box younger" onclick="openLightbox(this)">
+            <img src="{{ asset('/assets/players/y19.png') }}">
         </div>
-        <div class="image-box younger">
-            <img src="{{ asset('/assets/players/y20.png') }}" onclick="openLightbox(4)">
+        <div class="image-box younger" onclick="openLightbox(this)">
+            <img src="{{ asset('/assets/players/y20.png') }}">
         </div>
-        <div class="image-box younger">
-            <img src="{{ asset('/assets/players/y21.png') }}" onclick="openLightbox(4)">
+        <div class="image-box younger" onclick="openLightbox(this)">
+            <img src="{{ asset('/assets/players/y21.png') }}">
         </div>
-        <div class="image-box younger">
-            <img src="{{ asset('/assets/players/y23.png') }}" onclick="openLightbox(4)">
+        <div class="image-box younger" onclick="openLightbox(this)">
+            <img src="{{ asset('/assets/players/y23.png') }}">
         </div>
-        <div class="image-box younger">
-            <img src="{{ asset('/assets/players/y24.png') }}" onclick="openLightbox(4)">
+        <div class="image-box younger" onclick="openLightbox(this)">
+            <img src="{{ asset('/assets/players/y24.png') }}">
         </div>
-        <div class="image-box younger">
-            <img src="{{ asset('/assets/players/y25.png') }}" onclick="openLightbox(4)">
+        <div class="image-box younger" onclick="openLightbox(this)">
+            <img src="{{ asset('/assets/players/y25.png') }}">
         </div>
-        <div class="image-box younger">
-            <img src="{{ asset('/assets/players/y26.png') }}" onclick="openLightbox(4)">
+        <div class="image-box younger" onclick="openLightbox(this)">
+            <img src="{{ asset('/assets/players/y26.png') }}">
         </div>
-        <div class="image-box winner">
-            <img src="{{ asset('/assets/players/w1.png') }}" onclick="openLightbox(5)">
+        <div class="image-box winner" onclick="openLightbox(this)">
+            <img src="{{ asset('/assets/players/w1.png') }}">
         </div>
-        <div class="image-box winner">
-            <img src="{{ asset('/assets/players/w2.png') }}" onclick="openLightbox(5)">
+        <div class="image-box winner" onclick="openLightbox(this)">
+            <img src="{{ asset('/assets/players/w2.png') }}">
         </div>
-        <div class="image-box winner">
-            <img src="{{ asset('/assets/players/w3.png') }}" onclick="openLightbox(5)">
+        <div class="image-box winner" onclick="openLightbox(this)">
+            <img src="{{ asset('/assets/players/w3.png') }}">
         </div>
-        <div class="image-box winner">
-            <img src="{{ asset('/assets/players/w4.png') }}" onclick="openLightbox(5)">
+        <div class="image-box winner" onclick="openLightbox(this)">
+            <img src="{{ asset('/assets/players/w4.png') }}">
         </div>
         
         <!-- Video Gallery Items -->
-        <div class="image-box video ">
+        <div class="image-box video" onclick="openLightbox(this)">
             <span class="video-icon">▶</span>
-            <video controls onclick="openLightboxVideo(0)">
+            <video >
                 <source src="{{ asset('/assets/players/cv1.mp4') }}" type="video/mp4">
             </video>
         </div>
-        <div class="image-box video">
+        <div class="image-box video" onclick="openLightbox(this)">
             <span class="video-icon">▶</span>
-            <video controls onclick="openLightboxVideo(1)">
+            <video >
                 <source src="{{ asset('/assets/players/cv2.mp4') }}" type="video/mp4">
             </video>
         </div>
-        <div class="image-box video">
+        <div class="image-box video" onclick="openLightbox(this)">
             <span class="video-icon">▶</span>
-            <video controls onclick="openLightboxVideo(1)">
+            <video >
                 <source src="{{ asset('/assets/players/yv1.mp4') }}" type="video/mp4">
             </video>
         </div>
-        <div class="image-box video">
+        <div class="image-box video" onclick="openLightbox(this)">
             <span class="video-icon">▶</span>
-            <video controls onclick="openLightboxVideo(1)">
+            <video >
                 <source src="{{ asset('/assets/players/yv2.mp4') }}" type="video/mp4">
             </video>
         </div>
-        <div class="image-box video">
+        <div class="image-box video" onclick="openLightbox(this)">
             <span class="video-icon">▶</span>
-            <video controls onclick="openLightboxVideo(1)">
+            <video >
                 <source src="{{ asset('/assets/players/yv3.mp4') }}" type="video/mp4">
             </video>
         </div>
-        <div class="image-box video">
+        <div class="image-box video" onclick="openLightbox(this)">
             <span class="video-icon">▶</span>
-            <video controls onclick="openLightboxVideo(1)">
+            <video >
                 <source src="{{ asset('/assets/players/yv4.mp4') }}" type="video/mp4">
             </video>
         </div>
-         <div class="image-box video">
+         <div class="image-box video" onclick="openLightbox(this)">
             <span class="video-icon">▶</span>
-            <video controls onclick="openLightboxVideo(1)">
+            <video >
                 <source src="{{ asset('/assets/players/yv5.mp4') }}" type="video/mp4">
             </video>
         </div>
-         <div class="image-box video">
+         <div class="image-box video" onclick="openLightbox(this)">
             <span class="video-icon">▶</span>
-            <video controls onclick="openLightboxVideo(1)">
+            <video >
                 <source src="{{ asset('/assets/players/yv6.mp4') }}" type="video/mp4">
             </video>
         </div>
-         <div class="image-box video">
+         <div class="image-box video" onclick="openLightbox(this)">
             <span class="video-icon">▶</span>
-            <video controls onclick="openLightboxVideo(1)">
+            <video >
                 <source src="{{ asset('/assets/players/yv7.mp4') }}" type="video/mp4">
             </video>
         </div>
@@ -564,7 +573,13 @@
     </div>
 
     <script>
+    let currentVisibleIndex = 0;
+    let currentCategory = 'all';
+    const lightboxImg = document.getElementById('lightbox-img');
+    const lightboxVideo = document.getElementById('lightbox-video');
+
     function filterImages(category) {
+        currentCategory = category;
         const images = document.querySelectorAll('.image-box');
         images.forEach(img => {
             if (category === 'all') {
@@ -582,35 +597,52 @@
     }
 
     /* LIGHTBOX */
-    let currentIndex = 0;
-    const imageBoxes = document.querySelectorAll('.image-box');
-    const lightboxImg = document.getElementById('lightbox-img');
-    const lightboxVideo = document.getElementById('lightbox-video');
-
-    function openLightbox(index) {
-        currentIndex = index;
-        document.getElementById("lightbox").style.display = "flex";
-        showMedia();
-    }
-
-    function openLightboxVideo(index) {
-        const videos = document.querySelectorAll('.image-box video');
-        const imageCount = document.querySelectorAll('.image-box img').length;
-        currentIndex = imageCount + index;
+    function openLightbox(element) {
+        // Get all visible image boxes
+        const allVisibleBoxes = Array.from(document.querySelectorAll('.image-box:not(.hide)'));
+        
+        // Find the index of the clicked element among visible items
+        const clickedBox = element.closest('.image-box');
+        currentVisibleIndex = allVisibleBoxes.indexOf(clickedBox);
+        
         document.getElementById("lightbox").style.display = "flex";
         showMedia();
     }
 
     function showMedia() {
-        const allMedia = document.querySelectorAll('.image-box img, .image-box video');
-        const currentMedia = allMedia[currentIndex];
+        // Get all visible media items (images and videos)
+        const allVisibleBoxes = Array.from(document.querySelectorAll('.image-box:not(.hide)'));
+        let currentMedia = null;
+        let currentMediaIndex = 0;
         
-        if (currentMedia.tagName === 'VIDEO') {
+        // Find the media at currentVisibleIndex
+        for (let box of allVisibleBoxes) {
+            const img = box.querySelector('img');
+            const video = box.querySelector('video');
+            
+            if (img) {
+                if (currentMediaIndex === currentVisibleIndex) {
+                    currentMedia = img;
+                    break;
+                }
+                currentMediaIndex++;
+            }
+            if (video) {
+                if (currentMediaIndex === currentVisibleIndex) {
+                    currentMedia = video;
+                    break;
+                }
+                currentMediaIndex++;
+            }
+        }
+        
+        if (currentMedia && currentMedia.tagName === 'VIDEO') {
             lightboxImg.style.display = 'none';
             lightboxVideo.style.display = 'block';
             lightboxVideo.src = currentMedia.querySelector('source').src;
+            lightboxVideo.load();
             lightboxVideo.play();
-        } else {
+        } else if (currentMedia) {
             lightboxVideo.pause();
             lightboxVideo.style.display = 'none';
             lightboxImg.style.display = 'block';
@@ -624,19 +656,62 @@
     }
 
     function nextImage() {
-        const allMedia = document.querySelectorAll('.image-box img, .image-box video');
-        currentIndex++;
-        if (currentIndex >= allMedia.length) currentIndex = 0;
+        const allVisibleBoxes = Array.from(document.querySelectorAll('.image-box:not(.hide)'));
+        let totalMedia = 0;
+        allVisibleBoxes.forEach(box => {
+            if (box.querySelector('img') || box.querySelector('video')) {
+                totalMedia++;
+            }
+        });
+        
+        currentVisibleIndex++;
+        if (currentVisibleIndex >= totalMedia) currentVisibleIndex = 0;
         showMedia();
     }
 
     function prevImage() {
-        const allMedia = document.querySelectorAll('.image-box img, .image-box video');
-        currentIndex--;
-        if (currentIndex < 0) currentIndex = allMedia.length - 1;
+        const allVisibleBoxes = Array.from(document.querySelectorAll('.image-box:not(.hide)'));
+        let totalMedia = 0;
+        allVisibleBoxes.forEach(box => {
+            if (box.querySelector('img') || box.querySelector('video')) {
+                totalMedia++;
+            }
+        });
+        
+        currentVisibleIndex--;
+        if (currentVisibleIndex < 0) currentVisibleIndex = totalMedia - 1;
         showMedia();
     }
+    
+    // Close lightbox when clicking outside the image/video
+    document.getElementById('lightbox').addEventListener('click', function(e) {
+        if (e.target === this) {
+            closeLightbox();
+        }
+    });
+    
+    // Keyboard navigation
+    document.addEventListener('keydown', function(e) {
+        if (document.getElementById("lightbox").style.display === "flex") {
+            if (e.key === 'ArrowLeft') prevImage();
+            if (e.key === 'ArrowRight') nextImage();
+            if (e.key === 'Escape') closeLightbox();
+        }
+    });
     </script>
+            <!-- closeLightbox();
+        }
+    });
+    
+    // Keyboard navigation
+    document.addEventListener('keydown', function(e) {
+        if (document.getElementById("lightbox").style.display === "flex") {
+            if (e.key === 'ArrowLeft') prevImage();
+            if (e.key === 'ArrowRight') nextImage();
+            if (e.key === 'Escape') closeLightbox();
+        }
+    });
+    </script> -->
 
 </body>
 
