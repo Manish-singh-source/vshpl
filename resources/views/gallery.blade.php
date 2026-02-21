@@ -376,7 +376,7 @@
 
 <body>
 
-    <h1 class="title">Modern Gallery</h1>
+    <h1 class="title">Game of Champions</h1>
 
     <div class="buttons">
         <button onclick="filterImages('all')">All</button>
