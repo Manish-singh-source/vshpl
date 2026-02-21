@@ -82,3 +82,6 @@ Route::get('/holicelebration1', function () {
 Route::get('/test', function () {
     return view('test');
 });
+Route::get('/cricket/gallery', function () {
+    return view('gallery');
+});
