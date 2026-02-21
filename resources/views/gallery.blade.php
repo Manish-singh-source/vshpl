@@ -4,7 +4,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Modern Gallery - Responsive</title>
+    <title>Cricket Gallery</title>
+    <link rel="icon" href="{{ asset('assets/main.png') }}" type="image/png">
+
     <style>
     /* Reset & base */
     * {
