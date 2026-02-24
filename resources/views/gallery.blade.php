@@ -31,7 +31,7 @@
         flex-direction: column;
         align-items: center;
         padding: 20px;
-        background: linear-gradient(135deg, rgba(84, 181, 173, 0.3), rgba(63, 89, 158, 0.3)), url(http://127.0.0.1:8000/assets/players/background.jpg);
+        background: linear-gradient(135deg, rgba(84, 181, 173, 0.3), rgba(63, 89, 158, 0.3)), url(http://127.0.0.1:8000/assets/players/background.webp);
         background-size: cover;
         background-position: center;
         background-repeat: no-repeat;
@@ -390,188 +390,188 @@
     <div class="buttons">
         <button onclick="filterImages('all')">All</button>
         <button onclick="filterImages('children')">Children Team</button>
-        <button onclick="filterImages('younger')">Younger Team</button>
+        <button onclick="filterImages('younger')">Team</button>
         <button onclick="filterImages('winner')">Winner Team</button>
         <button onclick="filterImages('video')">Videos</button>
     </div>
 
     <div class="gallery">
         <div class="image-box children" onclick="openLightbox(this)">
-            <img src="{{ asset('/assets/players/c1.png') }}">
+            <img src="{{ asset('/assets/players/c1.webp') }}">
         </div>
         <div class="image-box children" onclick="openLightbox(this)">
-            <img src="{{ asset('/assets/players/c2.png') }}">
+            <img src="{{ asset('/assets/players/c2.webp') }}">
         </div>
         <div class="image-box children" onclick="openLightbox(this)">
-            <img src="{{ asset('/assets/players/c3.png') }}">
+            <img src="{{ asset('/assets/players/c3.webp') }}">
         </div>
         <div class="image-box children" onclick="openLightbox(this)">
-            <img src="{{ asset('/assets/players/c4.png') }}">
+            <img src="{{ asset('/assets/players/c4.webp') }}">
         </div>
         <div class="image-box children" onclick="openLightbox(this)">
-            <img src="{{ asset('/assets/players/c5.png') }}">
+            <img src="{{ asset('/assets/players/c5.webp') }}">
         </div>
         <div class="image-box children" onclick="openLightbox(this)">
-            <img src="{{ asset('/assets/players/c6.png') }}">
+            <img src="{{ asset('/assets/players/c6.webp') }}">
         </div>
         <div class="image-box children" onclick="openLightbox(this)">
-            <img src="{{ asset('/assets/players/c7.png') }}">
+            <img src="{{ asset('/assets/players/c7.webp') }}">
         </div>
         <div class="image-box children" onclick="openLightbox(this)">
-            <img src="{{ asset('/assets/players/c8.png') }}">
+            <img src="{{ asset('/assets/players/c8.webp') }}">
         </div>
         <div class="image-box children" onclick="openLightbox(this)">
-            <img src="{{ asset('/assets/players/c9.png') }}">
+            <img src="{{ asset('/assets/players/c9.webp') }}">
         </div>
         <div class="image-box children" onclick="openLightbox(this)">
-            <img src="{{ asset('/assets/players/c10.png') }}">
+            <img src="{{ asset('/assets/players/c10.webp') }}">
         </div>
          
         <div class="image-box younger" onclick="openLightbox(this)">
-            <img src="{{ asset('/assets/players/y2.png') }}">
+            <img src="{{ asset('/assets/players/y2.webp') }}">
         </div>
         <div class="image-box younger" onclick="openLightbox(this)">
-            <img src="{{ asset('/assets/players/y3.png') }}">
+            <img src="{{ asset('/assets/players/y3.webp') }}">
         </div>
         <div class="image-box younger" onclick="openLightbox(this)">
-            <img src="{{ asset('/assets/players/y4.png') }}">
+            <img src="{{ asset('/assets/players/y4.webp') }}">
         </div>
         <div class="image-box younger" onclick="openLightbox(this)">
-            <img src="{{ asset('/assets/players/y5.png') }}">
+            <img src="{{ asset('/assets/players/y5.webp') }}">
         </div>
         <div class="image-box younger" onclick="openLightbox(this)">
-            <img src="{{ asset('/assets/players/y6.png') }}">
+            <img src="{{ asset('/assets/players/y6.webp') }}">
         </div>
         <div class="image-box younger" onclick="openLightbox(this)">
-            <img src="{{ asset('/assets/players/y7.png') }}">
+            <img src="{{ asset('/assets/players/y7.webp') }}">
         </div>
         <div class="image-box younger" onclick="openLightbox(this)">
-            <img src="{{ asset('/assets/players/y8.png') }}">
+            <img src="{{ asset('/assets/players/y8.webp') }}">
         </div>
         <div class="image-box younger" onclick="openLightbox(this)">
-            <img src="{{ asset('/assets/players/y9.png') }}">
+            <img src="{{ asset('/assets/players/y9.webp') }}">
         </div>
         <div class="image-box younger" onclick="openLightbox(this)">
-            <img src="{{ asset('/assets/players/y10.png') }}">
+            <img src="{{ asset('/assets/players/y10.webp') }}">
         </div>
         <div class="image-box younger" onclick="openLightbox(this)">
-            <img src="{{ asset('/assets/players/y11.png') }}">
+            <img src="{{ asset('/assets/players/y11.webp') }}">
         </div>
         <div class="image-box younger" onclick="openLightbox(this)">
-            <img src="{{ asset('/assets/players/y12.png') }}">
+            <img src="{{ asset('/assets/players/y12.webp') }}">
         </div>
         <div class="image-box younger" onclick="openLightbox(this)">
-            <img src="{{ asset('/assets/players/y13.png') }}">
+            <img src="{{ asset('/assets/players/y13.webp') }}">
         </div>
         <div class="image-box younger" onclick="openLightbox(this)">
-            <img src="{{ asset('/assets/players/y14.png') }}">
+            <img src="{{ asset('/assets/players/y14.webp') }}">
         </div>
         <div class="image-box younger" onclick="openLightbox(this)">
-            <img src="{{ asset('/assets/players/y15.png') }}">
+            <img src="{{ asset('/assets/players/y15.webp') }}">
         </div>
         <div class="image-box younger" onclick="openLightbox(this)">
-            <img src="{{ asset('/assets/players/y16.png') }}">
+            <img src="{{ asset('/assets/players/y16.webp') }}">
         </div>
         <div class="image-box younger" onclick="openLightbox(this)">
-            <img src="{{ asset('/assets/players/y17.png') }}">
+            <img src="{{ asset('/assets/players/y17.webp') }}">
         </div>
         <div class="image-box younger" onclick="openLightbox(this)">
-            <img src="{{ asset('/assets/players/y18.png') }}">
+            <img src="{{ asset('/assets/players/y18.webp') }}">
         </div>
         <div class="image-box younger" onclick="openLightbox(this)">
-            <img src="{{ asset('/assets/players/y19.png') }}">
+            <img src="{{ asset('/assets/players/y19.webp') }}">
         </div>
         <div class="image-box younger" onclick="openLightbox(this)">
-            <img src="{{ asset('/assets/players/y20.png') }}">
+            <img src="{{ asset('/assets/players/y20.webp') }}">
         </div>
         <div class="image-box younger" onclick="openLightbox(this)">
-            <img src="{{ asset('/assets/players/y21.png') }}">
+            <img src="{{ asset('/assets/players/y21.webp') }}">
         </div>
         <div class="image-box younger" onclick="openLightbox(this)">
-            <img src="{{ asset('/assets/players/y23.png') }}">
+            <img src="{{ asset('/assets/players/y23.webp') }}">
         </div>
         <div class="image-box younger" onclick="openLightbox(this)">
-            <img src="{{ asset('/assets/players/y24.png') }}">
+            <img src="{{ asset('/assets/players/y24.webp') }}">
         </div>
         <div class="image-box younger" onclick="openLightbox(this)">
-            <img src="{{ asset('/assets/players/y25.png') }}">
+            <img src="{{ asset('/assets/players/y25.webp') }}">
         </div>
         <div class="image-box younger" onclick="openLightbox(this)">
-            <img src="{{ asset('/assets/players/y26.png') }}">
+            <img src="{{ asset('/assets/players/y26.webp') }}">
         </div>
         <div class="image-box winner" onclick="openLightbox(this)">
-            <img src="{{ asset('/assets/players/w1.png') }}">
+            <img src="{{ asset('/assets/players/w1.webp') }}">
         </div>
         <div class="image-box winner" onclick="openLightbox(this)">
-            <img src="{{ asset('/assets/players/w2.png') }}">
+            <img src="{{ asset('/assets/players/w2.webp') }}">
         </div>
         <div class="image-box winner" onclick="openLightbox(this)">
-            <img src="{{ asset('/assets/players/w3.png') }}">
+            <img src="{{ asset('/assets/players/w3.webp') }}">
         </div>
         <div class="image-box winner" onclick="openLightbox(this)">
-            <img src="{{ asset('/assets/players/w4.png') }}">
+            <img src="{{ asset('/assets/players/w4.webp') }}">
         </div>
 
         <!-- Video Gallery Items -->
         <div class="image-box video" onclick="openLightbox(this)">
             <span class="video-icon">▶</span>
-            <video poster="{{ asset('/assets/players/cv11.jpg') }}">
+            <video poster="{{ asset('/assets/players/cv11.webp') }}">
                 <source src="{{ asset('/assets/players/cv1.mp4') }}" type="video/mp4">
             </video>
         </div>
 
         <div class="image-box video" onclick="openLightbox(this)">
             <span class="video-icon">▶</span>
-            <video poster="{{ asset('/assets/players/cv22.jpg') }}">
+            <video poster="{{ asset('/assets/players/cv22.webp') }}">
                 <source src="{{ asset('/assets/players/cv2.mp4') }}" type="video/mp4">
             </video>
         </div>
 
         <div class="image-box video" onclick="openLightbox(this)">
             <span class="video-icon">▶</span>
-            <video poster="{{ asset('/assets/players/yv11.jpg') }}">
+            <video poster="{{ asset('/assets/players/yv11.webp') }}">
                 <source src="{{ asset('/assets/players/yv1.mp4') }}" type="video/mp4">
             </video>
         </div>
 
         <div class="image-box video" onclick="openLightbox(this)">
             <span class="video-icon">▶</span>
-            <video poster="{{ asset('/assets/players/yv22.jpg') }}">
+            <video poster="{{ asset('/assets/players/yv22.webp') }}">
                 <source src="{{ asset('/assets/players/yv2.mp4') }}" type="video/mp4">
             </video>
         </div>
 
         <div class="image-box video" onclick="openLightbox(this)">
             <span class="video-icon">▶</span>
-            <video poster="{{ asset('/assets/players/yv33.jpg') }}">
+            <video poster="{{ asset('/assets/players/yv33.webp') }}">
                 <source src="{{ asset('/assets/players/yv3.mp4') }}" type="video/mp4">
             </video>
         </div>
 
         <div class="image-box video" onclick="openLightbox(this)">
             <span class="video-icon">▶</span>
-            <video poster="{{ asset('/assets/players/yv44.jpg') }}">
+            <video poster="{{ asset('/assets/players/yv44.webp') }}">
                 <source src="{{ asset('/assets/players/yv4.mp4') }}" type="video/mp4">
             </video>
         </div>
 
         <div class="image-box video" onclick="openLightbox(this)">
             <span class="video-icon">▶</span>
-            <video poster="{{ asset('/assets/players/yv55.jpg') }}">
+            <video poster="{{ asset('/assets/players/yv55.webp') }}">
                 <source src="{{ asset('/assets/players/yv5.mp4') }}" type="video/mp4">
             </video>
         </div>
 
         <div class="image-box video" onclick="openLightbox(this)">
             <span class="video-icon">▶</span>
-            <video poster="{{ asset('/assets/players/yv66.jpg') }}">
+            <video poster="{{ asset('/assets/players/yv66.webp') }}">
                 <source src="{{ asset('/assets/players/yv6.mp4') }}" type="video/mp4">
             </video>
         </div>
 
         <div class="image-box video" onclick="openLightbox(this)">
             <span class="video-icon">▶</span>
-            <video poster="{{ asset('/assets/players/yv77.jpg') }}">
+            <video poster="{{ asset('/assets/players/yv77.webp') }}">
                 <source src="{{ asset('/assets/players/yv7.mp4') }}" type="video/mp4">
             </video>
         </div>
