@@ -4,9 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cricket Gallery</title>
-    <link rel="icon" href="{{ asset('assets/main.png') }}" type="image/png">
-
+    <title>Cricket Album</title>
     <style>
     /* Reset & base */
     * {
@@ -116,9 +114,11 @@
     .image-box video::-webkit-media-controls {
         display: none !important;
     }
+
     .image-box video::-moz-media-controls {
         display: none !important;
     }
+
     .image-box video::-webkit-media-controls-enclosure {
         display: none !important;
     }
@@ -255,6 +255,12 @@
         }
     }
 
+    .image-box video {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
     @media (max-width: 600px) {
         body {
             padding: 15px;
@@ -287,7 +293,7 @@
 
         button {
             font-size: 14px;
-            padding: 10px 12px;            
+            padding: 10px 12px;
         }
 
         .nav {
@@ -336,7 +342,7 @@
 
         button {
             font-size: 12px;
-            padding: 8px 10px;            
+            padding: 8px 10px;
             text-align: center;
         }
 
@@ -354,7 +360,7 @@
             max-width: 95%;
             max-height: 50%;
         }
-        
+
     }
 
     /* Touch-friendly improvements */
@@ -368,7 +374,8 @@
             cursor: zoom-in;
         }
 
-        .nav, .close {
+        .nav,
+        .close {
             min-width: 44px;
             min-height: 44px;
         }
@@ -419,9 +426,7 @@
         <div class="image-box children" onclick="openLightbox(this)">
             <img src="{{ asset('/assets/players/c10.png') }}">
         </div>
-        <div class="image-box younger" onclick="openLightbox(this)">
-            <img src="{{ asset('/assets/players/y1.png') }}">
-        </div>
+         
         <div class="image-box younger" onclick="openLightbox(this)">
             <img src="{{ asset('/assets/players/y2.png') }}">
         </div>
@@ -506,59 +511,67 @@
         <div class="image-box winner" onclick="openLightbox(this)">
             <img src="{{ asset('/assets/players/w4.png') }}">
         </div>
-        
+
         <!-- Video Gallery Items -->
         <div class="image-box video" onclick="openLightbox(this)">
             <span class="video-icon">▶</span>
-            <video >
+            <video poster="{{ asset('/assets/players/cv11.jpg') }}">
                 <source src="{{ asset('/assets/players/cv1.mp4') }}" type="video/mp4">
             </video>
         </div>
+
         <div class="image-box video" onclick="openLightbox(this)">
             <span class="video-icon">▶</span>
-            <video >
+            <video poster="{{ asset('/assets/players/cv22.jpg') }}">
                 <source src="{{ asset('/assets/players/cv2.mp4') }}" type="video/mp4">
             </video>
         </div>
+
         <div class="image-box video" onclick="openLightbox(this)">
             <span class="video-icon">▶</span>
-            <video >
+            <video poster="{{ asset('/assets/players/yv11.jpg') }}">
                 <source src="{{ asset('/assets/players/yv1.mp4') }}" type="video/mp4">
             </video>
         </div>
+
         <div class="image-box video" onclick="openLightbox(this)">
             <span class="video-icon">▶</span>
-            <video >
+            <video poster="{{ asset('/assets/players/yv22.jpg') }}">
                 <source src="{{ asset('/assets/players/yv2.mp4') }}" type="video/mp4">
             </video>
         </div>
+
         <div class="image-box video" onclick="openLightbox(this)">
             <span class="video-icon">▶</span>
-            <video >
+            <video poster="{{ asset('/assets/players/yv33.jpg') }}">
                 <source src="{{ asset('/assets/players/yv3.mp4') }}" type="video/mp4">
             </video>
         </div>
+
         <div class="image-box video" onclick="openLightbox(this)">
             <span class="video-icon">▶</span>
-            <video >
+            <video poster="{{ asset('/assets/players/yv44.jpg') }}">
                 <source src="{{ asset('/assets/players/yv4.mp4') }}" type="video/mp4">
             </video>
         </div>
-         <div class="image-box video" onclick="openLightbox(this)">
+
+        <div class="image-box video" onclick="openLightbox(this)">
             <span class="video-icon">▶</span>
-            <video >
+            <video poster="{{ asset('/assets/players/yv55.jpg') }}">
                 <source src="{{ asset('/assets/players/yv5.mp4') }}" type="video/mp4">
             </video>
         </div>
-         <div class="image-box video" onclick="openLightbox(this)">
+
+        <div class="image-box video" onclick="openLightbox(this)">
             <span class="video-icon">▶</span>
-            <video >
+            <video poster="{{ asset('/assets/players/yv66.jpg') }}">
                 <source src="{{ asset('/assets/players/yv6.mp4') }}" type="video/mp4">
             </video>
         </div>
-         <div class="image-box video" onclick="openLightbox(this)">
+
+        <div class="image-box video" onclick="openLightbox(this)">
             <span class="video-icon">▶</span>
-            <video >
+            <video poster="{{ asset('/assets/players/yv77.jpg') }}">
                 <source src="{{ asset('/assets/players/yv7.mp4') }}" type="video/mp4">
             </video>
         </div>
@@ -580,12 +593,29 @@
     const lightboxImg = document.getElementById('lightbox-img');
     const lightboxVideo = document.getElementById('lightbox-video');
 
+    // Hide videos by default on page load
+    document.addEventListener('DOMContentLoaded', function() {
+        filterImages('all');
+    });
+
     function filterImages(category) {
         currentCategory = category;
         const images = document.querySelectorAll('.image-box');
         images.forEach(img => {
             if (category === 'all') {
-                img.classList.remove('hide');
+                // Hide all videos when "All" is selected, show only images
+                if (img.classList.contains('video')) {
+                    img.classList.add('hide');
+                } else {
+                    img.classList.remove('hide');
+                }
+            } else if (category === 'video') {
+                // Show only videos when "Videos" is selected
+                if (img.classList.contains('video')) {
+                    img.classList.remove('hide');
+                } else {
+                    img.classList.add('hide');
+                }
             } else if (img.classList.contains(category)) {
                 img.classList.remove('hide');
             } else {
@@ -602,11 +632,11 @@
     function openLightbox(element) {
         // Get all visible image boxes
         const allVisibleBoxes = Array.from(document.querySelectorAll('.image-box:not(.hide)'));
-        
+
         // Find the index of the clicked element among visible items
         const clickedBox = element.closest('.image-box');
         currentVisibleIndex = allVisibleBoxes.indexOf(clickedBox);
-        
+
         document.getElementById("lightbox").style.display = "flex";
         showMedia();
     }
@@ -616,12 +646,12 @@
         const allVisibleBoxes = Array.from(document.querySelectorAll('.image-box:not(.hide)'));
         let currentMedia = null;
         let currentMediaIndex = 0;
-        
+
         // Find the media at currentVisibleIndex
         for (let box of allVisibleBoxes) {
             const img = box.querySelector('img');
             const video = box.querySelector('video');
-            
+
             if (img) {
                 if (currentMediaIndex === currentVisibleIndex) {
                     currentMedia = img;
@@ -637,7 +667,7 @@
                 currentMediaIndex++;
             }
         }
-        
+
         if (currentMedia && currentMedia.tagName === 'VIDEO') {
             lightboxImg.style.display = 'none';
             lightboxVideo.style.display = 'block';
@@ -665,7 +695,7 @@
                 totalMedia++;
             }
         });
-        
+
         currentVisibleIndex++;
         if (currentVisibleIndex >= totalMedia) currentVisibleIndex = 0;
         showMedia();
@@ -679,19 +709,19 @@
                 totalMedia++;
             }
         });
-        
+
         currentVisibleIndex--;
         if (currentVisibleIndex < 0) currentVisibleIndex = totalMedia - 1;
         showMedia();
     }
-    
+
     // Close lightbox when clicking outside the image/video
     document.getElementById('lightbox').addEventListener('click', function(e) {
         if (e.target === this) {
             closeLightbox();
         }
     });
-    
+
     // Keyboard navigation
     document.addEventListener('keydown', function(e) {
         if (document.getElementById("lightbox").style.display === "flex") {
@@ -701,7 +731,7 @@
         }
     });
     </script>
-            <!-- closeLightbox();
+    <!-- closeLightbox();
         }
     });
     
