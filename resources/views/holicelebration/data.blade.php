@@ -6,6 +6,7 @@
     <title>Holi Celebration Data</title>
     <link rel="icon" href="{{ asset('assets/main.png') }}" type="image/png">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.8/css/dataTables.bootstrap5.min.css">
     <style>
         body {
             background: #f5f7fb;
@@ -60,7 +61,7 @@
                 @endif
 
                 <div class="table-responsive">
-                    <table class="table table-bordered table-striped align-middle mb-0">
+                    <table id="holiDataTable" class="table table-bordered table-striped align-middle mb-0">
                         <thead class="table-dark">
                             <tr>
                                 <th>ID</th>
@@ -119,4 +120,18 @@
         </div>
     </div>
 </body>
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.8/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.8/js/dataTables.bootstrap5.min.js"></script>
+<script>
+    $(function () {
+        $('#holiDataTable').DataTable({
+            pageLength: 25,
+            order: [[0, 'desc']],
+            columnDefs: [
+                { orderable: false, targets: [10, 12] }
+            ]
+        });
+    });
+</script>
 </html>
