@@ -20,15 +20,34 @@
         .table th {
             white-space: nowrap;
         }
+        .summary-pill {
+            display: inline-flex;
+            align-items: center;
+            min-height: 31px;
+            padding: 0.375rem 0.75rem;
+            font-size: 0.875rem;
+            font-weight: 600;
+            border-radius: 0.375rem;
+        }
     </style>
 </head>
 <body>
+    @php
+        $recordsCollection = $records instanceof \Illuminate\Pagination\AbstractPaginator
+            ? $records->getCollection()
+            : collect($records);
+        $totalCoupons = $recordsCollection->sum(fn($record) => (int) ($record->coupons ?? 0));
+        $totalAmount = $recordsCollection->sum(fn($record) => (float) ($record->total_amount ?? 0));
+    @endphp
+
     <div class="container-fluid">
         <div class="card">
             <div class="card-body">
                 <div class="d-flex justify-content-between align-items-center mb-3">
                     <h3 class="mb-0">Holi Celebration Registrations</h3>
-                    <div class="d-flex gap-2">
+                    <div class="d-flex align-items-center gap-2 flex-wrap justify-content-end">
+                        <span class="summary-pill text-bg-info">Total Coupons: {{ number_format($totalCoupons) }}</span>
+                        <span class="summary-pill text-bg-secondary">Total Amount: Rs. {{ number_format($totalAmount, 2) }}</span>
                         <a href="{{ route('holicelebration.export') }}" class="btn btn-success btn-sm">Export to Excel</a>
                         <a href="{{ url('/holicelebration') }}" class="btn btn-primary btn-sm">Back to Form</a>
                     </div>
