@@ -38,7 +38,12 @@
             ? $records->getCollection()
             : collect($records);
         $totalCoupons = $recordsCollection->sum(fn($record) => (int) ($record->coupons ?? 0));
-        $totalAmount = $recordsCollection->sum(fn($record) => (float) ($record->total_amount ?? 0));
+        $codRecords = $recordsCollection->filter(fn($record) => strtoupper((string) ($record->payment_mode ?? '')) === 'COD');
+        $onlineRecords = $recordsCollection->filter(fn($record) => strtoupper((string) ($record->payment_mode ?? '')) === 'ONLINE');
+        $codCount = $codRecords->count();
+        $onlineCount = $onlineRecords->count();
+        $codAmount = $codRecords->sum(fn($record) => (float) ($record->total_amount ?? 0));
+        $onlineAmount = $onlineRecords->sum(fn($record) => (float) ($record->total_amount ?? 0));
     @endphp
 
     <div class="container-fluid">
@@ -48,7 +53,8 @@
                     <h3 class="mb-0">Holi Celebration Registrations</h3>
                     <div class="d-flex align-items-center gap-2 flex-wrap justify-content-end">
                         <span class="summary-pill text-bg-info">Total Coupons: {{ number_format($totalCoupons) }}</span>
-                        <span class="summary-pill text-bg-secondary">Total Amount: Rs. {{ number_format($totalAmount, 2) }}</span>
+                        <span class="summary-pill text-bg-secondary">COD: {{ $codCount }} | Rs. {{ number_format($codAmount, 2) }}</span>
+                        <span class="summary-pill text-bg-dark">ONLINE: {{ $onlineCount }} | Rs. {{ number_format($onlineAmount, 2) }}</span>
                         <a href="{{ route('holicelebration.export') }}" class="btn btn-success btn-sm">Export to Excel</a>
                         <a href="{{ url('/holicelebration') }}" class="btn btn-primary btn-sm">Back to Form</a>
                     </div>
