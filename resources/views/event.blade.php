@@ -193,12 +193,12 @@
         <div class="column" style="background-image: url('https://t4.ftcdn.net/jpg/10/33/79/25/360_F_1033792563_Ulsd6x24CQKcztYySpupwIQofgPHcmL1.jpg');">
             <h1>Celebrate Holi With Us</h1>
             <p>Join us for a vibrant Holi celebration filled with colors, music, and endless fun. Create beautiful memories with your friends and enjoy the festival in its purest joy.</p>
-            <button><a href="https://veenasmarthomes.com/holicelebration" target="_blank">Let's Play Holi</a></button>
+            <button><a href="#" target="_blank">Let's Play Holi</a></button>
         </div>
-        <div class="column column1" style="background-image: url('{{ asset('assets/team.JPG') }}');">
+        <div class="column column1" style="background-image: url('{{ asset('assets/team.jpg') }}');">
             <h1>Join Our Sponsor Team</h1>
             <p>Be a valued member of our sponsor team, ready to respond whenever needed. Collaborate, learn, and make an impact.</p>
-            <button><a href="https://veenasmarthomes.com/cricket" target="_blank">Join Now</a></button>
+            <button><a href="#" target="_blank">Join Now</a></button>
         </div>
     </div>
     <div class="site-credit">
