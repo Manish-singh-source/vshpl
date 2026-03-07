@@ -67,9 +67,10 @@ Route::get('/vehicleregistration/admin', function () {
 Route::get('/', function () {
     return view('home');
 });
-Route::get('/holicelebration', function () {
-    return view('holicelebration');
-});
+Route::get('/event', function () {
+    return view('event');
+})->name('event.page');
+// Route intentionally disabled: /holicelebration
 Route::post('/holicelebration', [App\Http\Controllers\HoliCelebrationController::class, 'store'])->name('holicelebration.store');
 Route::get('/holicelebration/data', [App\Http\Controllers\HoliCelebrationController::class, 'index'])->name('holicelebration.data');
 Route::delete('/holicelebration/{holiCelebration}', [App\Http\Controllers\HoliCelebrationController::class, 'destroy'])->name('holicelebration.destroy');
