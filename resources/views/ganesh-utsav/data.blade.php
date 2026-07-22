@@ -343,7 +343,7 @@
         <header class="page-bar">
             <div>
                 <p class="eyebrow">Admin Records</p>
-                <h1>Ganesh Utsav Contributions</h1>
+                <h1>Ganesh Utsav Contributions 2026</h1>
                 <p class="page-copy">Search, sort and review all resident contribution records.</p>
             </div>
             <a class="back-link" href="{{ route('ganesh.utsav.celebration') }}">Back to Contribution Form</a>
