@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -544,8 +544,13 @@
         }
 
         .qr-download {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
             padding: 12px 16px;
             width: 100%;
+            text-align: center;
+            text-decoration: none;
         }
 
         .payment-note {
@@ -1087,7 +1092,7 @@
         <section class="layout">
             <div class="visual-panel">
                 <div class="visual-overlay"></div>
-                {{-- <div class="mantra-badge">श्री<span>॥ श्री गणेशाय नमः ॥</span></div> --}}
+                {{-- <div class="mantra-badge">à¤¶à¥à¤°à¥€<span>à¥¥ à¤¶à¥à¤°à¥€ à¤—à¤£à¥‡à¤¶à¤¾à¤¯ à¤¨à¤®à¤ƒ à¥¥</span></div> --}}
 
                 {{-- <div class="bottom-banner">
                     <span class="small">Celebrate devotion. Create memories.</span>
@@ -1099,10 +1104,26 @@
                 <div class="mini-ornament"><span></span></div>
                 {{-- <p class="eyebrow">Ganesh Utsav Celebration</p> --}}
                 <h1 class="title">VSH<br> <strong>Ganesh Utsav Celebration 2026</strong></h1>
-                {{-- <p class="sub-mantra">|| मंगलमूर्ति मोरया, पुढच्या वर्षी लवकर या ||</p> --}}
+                {{-- <p class="sub-mantra">|| à¤®à¤‚à¤—à¤²à¤®à¥‚à¤°à¥à¤¤à¤¿ à¤®à¥‹à¤°à¤¯à¤¾, à¤ªà¥à¤¢à¤šà¥à¤¯à¤¾ à¤µà¤°à¥à¤·à¥€ à¤²à¤µà¤•à¤° à¤¯à¤¾ ||</p> --}}
                 {{-- <p class="description">Book your Ganpati celebration with ease. Static preview ready hai, baad mein isi section ko dynamic form se connect kar sakte hain.</p> --}}
 
                 <div class="booking-card">
+                    @if(session('success'))
+                        <div style="margin-bottom:16px;padding:14px 16px;border-radius:16px;background:#edf9f0;border:1px solid #b8e0c1;color:#18603d;font-weight:600;">
+                            {{ session('success') }}
+                        </div>
+                    @endif
+
+                    @if($errors->any())
+                        <div style="margin-bottom:16px;padding:14px 16px;border-radius:16px;background:#fff3f0;border:1px solid #f1c1b8;color:#8c2f1f;">
+                            <strong>Please fix the form errors:</strong>
+                            <ul style="margin:8px 0 0 18px;padding:0;">
+                                @foreach($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
                     {{-- <div class="stepper">
                         <div class="step-chip active" data-step-chip="0">Step 1<br>Basic Details</div>
                         <div class="step-chip" data-step-chip="1">Step 2<br>Profile & Method</div>
@@ -1111,7 +1132,7 @@
 
                     <div class="role-selector">
                         <h3>Select Resident Type</h3>
-                        <p>Please choose owner or tenant to continue with the booking form.</p>
+                        <p>Please select whether you are an owner or a tenant to join the celebrations.</p>
                         <div class="role-options">
                             <label class="role-option" data-role-option="owner">
                                 <input type="radio" name="resident_type" value="owner">
@@ -1126,67 +1147,69 @@
                         </div>
                     </div>
 
-                    <form class="booking-form-static" action="javascript:void(0);">
+                    <form class="booking-form-static" action="{{ route('ganesh.utsav.store') }}" method="POST" enctype="multipart/form-data">
+                        @csrf
+                        <input type="hidden" name="resident_type" data-resident-type-input>
                         <p class="step-title">Basic details</p>
                         <div class="simple-form-stack">
                             <div class="field">
                                 <div class="field-label">
-                                    <span class="field-icon">🏢</span>
+                                    <span class="field-icon" aria-hidden="true">&#x1F3E2;</span>
                                     <span>Select Wing</span>
                                 </div>
                                 <div class="field-control">
-                                    <select class="field-input">
-                                        <option>Select Wing</option>
-                                        <option>Wing A</option>
-                                        <option>Wing B</option>
-                                        <option>Wing C</option>
-                                        <option>Wing D</option>
-                                        <option>Wing E</option>
+                                    <select class="field-input" name="wing">
+                                        <option value="">Select Wing</option>
+                                        <option value="Wing A" {{ old('wing') === 'Wing A' ? 'selected' : '' }}>Wing A</option>
+                                        <option value="Wing B" {{ old('wing') === 'Wing B' ? 'selected' : '' }}>Wing B</option>
+                                        <option value="Wing C" {{ old('wing') === 'Wing C' ? 'selected' : '' }}>Wing C</option>
+                                        <option value="Wing D" {{ old('wing') === 'Wing D' ? 'selected' : '' }}>Wing D</option>
+                                        <option value="Wing E" {{ old('wing') === 'Wing E' ? 'selected' : '' }}>Wing E</option>
                                     </select>
                                 </div>
                             </div>
 
                             <div class="field">
                                 <div class="field-label">
-                                    <span class="field-icon">🏠</span>
+                                    <span class="field-icon" aria-hidden="true">&#x1F3E0;</span>
                                     <span>Flat Number</span>
                                 </div>
                                 <div class="field-control">
-                                    <input class="field-input" type="text" placeholder="Enter flat number">
+                                    <input class="field-input" type="text" name="flat_number" placeholder="Enter flat number" value="{{ old('flat_number') }}">
                                 </div>
                             </div>
 
                             <div class="field">
                                 <div class="field-label">
-                                    <span class="field-icon">👤</span>
+                                    <span class="field-icon" aria-hidden="true">&#x1F464;</span>
                                     <span>Name</span>
                                 </div>
                                 <div class="field-control">
-                                    <input class="field-input" type="text" placeholder="Enter full name">
+                                    <input class="field-input" type="text" name="full_name" placeholder="Enter full name" value="{{ old('full_name') }}">
                                 </div>
                             </div>
 
                             <div class="field">
                                 <div class="field-label">
-                                    <span class="field-icon">📞</span>
+                                    <span class="field-icon" aria-hidden="true">&#x1F4DE;</span>
                                     <span>Number</span>
                                 </div>
                                 <div class="field-control">
-                                    <input class="field-input" type="tel" placeholder="Enter mobile number">
+                                    <input class="field-input" type="tel" name="mobile_number" placeholder="Enter mobile number" value="{{ old('mobile_number') }}">
                                 </div>
                             </div>
 
                             <div class="summary-card">
                                 <div class="summary-row">
-                                    <span class="summary-title">Base Amount</span>
+                                    <span class="summary-title">Contribution Amount</span>
                                     <strong>Rs 1000</strong>
                                 </div>
                             </div>
 
                             <div class="checkbox-card">
                                 <label>
-                                    <input type="checkbox" data-extra-toggle>
-                                    <span>Extra Amount</span>
+                                    <input type="checkbox" name="has_extra_coupon" value="1" data-extra-toggle {{ old('has_extra_coupon') ? 'checked' : '' }}>
+                                    <span>Extra Coupon</span>
                                 </label>
                                 <span class="checkbox-note">Rs 250</span>
                             </div>
@@ -1194,11 +1217,11 @@
                             <div class="extra-coupon-panel" data-extra-panel>
                                 <div class="field">
                                     <div class="field-label">
-                                        <span class="field-icon">🎟</span>
-                                        <span>Select Extra Quantity</span>
+                                        <span class="field-icon" aria-hidden="true">&#x1F39F;</span>
+                                        <span>Select Extra Coupon Quantity</span>
                                     </div>
                                     <div class="field-control">
-                                        <select class="field-input" data-extra-count>
+                                        <select class="field-input" name="extra_coupon_quantity" data-extra-count>
                                             <option value="1">1</option>
                                             <option value="2">2</option>
                                             <option value="3">3</option>
@@ -1226,7 +1249,7 @@
 
                             <div class="checkbox-card">
                                 <label>
-                                    <input type="checkbox" data-sponsor-toggle>
+                                    <input type="checkbox" name="is_sponsor" value="1" data-sponsor-toggle {{ old('is_sponsor') ? 'checked' : '' }}>
                                     <span>We are sponsor</span>
                                 </label>
                             </div>
@@ -1234,21 +1257,21 @@
                             <div class="sponsor-panel" data-sponsor-panel>
                                  <div class="field">
                                     <div class="field-label">
-                                        <span class="field-icon">📝</span>
+                                        <span class="field-icon" aria-hidden="true">&#x1F4DD;</span>
                                         <span>Description</span>
                                     </div>
                                     <div class="field-control">
-                                        <textarea class="field-input" placeholder="Write about the sponsor"></textarea>
+                                        <textarea class="field-input" name="sponsor_about" placeholder="Write about the sponsor">{{ old('sponsor_about') }}</textarea>
                                     </div>
                                 </div>
 
                                 <div class="field">
                                     <div class="field-label">
-                                        <span class="field-icon">💰</span>
+                                        <span class="field-icon" aria-hidden="true">&#x1F4B0;</span>
                                         <span>Sponsor Amount</span>
                                     </div>
                                     <div class="field-control">
-                                        <input class="field-input" type="number" min="0" step="1" placeholder="Enter sponsor amount" data-sponsor-amount>
+                                        <input class="field-input" type="number" min="0" step="1" name="sponsor_amount" placeholder="Enter sponsor amount" data-sponsor-amount value="{{ old('sponsor_amount') }}">
                                     </div>
                                 </div>
 
@@ -1257,51 +1280,37 @@
                                
                                 <div class="field">
                                     <div class="field-label">
-                                        <span class="field-icon">💳</span>
+                                        <span class="field-icon" aria-hidden="true">&#x1F4B3;</span>
                                         <span>Payment Method</span>
                                     </div>
                                     <div class="payment-layout">
                                         <div class="payment-choice-row">
                                             <label class="payment-option active" data-sponsor-payment-option="cash">
-                                                <input type="radio" name="sponsor_payment_method" value="cash" checked>
+                                                <input type="radio" name="sponsor_payment_method" value="cash" {{ old('sponsor_payment_method', 'cash') === 'cash' ? 'checked' : '' }}>
                                                 <span class="payment-dot"></span>
                                                 <span>Cash</span>
                                             </label>
                                             <label class="payment-option" data-sponsor-payment-option="online">
-                                                <input type="radio" name="sponsor_payment_method" value="online">
+                                                <input type="radio" name="sponsor_payment_method" value="online" {{ old('sponsor_payment_method') === 'online' ? 'checked' : '' }}>
                                                 <span class="payment-dot"></span>
                                                 <span>Online</span>
                                             </label>
                                             <label class="payment-option" data-sponsor-payment-option="already-paid">
-                                                <input type="radio" name="sponsor_payment_method" value="already_paid">
+                                                <input type="radio" name="sponsor_payment_method" value="already_paid" {{ old('sponsor_payment_method') === 'already_paid' ? 'checked' : '' }}>
                                                 <span class="payment-dot"></span>
                                                 <span>Already Paid</span>
                                             </label>
                                         </div>
 
-                                        <div class="sponsor-payment-preview" data-sponsor-payment-preview="online">
+                                        <div class="sponsor-payment-preview" data-sponsor-payment-preview="proof">
                                             <div class="scanner-box">
-                                                <img src="{{ asset('assets/qr.png') }}" alt="Scanner QR Code">
+                                                <img src="{{ asset('assets/ganptiqrcode.jpeg') }}" alt="Scanner QR Code">
                                                 <p>Scan or download the QR code before uploading the payment screenshot.</p>
-                                                <button class="qr-download" type="button">Download QR Code</button>
+                                                <a class="qr-download" href="{{ asset('assets/ganptiqrcode.jpeg') }}" download="ganpati-qr-code.jpeg">Download QR Code</a>
                                             </div>
-                                            <div class="field-upload">
-                                                <span>Upload payment screenshot</span>
-                                                <button class="upload-btn" type="button">Upload Image</button>
-                                            </div>
+                                            <div class="field-control"><input class="field-input" type="file" name="sponsor_payment_screenshot" accept="image/*"></div>
                                         </div>
 
-                                        <div class="sponsor-payment-preview" data-sponsor-payment-preview="already-paid">
-                                            <div class="scanner-box">
-                                                <img src="{{ asset('assets/qr.png') }}" alt="Scanner QR Code">
-                                                <p>Use this QR code reference before uploading your payment proof.</p>
-                                                <button class="qr-download" type="button">Download QR Code</button>
-                                            </div>
-                                            <div class="field-upload">
-                                                <span>Upload payment proof</span>
-                                                <button class="upload-btn" type="button">Upload Image</button>
-                                            </div>
-                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -1309,7 +1318,7 @@
                             <div class="summary-card">
                                 <p class="summary-title">Total Amount</p>
                                 <div class="summary-row">
-                                    <span>Coupon Amount</span>
+                                    <span>Contribution Amount</span>
                                     <strong>Rs 1000</strong>
                                 </div>
                                 <div class="summary-row">
@@ -1326,8 +1335,8 @@
                                 </div>
                             </div>
 
-                            <button class="cta" type="button">
-                                <span>📩 Submit Booking</span>
+                            <button class="cta" type="submit">
+                                <span><span aria-hidden="true">&#x1F4E9;</span> Submit Contribution</span>
                             </button>
                         </div>
                     </form>
@@ -1344,6 +1353,7 @@
         <script>
         const bookingForm = document.querySelector('.booking-form-static');
         const roleOptions = Array.from(document.querySelectorAll('[data-role-option]'));
+        const residentTypeInput = document.querySelector('[data-resident-type-input]');
         const extraToggle = document.querySelector('[data-extra-toggle]');
         const extraPanel = document.querySelector('[data-extra-panel]');
         const extraCount = document.querySelector('[data-extra-count]');
@@ -1394,7 +1404,7 @@
             });
 
             sponsorPaymentPreviews.forEach((preview) => {
-                preview.classList.toggle('visible', preview.dataset.sponsorPaymentPreview === activeSponsorPayment && activeSponsorPayment !== 'cash');
+                preview.classList.toggle('visible', activeSponsorPayment !== 'cash');
             });
         }
 
@@ -1424,6 +1434,9 @@
                 const input = option.querySelector('input');
                 if (input) {
                     input.checked = true;
+                    if (residentTypeInput) {
+                        residentTypeInput.value = input.value;
+                    }
                 }
                 if (bookingForm) {
                     bookingForm.classList.add('visible');
@@ -1459,6 +1472,22 @@
             });
         });
 
+        const preselectedRole = roleOptions.find((option) => {
+            const input = option.querySelector('input');
+            return input && input.checked;
+        });
+
+        if (preselectedRole) {
+            preselectedRole.classList.add('active');
+            if (residentTypeInput) {
+                const input = preselectedRole.querySelector('input');
+                residentTypeInput.value = input ? input.value : '';
+            }
+            if (bookingForm) {
+                bookingForm.classList.add('visible');
+            }
+        }
+
         updateExtraPanel();
         updateSponsorPanel();
         updateSponsorPaymentPreview();
@@ -1467,3 +1496,6 @@
 </body>
 
 </html>
+
+
+

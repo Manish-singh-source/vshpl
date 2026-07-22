@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\RegistrationController;
 use App\Http\Controllers\VehicleServiceController;
+use App\Http\Controllers\GaneshUtsavController;
 
 Route::prefix('/vshpl')->group(function () {
     Route::get('/', function () {
@@ -73,6 +74,8 @@ Route::get('/event', function () {
 Route::get('/ganesh-utsav-2026', function () {
     return view('ganpati-booking');
 })->name('ganesh.utsav.celebration');
+Route::post('/ganesh-utsav-2026', [GaneshUtsavController::class, 'store'])->name('ganesh.utsav.store');
+Route::get('/ganesh-utsav-2026/data', [GaneshUtsavController::class, 'index'])->name('ganesh.utsav.data');
 // Route intentionally disabled: /holicelebration
 Route::post('/holicelebration', [App\Http\Controllers\HoliCelebrationController::class, 'store'])->name('holicelebration.store');
 Route::get('/holicelebration/data', [App\Http\Controllers\HoliCelebrationController::class, 'index'])->name('holicelebration.data');
