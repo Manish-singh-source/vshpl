@@ -1093,10 +1093,10 @@
                                     </div>
                                     <div class="payment-layout">
                                         <div class="payment-choice-row">
-                                            <label class="payment-option active" data-payment-option="cod">
-                                                <input type="radio" name="payment_method" value="cod" checked>
+                                            <label class="payment-option active" data-payment-option="Cash">
+                                                <input type="radio" name="payment_method" value="Cash" checked>
                                                 <span class="payment-dot"></span>
-                                                <span>COD</span>
+                                                <span>Cash</span>
                                             </label>
                                             <label class="payment-option" data-payment-option="online">
                                                 <input type="radio" name="payment_method" value="online">
