@@ -1232,6 +1232,16 @@
                             </div>
 
                             <div class="sponsor-panel" data-sponsor-panel>
+                                 <div class="field">
+                                    <div class="field-label">
+                                        <span class="field-icon">📝</span>
+                                        <span>Description</span>
+                                    </div>
+                                    <div class="field-control">
+                                        <textarea class="field-input" placeholder="Write about the sponsor"></textarea>
+                                    </div>
+                                </div>
+
                                 <div class="field">
                                     <div class="field-label">
                                         <span class="field-icon">💰</span>
@@ -1244,16 +1254,7 @@
 
                               
 
-                                <div class="field">
-                                    <div class="field-label">
-                                        <span class="field-icon">📝</span>
-                                        <span>Description</span>
-                                    </div>
-                                    <div class="field-control">
-                                        <textarea class="field-input" placeholder="Write about the sponsor"></textarea>
-                                    </div>
-                                </div>
-
+                               
                                 <div class="field">
                                     <div class="field-label">
                                         <span class="field-icon">💳</span>
