@@ -939,6 +939,24 @@
                 grid-template-columns: 1fr;
             }
 
+            .payment-choice-row {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+                gap: 10px;
+            }
+
+            .payment-choice-row .payment-option:last-child {
+                grid-column: 1 / -1;
+            }
+
+            .payment-option {
+                min-height: 54px;
+                padding: 12px;
+                gap: 8px;
+                justify-content: center;
+                font-size: 0.95rem;
+                text-align: center;
+            }
+
             .feature-row {
                 grid-template-columns: 1fr;
             }
