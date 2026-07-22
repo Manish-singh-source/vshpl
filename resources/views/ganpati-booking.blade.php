@@ -412,19 +412,7 @@
             accent-color: #8f1217;
         }
 
-        .sponsor-panel {
-            display: none;
-            margin-top: 12px;
-            padding: 14px;
-            border-radius: 18px;
-            background: rgba(255, 248, 236, 0.96);
-            border: 1px solid rgba(216, 121, 0, 0.18);
-        }
 
-        .sponsor-panel.visible {
-            display: grid;
-            gap: 12px;
-        }
 
         .amount-summary {
             display: grid;
@@ -1095,13 +1083,7 @@
                                         <input type="checkbox" name="is_sponsor" data-sponsor-toggle>
                                         <span>I am sponsoring this celebration</span>
                                     </label>
-                                    <div class="sponsor-panel" data-sponsor-panel>
-                                        <input class="field-input" type="text" placeholder="Enter sponsor amount">
-                                        <div class="field-upload">
-                                            <span>Upload sponsor payment image</span>
-                                            <button class="upload-btn" type="button">Upload Image</button>
-                                        </div>
-                                    </div>
+
                                 </div>
 
                                 <div class="field">
@@ -1324,8 +1306,7 @@
         const prevButtons = document.querySelectorAll('[data-prev-step]');
         const paymentOptions = Array.from(document.querySelectorAll('[data-payment-option]'));
         const paymentPreviews = Array.from(document.querySelectorAll('[data-payment-preview]'));
-        const sponsorToggle = document.querySelector('[data-sponsor-toggle]');
-        const sponsorPanel = document.querySelector('[data-sponsor-panel]');
+
         const extraCouponSelects = Array.from(document.querySelectorAll('[data-extra-count]'));
         const totalAmountLabels = Array.from(document.querySelectorAll('[data-total-amount]'));
         const baseCouponAmount = 1000;
@@ -1358,13 +1339,7 @@
             });
         }
 
-        function updateSponsorPanel() {
-            if (!sponsorToggle || !sponsorPanel) {
-                return;
-            }
 
-            sponsorPanel.classList.toggle('visible', sponsorToggle.checked);
-        }
 
         function updateCouponTotals(selectedValue = null) {
             let extraCount = selectedValue;
@@ -1421,9 +1396,7 @@
             });
         });
 
-        if (sponsorToggle) {
-            sponsorToggle.addEventListener('change', updateSponsorPanel);
-        }
+
 
         extraCouponSelects.forEach((select) => {
             select.addEventListener('change', () => {
@@ -1433,7 +1406,6 @@
 
         updateSteps();
         updatePaymentPreview();
-        updateSponsorPanel();
         updateCouponTotals();
     </script>
 </body>
