@@ -64,15 +64,7 @@
             overflow: hidden;
         }
 
-        .page-logo {
-            position: absolute;
-            top: 22px;
-            left: 24px;
-            z-index: 3;
-            width: 92px;
-            height: auto;
-            filter: drop-shadow(0 10px 18px rgba(81, 29, 8, 0.18));
-        }
+
 
         .corner-garland {
             position: absolute;
@@ -762,6 +754,135 @@
             color: rgba(76, 51, 39, 0.7);
         }
 
+        .simple-form-stack {
+            display: grid;
+            gap: 16px;
+        }
+
+        .checkbox-card {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+            padding: 14px 16px;
+            border-radius: 18px;
+            background: rgba(255, 247, 233, 0.95);
+            border: 1px solid rgba(216, 121, 0, 0.18);
+        }
+
+        .checkbox-card label {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: #553227;
+            font-weight: 600;
+        }
+
+        .checkbox-card input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            accent-color: #8f1217;
+        }
+
+        .checkbox-note {
+            color: #7b1916;
+            font-weight: 700;
+            white-space: nowrap;
+        }
+
+        .extra-coupon-panel,
+        .sponsor-panel {
+            display: none;
+            gap: 12px;
+            padding: 14px;
+            border-radius: 18px;
+            background: rgba(255, 248, 236, 0.96);
+            border: 1px solid rgba(216, 121, 0, 0.18);
+        }
+
+        .extra-coupon-panel.visible,
+        .sponsor-panel.visible {
+            display: grid;
+        }
+
+        .sponsor-payment-preview {
+            display: none;
+        }
+
+        .sponsor-payment-preview.visible {
+            display: block;
+        }
+
+        .scanner-box {
+            display: grid;
+            justify-items: center;
+            gap: 10px;
+            margin-bottom: 12px;
+            padding: 14px;
+            border-radius: 18px;
+            background: linear-gradient(180deg, #fffdfa 0%, #fff4df 100%);
+            border: 1px solid rgba(188, 76, 18, 0.18);
+        }
+
+        .scanner-box img {
+            width: 96px;
+            height: 96px;
+            object-fit: contain;
+            border-radius: 14px;
+            border: 1px solid rgba(188, 76, 18, 0.18);
+            background: #fff;
+            padding: 8px;
+        }
+
+        .scanner-box p {
+            margin: 0;
+            font-size: 0.88rem;
+            text-align: center;
+            color: rgba(76, 51, 39, 0.82);
+        }
+
+        .summary-card {
+            display: grid;
+            gap: 12px;
+            padding: 16px;
+            border-radius: 20px;
+            background: linear-gradient(180deg, rgba(255, 248, 236, 0.98), rgba(255, 240, 214, 0.92));
+            border: 1px solid rgba(216, 121, 0, 0.18);
+        }
+
+        .summary-title {
+            margin: 0;
+            color: #7b1916;
+            font-size: 1rem;
+            font-weight: 700;
+        }
+
+        .summary-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            color: #553227;
+            font-size: 0.96rem;
+        }
+
+        .summary-row strong {
+            color: #7b1916;
+        }
+
+        .summary-row.total {
+            padding-top: 10px;
+            border-top: 1px dashed rgba(188, 76, 18, 0.24);
+            font-size: 1.02rem;
+            font-weight: 700;
+        }
+
+        textarea.field-input {
+            min-height: 120px;
+            padding: 16px 18px;
+            resize: vertical;
+        }
+
         .feature-row {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
@@ -847,11 +968,7 @@
                 border-radius: 22px;
             }
 
-            .page-logo {
-                width: 72px;
-                top: 16px;
-                left: 16px;
-            }
+
 
             .role-selector {
                 padding: 16px 14px;
@@ -963,9 +1080,9 @@
 
 <body>
     <main class="page">
-        <img src="{{ asset('assets/main.png') }}" alt="Veena Smart Homes Logo" class="page-logo">
-        <div class="corner-garland left"></div>
-        <div class="corner-garland right"></div>
+
+        {{-- <div class="corner-garland left"></div>
+        <div class="corner-garland right"></div> --}}
 
         <section class="layout">
             <div class="visual-panel">
@@ -980,8 +1097,8 @@
 
             <div class="content-panel">
                 <div class="mini-ornament"><span></span></div>
-                <p class="eyebrow">Ganesh Utsav Celebration</p>
-                <h1 class="title">VSH 2026 <br> <strong>Ganesh Utsav Celebration</strong></h1>
+                {{-- <p class="eyebrow">Ganesh Utsav Celebration</p> --}}
+                <h1 class="title">VSH<br> <strong>Ganesh Utsav Celebration 2026</strong></h1>
                 {{-- <p class="sub-mantra">|| मंगलमूर्ति मोरया, पुढच्या वर्षी लवकर या ||</p> --}}
                 {{-- <p class="description">Book your Ganpati celebration with ease. Static preview ready hai, baad mein isi section ko dynamic form se connect kar sakte hain.</p> --}}
 
@@ -1010,80 +1127,131 @@
                     </div>
 
                     <form class="booking-form-static" action="javascript:void(0);">
-                        <div class="form-step active" data-step="0">
-                            <p class="step-title">Basic details</p>
-                            <div class="field-grid">
+                        <p class="step-title">Basic details</p>
+                        <div class="simple-form-stack">
+                            <div class="field">
+                                <div class="field-label">
+                                    <span class="field-icon">🏢</span>
+                                    <span>Select Wing</span>
+                                </div>
+                                <div class="field-control">
+                                    <select class="field-input">
+                                        <option>Select Wing</option>
+                                        <option>Wing A</option>
+                                        <option>Wing B</option>
+                                        <option>Wing C</option>
+                                        <option>Wing D</option>
+                                        <option>Wing E</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="field">
+                                <div class="field-label">
+                                    <span class="field-icon">🏠</span>
+                                    <span>Flat Number</span>
+                                </div>
+                                <div class="field-control">
+                                    <input class="field-input" type="text" placeholder="Enter flat number">
+                                </div>
+                            </div>
+
+                            <div class="field">
+                                <div class="field-label">
+                                    <span class="field-icon">👤</span>
+                                    <span>Name</span>
+                                </div>
+                                <div class="field-control">
+                                    <input class="field-input" type="text" placeholder="Enter full name">
+                                </div>
+                            </div>
+
+                            <div class="field">
+                                <div class="field-label">
+                                    <span class="field-icon">📞</span>
+                                    <span>Number</span>
+                                </div>
+                                <div class="field-control">
+                                    <input class="field-input" type="tel" placeholder="Enter mobile number">
+                                </div>
+                            </div>
+
+                            <div class="summary-card">
+                                <div class="summary-row">
+                                    <span class="summary-title">Base Amount</span>
+                                    <strong>Rs 1000</strong>
+                                </div>
+                            </div>
+
+                            <div class="checkbox-card">
+                                <label>
+                                    <input type="checkbox" data-extra-toggle>
+                                    <span>Extra Amount</span>
+                                </label>
+                                <span class="checkbox-note">Rs 250</span>
+                            </div>
+
+                            <div class="extra-coupon-panel" data-extra-panel>
                                 <div class="field">
                                     <div class="field-label">
-                                        <span class="field-icon">🏢</span>
-                                        <span>Select Wing</span>
+                                        <span class="field-icon">🎟</span>
+                                        <span>Select Extra Quantity</span>
                                     </div>
                                     <div class="field-control">
-                                        <select class="field-input">
-                                            <option>Select Wing</option>
-                                            <option>Wing A</option>
-                                            <option>Wing B</option>
-                                            <option>Wing C</option>
-                                            <option>Wing D</option>
-                                            <option>Wing E</option>
+                                        <select class="field-input" data-extra-count>
+                                            <option value="1">1</option>
+                                            <option value="2">2</option>
+                                            <option value="3">3</option>
+                                            <option value="4">4</option>
+                                            <option value="5">5</option>
+                                            <option value="6">6</option>
+                                            <option value="7">7</option>
+                                            <option value="8">8</option>
+                                            <option value="9">9</option>
+                                            <option value="10">10</option>
+                                            <option value="11">11</option>
+                                            <option value="12">12</option>
+                                            <option value="13">13</option>
+                                            <option value="14">14</option>
+                                            <option value="15">15</option>
+                                            <option value="16">16</option>
+                                            <option value="17">17</option>
+                                            <option value="18">18</option>
+                                            <option value="19">19</option>
+                                            <option value="20">20</option>
                                         </select>
                                     </div>
                                 </div>
-
-                                <div class="field">
-                                    <div class="field-label">
-                                        <span class="field-icon">🏠</span>
-                                        <span>Flat Number</span>
-                                    </div>
-                                    <div class="field-control">
-                                        <input class="field-input" type="text" placeholder="Enter flat number">
-                                    </div>
-                                </div>
-
-                                <div class="field">
-                                    <div class="field-label">
-                                        <span class="field-icon">👤</span>
-                                        <span>Name</span>
-                                    </div>
-                                    <div class="field-control">
-                                        <input class="field-input" type="text" placeholder="Enter full name">
-                                    </div>
-                                </div>
-
-                                <div class="field">
-                                    <div class="field-label">
-                                        <span class="field-icon">📞</span>
-                                        <span>Number</span>
-                                    </div>
-                                    <div class="field-control">
-                                        <input class="field-input" type="tel" placeholder="Enter mobile number">
-                                    </div>
-                                </div>
                             </div>
 
-                            <div class="step-actions">
-                                <button class="ghost-btn" type="button" disabled>Previous</button>
-                                <button class="next-btn" type="button" data-next-step>Next</button>
+                            <div class="checkbox-card">
+                                <label>
+                                    <input type="checkbox" data-sponsor-toggle>
+                                    <span>We are sponsor</span>
+                                </label>
                             </div>
-                        </div>
 
-                        <div class="form-step" data-step="1">
-                            <p class="step-title">Select your profile picture and payment method</p>
-                            <div class="field-grid">
+                            <div class="sponsor-panel" data-sponsor-panel>
                                 <div class="field">
                                     <div class="field-label">
-                                        <span class="field-icon">🖼</span>
-                                        <span>Profile Picture</span>
+                                        <span class="field-icon">💰</span>
+                                        <span>Sponsor Amount</span>
                                     </div>
-                                    <div class="field-upload">
-                                        <span>Upload profile picture</span>
-                                        <button class="upload-btn" type="button">Choose File</button>
+                                    <div class="field-control">
+                                        <input class="field-input" type="number" min="0" step="1" placeholder="Enter sponsor amount" data-sponsor-amount>
                                     </div>
-                                    <label class="sponsor-check">
-                                        <input type="checkbox" name="is_sponsor" data-sponsor-toggle>
-                                        <span>I am sponsoring this celebration</span>
-                                    </label>
+                                </div>
 
+                              
+
+                                <div class="field">
+                                    <div class="field-label">
+                                        <span class="field-icon">📝</span>
+                                        <span>Description</span>
+                                    </div>
+                                    <div class="field-control">
+                                        <textarea class="field-input" placeholder="Write about the sponsor"></textarea>
+                                    </div>
                                 </div>
 
                                 <div class="field">
@@ -1093,124 +1261,28 @@
                                     </div>
                                     <div class="payment-layout">
                                         <div class="payment-choice-row">
-                                            <label class="payment-option active" data-payment-option="Cash">
-                                                <input type="radio" name="payment_method" value="Cash" checked>
+                                            <label class="payment-option active" data-sponsor-payment-option="cash">
+                                                <input type="radio" name="sponsor_payment_method" value="cash" checked>
                                                 <span class="payment-dot"></span>
                                                 <span>Cash</span>
                                             </label>
-                                            <label class="payment-option" data-payment-option="online">
-                                                <input type="radio" name="payment_method" value="online">
+                                            <label class="payment-option" data-sponsor-payment-option="online">
+                                                <input type="radio" name="sponsor_payment_method" value="online">
                                                 <span class="payment-dot"></span>
                                                 <span>Online</span>
                                             </label>
-                                            <label class="payment-option" data-payment-option="already-paid">
-                                                <input type="radio" name="payment_method" value="already_paid">
+                                            <label class="payment-option" data-sponsor-payment-option="already-paid">
+                                                <input type="radio" name="sponsor_payment_method" value="already_paid">
                                                 <span class="payment-dot"></span>
                                                 <span>Already Paid</span>
                                             </label>
                                         </div>
-                                    </div>
-                                </div>
-                            </div>
 
-                            <div class="step-actions">
-                                <button class="ghost-btn" type="button" data-prev-step>Previous</button>
-                                <button class="next-btn" type="button" data-next-step>Next</button>
-                            </div>
-                        </div>
-
-                        <div class="form-step" data-step="2">
-                            <p class="step-title">Complete your payment details</p>
-                            <div class="payment-preview active" data-payment-preview="cod">
-                                <div class="payment-detail">
-                                    <h3>COD Amount</h3>
-                                    <div class="amount-summary">
-                                        <div class="summary-row">
-                                            <span>Coupon Amount</span>
-                                            <strong>Rs 1000</strong>
-                                        </div>
-                                        <div class="summary-row">
-                                            <span>Extra Coupon</span>
-                                            <strong>Rs 250 each</strong>
-                                        </div>
-                                        <div class="summary-row summary-row-select">
-                                            <span>Select Extra Coupon</span>
-                                            <select class="field-input" data-extra-count>
-                                                <option value="0">No Extra Coupon</option>
-                                                <option value="1">1</option>
-                                                <option value="2">2</option>
-                                                <option value="3">3</option>
-                                                <option value="4">4</option>
-                                                <option value="5">5</option>
-                                                <option value="6">6</option>
-                                                <option value="7">7</option>
-                                                <option value="8">8</option>
-                                                <option value="9">9</option>
-                                                <option value="10">10</option>
-                                                <option value="11">11</option>
-                                                <option value="12">12</option>
-                                                <option value="13">13</option>
-                                                <option value="14">14</option>
-                                                <option value="15">15</option>
-                                                <option value="16">16</option>
-                                                <option value="17">17</option>
-                                                <option value="18">18</option>
-                                                <option value="19">19</option>
-                                                <option value="20">20</option>
-                                            </select>
-                                        </div>
-                                        <div class="summary-row total">
-                                            <span>Total Amount</span>
-                                            <strong data-total-amount>Rs 1000</strong>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="payment-preview" data-payment-preview="online">
-                                <div class="payment-detail">
-                                    <h3>Online Payment</h3>
-                                    <div class="payment-row">
-                                        <div class="payment-detail-grid">
-                                            <div class="amount-summary">
-                                                <div class="summary-row">
-                                                    <span>Coupon Amount</span>
-                                                    <strong>Rs 1000</strong>
-                                                </div>
-                                                <div class="summary-row">
-                                                    <span>Extra Coupon</span>
-                                                    <strong>Rs 250 each</strong>
-                                                </div>
-                                                <div class="summary-row summary-row-select">
-                                                    <span>Select Extra Coupon</span>
-                                                    <select class="field-input" data-extra-count>
-                                                        <option value="0">No Extra Coupon</option>
-                                                        <option value="1">1</option>
-                                                        <option value="2">2</option>
-                                                        <option value="3">3</option>
-                                                        <option value="4">4</option>
-                                                        <option value="5">5</option>
-                                                        <option value="6">6</option>
-                                                        <option value="7">7</option>
-                                                        <option value="8">8</option>
-                                                        <option value="9">9</option>
-                                                        <option value="10">10</option>
-                                                        <option value="11">11</option>
-                                                        <option value="12">12</option>
-                                                        <option value="13">13</option>
-                                                        <option value="14">14</option>
-                                                        <option value="15">15</option>
-                                                        <option value="16">16</option>
-                                                        <option value="17">17</option>
-                                                        <option value="18">18</option>
-                                                        <option value="19">19</option>
-                                                        <option value="20">20</option>
-                                                    </select>
-                                                </div>
-                                                <div class="summary-row total">
-                                                    <span>Total Amount</span>
-                                                    <strong data-total-amount>Rs 1000</strong>
-                                                </div>
+                                        <div class="sponsor-payment-preview" data-sponsor-payment-preview="online">
+                                            <div class="scanner-box">
+                                                <img src="{{ asset('assets/qr.png') }}" alt="Scanner QR Code">
+                                                <p>Scan or download the QR code before uploading the payment screenshot.</p>
+                                                <button class="qr-download" type="button">Download QR Code</button>
                                             </div>
                                             <div class="field-upload">
                                                 <span>Upload payment screenshot</span>
@@ -1218,167 +1290,131 @@
                                             </div>
                                         </div>
 
-                                        <div class="qr-panel">
-                                            <img src="{{ asset('assets/qr.png') }}" alt="QR Code">
-                                            <p>Scan or download your QR code for online payment.</p>
-                                            <button class="qr-download" type="button">Download QR Code</button>
+                                        <div class="sponsor-payment-preview" data-sponsor-payment-preview="already-paid">
+                                            <div class="scanner-box">
+                                                <img src="{{ asset('assets/qr.png') }}" alt="Scanner QR Code">
+                                                <p>Use this QR code reference before uploading your payment proof.</p>
+                                                <button class="qr-download" type="button">Download QR Code</button>
+                                            </div>
+                                            <div class="field-upload">
+                                                <span>Upload payment proof</span>
+                                                <button class="upload-btn" type="button">Upload Image</button>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
 
-                            <div class="payment-preview" data-payment-preview="already-paid">
-                                <div class="payment-detail">
-                                    <h3>Already Paid</h3>
-                                    <div class="payment-detail-grid">
-                                        <div class="amount-summary">
-                                            <div class="summary-row">
-                                                <span>Coupon Amount</span>
-                                                <strong>Rs 1000</strong>
-                                            </div>
-                                            <div class="summary-row">
-                                                <span>Extra Coupon</span>
-                                                <strong>Rs 250 each</strong>
-                                            </div>
-                                            <div class="summary-row summary-row-select">
-                                                <span>Select Extra Coupon</span>
-                                                <select class="field-input" data-extra-count>
-                                                    <option value="0">No Extra Coupon</option>
-                                                    <option value="1">1</option>
-                                                    <option value="2">2</option>
-                                                    <option value="3">3</option>
-                                                    <option value="4">4</option>
-                                                    <option value="5">5</option>
-                                                    <option value="6">6</option>
-                                                    <option value="7">7</option>
-                                                    <option value="8">8</option>
-                                                    <option value="9">9</option>
-                                                    <option value="10">10</option>
-                                                    <option value="11">11</option>
-                                                    <option value="12">12</option>
-                                                    <option value="13">13</option>
-                                                    <option value="14">14</option>
-                                                    <option value="15">15</option>
-                                                    <option value="16">16</option>
-                                                    <option value="17">17</option>
-                                                    <option value="18">18</option>
-                                                    <option value="19">19</option>
-                                                    <option value="20">20</option>
-                                                </select>
-                                            </div>
-                                            <div class="summary-row total">
-                                                <span>Total Amount</span>
-                                                <strong data-total-amount>Rs 1000</strong>
-                                            </div>
-                                        </div>
-                                        <div class="field-upload">
-                                            <span>Upload payment proof</span>
-                                            <button class="upload-btn" type="button">Upload Image</button>
-                                        </div>
-                                    </div>
+                            <div class="summary-card">
+                                <p class="summary-title">Total Amount</p>
+                                <div class="summary-row">
+                                    <span>Coupon Amount</span>
+                                    <strong>Rs 1000</strong>
+                                </div>
+                                <div class="summary-row">
+                                    <span>Extra Coupon Total</span>
+                                    <strong data-extra-total>Rs 0</strong>
+                                </div>
+                                <div class="summary-row">
+                                    <span>Sponsor Amount</span>
+                                    <strong data-sponsor-total>Rs 0</strong>
+                                </div>
+                                <div class="summary-row total">
+                                    <span>Grand Total</span>
+                                    <strong data-grand-total>Rs 1000</strong>
                                 </div>
                             </div>
 
-                            <div class="step-actions">
-                                <button class="ghost-btn" type="button" data-prev-step>Previous</button>
-                                <button class="cta" type="button">
-                                    <span>📩 Submit Booking</span>
-                                </button>
-                            </div>
+                            <button class="cta" type="button">
+                                <span>📩 Submit Booking</span>
+                            </button>
                         </div>
                     </form>
                 </div>
 
                 
 
-                <div class="site-credit">
+                {{-- <div class="site-credit">
                     Designed by <a href="https://technofra.com/" target="_blank">Technofra</a>
-                </div>
+                </div> --}}
             </div>
         </section>
     </main>
-    <script>
+        <script>
         const bookingForm = document.querySelector('.booking-form-static');
         const roleOptions = Array.from(document.querySelectorAll('[data-role-option]'));
-        const formSteps = Array.from(document.querySelectorAll('[data-step]'));
-        const stepChips = Array.from(document.querySelectorAll('[data-step-chip]'));
-        const nextButtons = document.querySelectorAll('[data-next-step]');
-        const prevButtons = document.querySelectorAll('[data-prev-step]');
-        const paymentOptions = Array.from(document.querySelectorAll('[data-payment-option]'));
-        const paymentPreviews = Array.from(document.querySelectorAll('[data-payment-preview]'));
-
-        const extraCouponSelects = Array.from(document.querySelectorAll('[data-extra-count]'));
-        const totalAmountLabels = Array.from(document.querySelectorAll('[data-total-amount]'));
+        const extraToggle = document.querySelector('[data-extra-toggle]');
+        const extraPanel = document.querySelector('[data-extra-panel]');
+        const extraCount = document.querySelector('[data-extra-count]');
+        const sponsorToggle = document.querySelector('[data-sponsor-toggle]');
+        const sponsorPanel = document.querySelector('[data-sponsor-panel]');
+        const sponsorAmountInput = document.querySelector('[data-sponsor-amount]');
+        const sponsorPaymentOptions = Array.from(document.querySelectorAll('[data-sponsor-payment-option]'));
+        const sponsorPaymentPreviews = Array.from(document.querySelectorAll('[data-sponsor-payment-preview]'));
+        const extraTotalLabel = document.querySelector('[data-extra-total]');
+        const sponsorTotalLabel = document.querySelector('[data-sponsor-total]');
+        const grandTotalLabel = document.querySelector('[data-grand-total]');
         const baseCouponAmount = 1000;
         const extraCouponAmount = 250;
-        let activeStep = 0;
-        let activePayment = 'cod';
 
-        function updateSteps() {
-            formSteps.forEach((step, index) => {
-                step.classList.toggle('active', index === activeStep);
-            });
+        function updateExtraPanel() {
+            if (!extraToggle || !extraPanel) {
+                return;
+            }
 
-            stepChips.forEach((chip, index) => {
-                chip.classList.toggle('active', index === activeStep);
-            });
+            extraPanel.classList.toggle('visible', extraToggle.checked);
         }
 
-        function updatePaymentPreview() {
-            paymentOptions.forEach((option) => {
-                const isActive = option.dataset.paymentOption === activePayment;
-                option.classList.toggle('active', isActive);
+        function updateSponsorPanel() {
+            if (!sponsorToggle || !sponsorPanel) {
+                return;
+            }
+
+            sponsorPanel.classList.toggle('visible', sponsorToggle.checked);
+        }
+
+        function updateSponsorPaymentPreview() {
+            let activeSponsorPayment = 'cash';
+
+            sponsorPaymentOptions.forEach((option) => {
                 const input = option.querySelector('input');
+                if (input && input.checked) {
+                    activeSponsorPayment = option.dataset.sponsorPaymentOption;
+                }
+            });
+
+            sponsorPaymentOptions.forEach((option) => {
+                const input = option.querySelector('input');
+                const isActive = option.dataset.sponsorPaymentOption === activeSponsorPayment;
+                option.classList.toggle('active', isActive);
                 if (input) {
                     input.checked = isActive;
                 }
             });
 
-            paymentPreviews.forEach((preview) => {
-                preview.classList.toggle('active', preview.dataset.paymentPreview === activePayment);
+            sponsorPaymentPreviews.forEach((preview) => {
+                preview.classList.toggle('visible', preview.dataset.sponsorPaymentPreview === activeSponsorPayment && activeSponsorPayment !== 'cash');
             });
         }
 
+        function updateTotals() {
+            const extraCountValue = extraToggle && extraToggle.checked && extraCount ? Number(extraCount.value || 0) : 0;
+            const extraTotal = extraCountValue * extraCouponAmount;
+            const sponsorAmount = sponsorToggle && sponsorToggle.checked && sponsorAmountInput ? Number(sponsorAmountInput.value || 0) : 0;
+            const grandTotal = baseCouponAmount + extraTotal + sponsorAmount;
 
-
-        function updateCouponTotals(selectedValue = null) {
-            let extraCount = selectedValue;
-
-            if (extraCount === null) {
-                extraCount = extraCouponSelects.length ? Number(extraCouponSelects[0].value || 0) : 0;
+            if (extraTotalLabel) {
+                extraTotalLabel.textContent = `Rs ${extraTotal}`;
             }
 
-            const total = baseCouponAmount + (extraCouponAmount * Number(extraCount));
+            if (sponsorTotalLabel) {
+                sponsorTotalLabel.textContent = `Rs ${sponsorAmount}`;
+            }
 
-            extraCouponSelects.forEach((select) => {
-                select.value = String(extraCount);
-            });
-
-            totalAmountLabels.forEach((label) => {
-                label.textContent = `Rs ${total}`;
-            });
+            if (grandTotalLabel) {
+                grandTotalLabel.textContent = `Rs ${grandTotal}`;
+            }
         }
-
-        nextButtons.forEach((button) => {
-            button.addEventListener('click', () => {
-                activeStep = Math.min(activeStep + 1, formSteps.length - 1);
-                updateSteps();
-            });
-        });
-
-        prevButtons.forEach((button) => {
-            button.addEventListener('click', () => {
-                activeStep = Math.max(activeStep - 1, 0);
-                updateSteps();
-            });
-        });
-
-        paymentOptions.forEach((option) => {
-            option.addEventListener('click', () => {
-                activePayment = option.dataset.paymentOption;
-                updatePaymentPreview();
-            });
-        });
 
         roleOptions.forEach((option) => {
             option.addEventListener('click', () => {
@@ -1391,22 +1427,41 @@
                 if (bookingForm) {
                     bookingForm.classList.add('visible');
                 }
-                activeStep = 0;
-                updateSteps();
             });
         });
 
+        if (extraToggle) {
+            extraToggle.addEventListener('change', () => {
+                updateExtraPanel();
+                updateTotals();
+            });
+        }
 
+        if (extraCount) {
+            extraCount.addEventListener('change', updateTotals);
+        }
 
-        extraCouponSelects.forEach((select) => {
-            select.addEventListener('change', () => {
-                updateCouponTotals(Number(select.value || 0));
+        if (sponsorToggle) {
+            sponsorToggle.addEventListener('change', () => {
+                updateSponsorPanel();
+                updateTotals();
+            });
+        }
+
+        if (sponsorAmountInput) {
+            sponsorAmountInput.addEventListener('input', updateTotals);
+        }
+
+        sponsorPaymentOptions.forEach((option) => {
+            option.addEventListener('click', () => {
+                updateSponsorPaymentPreview();
             });
         });
 
-        updateSteps();
-        updatePaymentPreview();
-        updateCouponTotals();
+        updateExtraPanel();
+        updateSponsorPanel();
+        updateSponsorPaymentPreview();
+        updateTotals();
     </script>
 </body>
 
