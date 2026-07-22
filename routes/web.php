@@ -70,6 +70,9 @@ Route::get('/', function () {
 Route::get('/event', function () {
     return view('event');
 })->name('event.page');
+Route::get('/ganesh-utsav-2026', function () {
+    return view('ganpati-booking');
+})->name('ganesh.utsav.celebration');
 // Route intentionally disabled: /holicelebration
 Route::post('/holicelebration', [App\Http\Controllers\HoliCelebrationController::class, 'store'])->name('holicelebration.store');
 Route::get('/holicelebration/data', [App\Http\Controllers\HoliCelebrationController::class, 'index'])->name('holicelebration.data');
