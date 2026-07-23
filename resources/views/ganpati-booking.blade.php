@@ -1772,7 +1772,9 @@
             if (extraCard) extraCard.style.display = isSponsor ? 'none' : 'flex';
             if (extraToggle && isSponsor) extraToggle.checked = false;
 
-            if (sponsorBreakdown) sponsorBreakdown.style.display = isSponsor ? 'block' : 'none';
+if (sponsorBreakdown) {
+                sponsorBreakdown.style.display = isSponsor && getSponsorMode() === 'monetary' ? 'block' : 'none';
+            }
 
             updateExtraPanel();
             updateSponsorModeUI();
@@ -1995,6 +1997,7 @@
 </body>
 
 </html>
+
 
 
 
