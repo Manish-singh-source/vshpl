@@ -1235,7 +1235,18 @@
                 grid-column: 1 / -1;
             }
 
-            .payment-option {
+            
+            .payment-choice-row.sponsor-mode-row {
+                grid-template-columns: 1fr;
+            }
+
+            .payment-choice-row.sponsor-mode-row .payment-option {
+                width: 100%;
+                min-height: 60px;
+                justify-content: flex-start;
+                text-align: left;
+            }
+.payment-option {
                 min-height: 54px;
                 padding: 12px;
                 gap: 8px;
@@ -1997,6 +2008,7 @@ if (sponsorBreakdown) {
 </body>
 
 </html>
+
 
 
 
