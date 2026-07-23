@@ -322,6 +322,11 @@
             font-size: 0.98rem;
         }
 
+        .required {
+            color: #b5161d;
+            font-weight: 800;
+        }
+
         .field-input,
         .field-upload,
         .payment-option,
@@ -741,7 +746,16 @@
         }
 
         .payment-option input {
-            display: none;
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .payment-option:has(input:focus-visible) {
+            outline: 3px solid rgba(190, 22, 29, 0.28);
+            outline-offset: 3px;
         }
 
         .payment-preview {
@@ -1092,7 +1106,7 @@
         <section class="layout">
             <div class="visual-panel">
                 <div class="visual-overlay"></div>
-                {{-- <div class="mantra-badge">à¤¶à¥à¤°à¥€<span>à¥¥ à¤¶à¥à¤°à¥€ à¤—à¤£à¥‡à¤¶à¤¾à¤¯ à¤¨à¤®à¤ƒ à¥¥</span></div> --}}
+                {{-- <div class="mantra-badge">श्री<span>॥ श्री गणेशाय नमः ॥</span></div> --}}
 
                 {{-- <div class="bottom-banner">
                     <span class="small">Celebrate devotion. Create memories.</span>
@@ -1104,7 +1118,7 @@
                 <div class="mini-ornament"><span></span></div>
                 {{-- <p class="eyebrow">Ganesh Utsav Celebration</p> --}}
                 <h1 class="title">VSH<br> <strong>Ganesh Utsav Celebration 2026</strong></h1>
-                {{-- <p class="sub-mantra">|| à¤®à¤‚à¤—à¤²à¤®à¥‚à¤°à¥à¤¤à¤¿ à¤®à¥‹à¤°à¤¯à¤¾, à¤ªà¥à¤¢à¤šà¥à¤¯à¤¾ à¤µà¤°à¥à¤·à¥€ à¤²à¤µà¤•à¤° à¤¯à¤¾ ||</p> --}}
+                {{-- <p class="sub-mantra">|| मंगलमूर्ति मोरया, पुढच्या वर्षी लवकर या ||</p> --}}
                 {{-- <p class="description">Book your Ganpati celebration with ease. Static preview ready hai, baad mein isi section ko dynamic form se connect kar sakte hain.</p> --}}
 
                 <div class="booking-card">
@@ -1131,16 +1145,16 @@
                     </div> --}}
 
                     <div class="role-selector">
-                        <h3>Select Resident Type</h3>
+                        <h3>Select Resident Type <span class="required">*</span></h3>
                         <p>Please select whether you are an owner or a tenant to join the celebrations.</p>
                         <div class="role-options">
                             <label class="role-option" data-role-option="owner">
-                                <input type="radio" name="resident_type" value="owner">
+                                <input type="radio" name="resident_type" value="owner" {{ old('resident_type') === 'owner' ? 'checked' : '' }}>
                                 <span class="role-dot"></span>
                                 <span>Owner</span>
                             </label>
                             <label class="role-option" data-role-option="tenant">
-                                <input type="radio" name="resident_type" value="tenant">
+                                <input type="radio" name="resident_type" value="tenant" {{ old('resident_type') === 'tenant' ? 'checked' : '' }}>
                                 <span class="role-dot"></span>
                                 <span>Tenant</span>
                             </label>
@@ -1149,16 +1163,16 @@
 
                     <form class="booking-form-static" action="{{ route('ganesh.utsav.store') }}" method="POST" enctype="multipart/form-data">
                         @csrf
-                        <input type="hidden" name="resident_type" data-resident-type-input>
+                        <input type="hidden" name="resident_type" value="{{ old('resident_type') }}" data-resident-type-input>
                         <p class="step-title">Basic details</p>
                         <div class="simple-form-stack">
                             <div class="field">
                                 <div class="field-label">
                                     <span class="field-icon" aria-hidden="true">&#x1F3E2;</span>
-                                    <span>Select Wing</span>
+                                    <span>Select Wing <span class="required">*</span></span>
                                 </div>
                                 <div class="field-control">
-                                    <select class="field-input" name="wing">
+                                    <select class="field-input" name="wing" required>
                                         <option value="">Select Wing</option>
                                         <option value="Wing A" {{ old('wing') === 'Wing A' ? 'selected' : '' }}>Wing A</option>
                                         <option value="Wing B" {{ old('wing') === 'Wing B' ? 'selected' : '' }}>Wing B</option>
@@ -1172,32 +1186,33 @@
                             <div class="field">
                                 <div class="field-label">
                                     <span class="field-icon" aria-hidden="true">&#x1F3E0;</span>
-                                    <span>Flat Number</span>
+                                    <span>Flat Number <span class="required">*</span></span>
                                 </div>
                                 <div class="field-control">
-                                    <input class="field-input" type="text" name="flat_number" placeholder="Enter flat number" value="{{ old('flat_number') }}">
+                                    <input class="field-input" type="text" name="flat_number" placeholder="Enter flat number" value="{{ old('flat_number') }}" required>
                                 </div>
                             </div>
 
                             <div class="field">
                                 <div class="field-label">
                                     <span class="field-icon" aria-hidden="true">&#x1F464;</span>
-                                    <span>Name</span>
+                                    <span>Name <span class="required">*</span></span>
                                 </div>
                                 <div class="field-control">
-                                    <input class="field-input" type="text" name="full_name" placeholder="Enter full name" value="{{ old('full_name') }}">
+                                    <input class="field-input" type="text" name="full_name" placeholder="Enter full name" value="{{ old('full_name') }}" required>
                                 </div>
                             </div>
 
                             <div class="field">
                                 <div class="field-label">
                                     <span class="field-icon" aria-hidden="true">&#x1F4DE;</span>
-                                    <span>Number</span>
+                                    <span>Number <span class="required">*</span></span>
                                 </div>
                                 <div class="field-control">
-                                    <input class="field-input" type="tel" name="mobile_number" placeholder="Enter mobile number" value="{{ old('mobile_number') }}">
+                                    <input class="field-input" type="tel" name="mobile_number" placeholder="Enter mobile number" value="{{ old('mobile_number') }}" required>
                                 </div>
                             </div>
+
 
                             <div class="summary-card">
                                 <div class="summary-row">
@@ -1255,7 +1270,7 @@
                             </div>
 
                             <div class="sponsor-panel" data-sponsor-panel>
-                                 <div class="field">
+                                <div class="field">
                                     <div class="field-label">
                                         <span class="field-icon" aria-hidden="true">&#x1F4DD;</span>
                                         <span>Description</span>
@@ -1274,46 +1289,43 @@
                                         <input class="field-input" type="number" min="0" step="1" name="sponsor_amount" placeholder="Enter sponsor amount" data-sponsor-amount value="{{ old('sponsor_amount') }}">
                                     </div>
                                 </div>
+                            </div>
 
-                              
-
-                               
-                                <div class="field">
-                                    <div class="field-label">
-                                        <span class="field-icon" aria-hidden="true">&#x1F4B3;</span>
-                                        <span>Payment Method</span>
+                            <div class="field">
+                                <div class="field-label">
+                                    <span class="field-icon" aria-hidden="true">&#x1F4B3;</span>
+                                    <span>Payment Method <span class="required">*</span></span>
+                                </div>
+                                <div class="payment-layout">
+                                    <div class="payment-choice-row">
+                                        <label class="payment-option" data-sponsor-payment-option="cash">
+                                            <input type="radio" name="sponsor_payment_method" value="cash" required {{ old('sponsor_payment_method') === 'cash' ? 'checked' : '' }}>
+                                            <span class="payment-dot"></span>
+                                            <span>Cash</span>
+                                        </label>
+                                        <label class="payment-option" data-sponsor-payment-option="online">
+                                            <input type="radio" name="sponsor_payment_method" value="online" required {{ old('sponsor_payment_method') === 'online' ? 'checked' : '' }}>
+                                            <span class="payment-dot"></span>
+                                            <span>Online</span>
+                                        </label>
+                                        <label class="payment-option" data-sponsor-payment-option="already-paid">
+                                            <input type="radio" name="sponsor_payment_method" value="already_paid" required {{ old('sponsor_payment_method') === 'already_paid' ? 'checked' : '' }}>
+                                            <span class="payment-dot"></span>
+                                            <span>Already Paid</span>
+                                        </label>
                                     </div>
-                                    <div class="payment-layout">
-                                        <div class="payment-choice-row">
-                                            <label class="payment-option active" data-sponsor-payment-option="cash">
-                                                <input type="radio" name="sponsor_payment_method" value="cash" {{ old('sponsor_payment_method', 'cash') === 'cash' ? 'checked' : '' }}>
-                                                <span class="payment-dot"></span>
-                                                <span>Cash</span>
-                                            </label>
-                                            <label class="payment-option" data-sponsor-payment-option="online">
-                                                <input type="radio" name="sponsor_payment_method" value="online" {{ old('sponsor_payment_method') === 'online' ? 'checked' : '' }}>
-                                                <span class="payment-dot"></span>
-                                                <span>Online</span>
-                                            </label>
-                                            <label class="payment-option" data-sponsor-payment-option="already-paid">
-                                                <input type="radio" name="sponsor_payment_method" value="already_paid" {{ old('sponsor_payment_method') === 'already_paid' ? 'checked' : '' }}>
-                                                <span class="payment-dot"></span>
-                                                <span>Already Paid</span>
-                                            </label>
-                                        </div>
 
-                                        <div class="sponsor-payment-preview" data-sponsor-payment-preview="proof">
-                                            <div class="scanner-box">
-                                                <img src="{{ asset('assets/ganptiqrcode.jpeg') }}" alt="Scanner QR Code">
-                                                <p>Scan or download the QR code before uploading the payment screenshot.</p>
-                                                <a class="qr-download" href="{{ asset('assets/ganptiqrcode.jpeg') }}" download="ganpati-qr-code.jpeg">Download QR Code</a>
-                                            </div>
-                                            <div class="field-control"><input class="field-input" type="file" name="sponsor_payment_screenshot" accept="image/*"></div>
+                                    <div class="sponsor-payment-preview" data-sponsor-payment-preview="proof">
+                                        <div class="scanner-box">
+                                            <img src="{{ asset('assets/ganptiqrcode.jpeg') }}" alt="Scanner QR Code">
+                                            <p>Scan or download the QR code before uploading the payment screenshot.</p>
+                                            <a class="qr-download" href="{{ asset('assets/ganptiqrcode.jpeg') }}" download="ganpati-qr-code.jpeg">Download QR Code</a>
                                         </div>
-
+                                        <div class="field-control"><input class="field-input" type="file" name="sponsor_payment_screenshot" accept="image/*"></div>
                                     </div>
                                 </div>
                             </div>
+
 
                             <div class="summary-card">
                                 <p class="summary-title">Total Amount</p>
@@ -1385,7 +1397,7 @@
         }
 
         function updateSponsorPaymentPreview() {
-            let activeSponsorPayment = 'cash';
+            let activeSponsorPayment = null;
 
             sponsorPaymentOptions.forEach((option) => {
                 const input = option.querySelector('input');
@@ -1404,7 +1416,7 @@
             });
 
             sponsorPaymentPreviews.forEach((preview) => {
-                preview.classList.toggle('visible', activeSponsorPayment !== 'cash');
+                preview.classList.toggle('visible', activeSponsorPayment !== null && activeSponsorPayment !== 'cash');
             });
         }
 

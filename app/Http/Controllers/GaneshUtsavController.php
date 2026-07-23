@@ -29,7 +29,7 @@ class GaneshUtsavController extends Controller
             'is_sponsor' => ['nullable', 'boolean'],
             'sponsor_about' => ['nullable', 'string'],
             'sponsor_amount' => ['nullable', 'integer', 'min:0'],
-            'sponsor_payment_method' => ['nullable', 'in:cash,online,already_paid'],
+            'sponsor_payment_method' => ['required', 'in:cash,online,already_paid'],
             'sponsor_payment_screenshot' => ['nullable', 'image', 'max:4096'],
         ]);
 
@@ -40,9 +40,9 @@ class GaneshUtsavController extends Controller
 
         $isSponsor = $request->boolean('is_sponsor');
         $sponsorAmount = $isSponsor ? (int) $request->input('sponsor_amount', 0) : 0;
-        $sponsorPaymentMethod = $isSponsor ? $request->input('sponsor_payment_method', 'cash') : null;
+        $sponsorPaymentMethod = $validated['sponsor_payment_method'];
 
-        if ($isSponsor && in_array($sponsorPaymentMethod, ['online', 'already_paid'], true)) {
+        if (in_array($sponsorPaymentMethod, ['online', 'already_paid'], true)) {
             $request->validate([
                 'sponsor_payment_screenshot' => ['required', 'image', 'max:4096'],
             ]);
