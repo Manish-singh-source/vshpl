@@ -607,7 +607,7 @@
 
         .role-options {
             display: grid;
-            grid-template-columns: repeat(2, minmax(0, 1fr));
+            grid-template-columns: repeat(3, minmax(0, 1fr));
             gap: 12px;
         }
 
@@ -822,6 +822,55 @@
         .extra-coupon-panel.visible,
         .sponsor-panel.visible {
             display: grid;
+        }
+
+        .sponsor-mode-row {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+
+        .sponsor-kind-panel,
+        .sponsor-amount-panel {
+            display: none;
+            gap: 12px;
+        }
+
+        .sponsor-kind-panel.visible,
+        .sponsor-amount-panel.visible {
+            display: grid;
+        }
+
+        .sponsor-help {
+            margin: 0;
+            font-size: 0.88rem;
+            color: rgba(76, 51, 39, 0.78);
+        }
+
+        .sponsor-item-list {
+            display: grid;
+            gap: 12px;
+        }
+
+        .sponsor-item-card {
+            align-items: flex-start;
+            flex-direction: column;
+        }
+
+        .sponsor-item-card > span {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            color: #553227;
+        }
+
+        .sponsor-item-card input[type="checkbox"] {
+            margin-top: 3px;
+        }
+
+        .sponsor-item-note {
+            color: rgba(76, 51, 39, 0.76);
+            font-size: 0.84rem;
+            line-height: 1.45;
+            padding-left: 28px;
         }
 
         .sponsor-payment-preview {
@@ -1115,15 +1164,15 @@
             }
 
             .role-options {
-                grid-template-columns: repeat(2, minmax(0, 1fr));
+                grid-template-columns: repeat(3, minmax(0, 1fr));
                 gap: 10px;
             }
 
             .role-option {
                 min-height: 52px;
-                padding: 0 12px;
+                padding: 0 10px;
                 gap: 8px;
-                font-size: 0.95rem;
+                font-size: 0.9rem;
                 justify-content: center;
             }
 
@@ -1173,6 +1222,10 @@
                 grid-template-columns: 1fr;
             }
 
+            .sponsor-mode-row {
+                grid-template-columns: 1fr;
+            }
+
             .payment-choice-row {
                 grid-template-columns: repeat(2, minmax(0, 1fr));
                 gap: 10px;
@@ -1204,7 +1257,7 @@
                 bottom: 14px;
                 width: 46px;
                 height: 46px;
-
+            }
             .site-credit {
                 text-align: center;
                 margin-top: 20px;
@@ -1294,7 +1347,7 @@
 
                     <div class="role-selector">
                         <h3>Select Resident Type <span class="required">*</span></h3>
-                        <p>Please select whether you are an owner or a tenant to join the celebrations.</p>
+                        <p>Please select whether you are an owner, tenant, or sponsor to join the celebrations.</p>
                         <div class="role-options">
                             <label class="role-option" data-role-option="owner">
                                 <input type="radio" name="resident_type" value="owner" {{ old('resident_type') === 'owner' ? 'checked' : '' }}>
@@ -1306,12 +1359,89 @@
                                 <span class="role-dot"></span>
                                 <span>Tenant</span>
                             </label>
+                            <label class="role-option" data-role-option="sponsor">
+                                <input type="radio" name="resident_type" value="sponsor" {{ old('resident_type') === 'sponsor' ? 'checked' : '' }}>
+                                <span class="role-dot"></span>
+                                <span>Sponsor</span>
+                            </label>
                         </div>
                     </div>
 
                     <form class="booking-form-static" action="{{ route('ganesh.utsav.store') }}" method="POST" enctype="multipart/form-data" data-lookup-url="{{ route('ganesh.utsav.lookup') }}">
                         @csrf
                         <input type="hidden" name="resident_type" value="{{ old('resident_type') }}" data-resident-type-input>
+                            <div class="sponsor-panel" data-sponsor-panel>
+                                <div class="field">
+                                    <div class="field-label">
+                                        <span class="field-icon" aria-hidden="true">&#x1F4CB;</span>
+                                        <span>Sponsorship Options</span>
+                                    </div>
+                                    <div class="payment-choice-row sponsor-mode-row">
+                                        <label class="payment-option sponsor-mode-option" data-sponsor-mode-option="in_kind">
+                                            <input type="radio" name="sponsor_description" value="in_kind" {{ old('sponsor_description') === 'in_kind' ? 'checked' : '' }}>
+                                            <span class="payment-dot"></span>
+                                            <span>In-Kind Sponsorship</span>
+                                        </label>
+                                        <label class="payment-option sponsor-mode-option" data-sponsor-mode-option="monetary">
+                                            <input type="radio" name="sponsor_description" value="monetary" {{ old('sponsor_description') === 'monetary' ? 'checked' : '' }}>
+                                            <span class="payment-dot"></span>
+                                            <span>Sponsorship Through Amount</span>
+                                        </label>
+                                    </div>
+                                </div>
+
+                                <div class="sponsor-kind-panel" data-sponsor-kind-panel>
+                                    <div class="sponsor-item-list">
+                                        <label class="checkbox-card sponsor-item-card">
+                                            <span>
+                                                <input type="checkbox" name="sponsor_items[]" value="satyanarayan_pooja" {{ in_array('satyanarayan_pooja', old('sponsor_items', []), true) ? 'checked' : '' }}>
+                                                <strong>Satyanarayan Pooja</strong>
+                                            </span>
+                                            <small class="sponsor-item-note">Includes the pooja arrangements, performance of the pooja, and prasad. The organising team will assist with the arrangements, and the sponsor can make the required payment.</small>
+                                        </label>
+                                        <label class="checkbox-card sponsor-item-card">
+                                            <span>
+                                                <input type="checkbox" name="sponsor_items[]" value="ukadiche_modak_prasad" {{ in_array('ukadiche_modak_prasad', old('sponsor_items', []), true) ? 'checked' : '' }}>
+                                                <strong>Ukadiche Modak Prasad - Day 1 Afternoon</strong>
+                                            </span>
+                                            <small class="sponsor-item-note">This sponsorship will be done collectively. All interested members can contribute together toward the prasad.</small>
+                                        </label>
+                                        <label class="checkbox-card sponsor-item-card">
+                                            <span>
+                                                <input type="checkbox" name="sponsor_items[]" value="aarti_prasad" {{ in_array('aarti_prasad', old('sponsor_items', []), true) ? 'checked' : '' }}>
+                                                <strong>Aarti Prasad - Day 2 Afternoon</strong>
+                                            </span>
+                                        </label>
+                                        <label class="checkbox-card sponsor-item-card">
+                                            <span>
+                                                <input type="checkbox" name="sponsor_items[]" value="visarjan_snacks" {{ in_array('visarjan_snacks', old('sponsor_items', []), true) ? 'checked' : '' }}>
+                                                <strong>Visarjan Snacks</strong>
+                                            </span>
+                                            <small class="sponsor-item-note">Approximately 200 to 250 samosas or vada pav.</small>
+                                        </label>
+                                        <label class="checkbox-card sponsor-item-card">
+                                            <span>
+                                                <input type="checkbox" name="sponsor_items[]" value="games_gifts" {{ in_array('games_gifts', old('sponsor_items', []), true) ? 'checked' : '' }}>
+                                                <strong>Games Gifts</strong>
+                                            </span>
+                                            <small class="sponsor-item-note">Approximately 50 gifts.</small>
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="sponsor-amount-panel" data-sponsor-amount-panel>
+                                    <div class="field">
+                                        <div class="field-label">
+                                            <span class="field-icon" aria-hidden="true">&#x1F4B0;</span>
+                                            <span>Sponsor Amount</span>
+                                        </div>
+                                        <div class="field-control">
+                                            <input class="field-input" type="number" min="0" step="1" name="sponsor_amount" placeholder="Enter sponsor amount" data-sponsor-amount value="{{ old('sponsor_amount') }}">
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                            </div>
                         <p class="step-title">Basic details</p>
                         <div class="simple-form-stack">
                             <div class="field">
@@ -1392,8 +1522,7 @@
                                     <strong data-paid-grand-total>Rs 0</strong>
                                 </div>
                             </div>
-
-                            <div class="checkbox-card">
+                            <div class="checkbox-card" data-extra-card>
                                 <label>
                                     <input type="checkbox" name="has_extra_coupon" value="1" data-extra-toggle {{ old('has_extra_coupon') ? 'checked' : '' }}>
                                     <span>Extra Coupon Amount</span>
@@ -1401,6 +1530,7 @@
                                 <span class="checkbox-note">Rs 250</span>
                             </div>
 
+                             
                             <div class="extra-coupon-panel" data-extra-panel>
                                 <div class="field">
                                     <div class="field-label">
@@ -1434,57 +1564,24 @@
                                 </div>
                             </div>
 
-                            <div class="checkbox-card">
-                                <label>
-                                    <input type="checkbox" name="is_sponsor" value="1" data-sponsor-toggle {{ old('is_sponsor') ? 'checked' : '' }}>
-                                    <span>We are sponsor</span>
-                                </label>
-                            </div>
 
-                            <div class="sponsor-panel" data-sponsor-panel>
-                                <div class="field">
-                                    <div class="field-label">
-                                        <span class="field-icon" aria-hidden="true">&#x1F4DD;</span>
-                                        <span>Description</span>
-                                    </div>
-                                    <div class="field-control">
-                                        <textarea class="field-input" name="sponsor_about" placeholder="Write about the sponsor">{{ old('sponsor_about') }}</textarea>
-                                    </div>
-                                </div>
-
-                                <div class="field">
-                                    <div class="field-label">
-                                        <span class="field-icon" aria-hidden="true">&#x1F4B0;</span>
-                                        <span>Sponsor Amount</span>
-                                    </div>
-                                    <div class="field-control">
-                                        <input class="field-input" type="number" min="0" step="1" name="sponsor_amount" placeholder="Enter sponsor amount" data-sponsor-amount value="{{ old('sponsor_amount') }}">
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="field">
+                            <div class="field" data-payment-field>
                                 <div class="field-label">
                                     <span class="field-icon" aria-hidden="true">&#x1F4B3;</span>
-                                    <span>Payment Method <span class="required">*</span></span>
+                                    <span>Payment Method</span>
                                 </div>
                                 <div class="payment-layout">
                                     <div class="payment-choice-row">
                                         <label class="payment-option" data-sponsor-payment-option="cash">
-                                            <input type="radio" name="sponsor_payment_method" value="cash" required {{ old('sponsor_payment_method') === 'cash' ? 'checked' : '' }}>
+                                            <input type="radio" name="sponsor_payment_method" value="cash" {{ old('sponsor_payment_method') === 'cash' ? 'checked' : '' }}>
                                             <span class="payment-dot"></span>
                                             <span>Cash</span>
                                         </label>
                                         <label class="payment-option" data-sponsor-payment-option="online">
-                                            <input type="radio" name="sponsor_payment_method" value="online" required {{ old('sponsor_payment_method') === 'online' ? 'checked' : '' }}>
+                                            <input type="radio" name="sponsor_payment_method" value="online" {{ old('sponsor_payment_method') === 'online' ? 'checked' : '' }}>
                                             <span class="payment-dot"></span>
                                             <span>Online</span>
                                         </label>
-                                        {{-- <label class="payment-option" data-sponsor-payment-option="already-paid">
-                                            <input type="radio" name="sponsor_payment_method" value="already_paid" required {{ old('sponsor_payment_method') === 'already_paid' ? 'checked' : '' }}>
-                                            <span class="payment-dot"></span>
-                                            <span>Already Paid</span>
-                                        </label> --}}
                                     </div>
 
                                     <div class="sponsor-payment-preview" data-sponsor-payment-preview="proof">
@@ -1504,31 +1601,21 @@
                                     </div>
                                 </div>
                             </div>
-
-                            <div class="summary-card">
-                                <p class="summary-title">Total Amount</p>
-                                <div class="summary-row" data-contribution-row>
-                                    <span>Contribution Amount</span>
-                                    <strong data-contribution-total>Rs 1000</strong>
-                                </div>
-                                <div class="summary-row">
-                                    <span>Extra Coupon Total</span>
-                                    <strong data-extra-total>Rs 0</strong>
-                                </div>
-                                <div class="summary-row">
+                            <div class="summary-card summary-card-compact" data-sponsor-breakdown style="display: {{ old('resident_type') === 'sponsor' ? 'block' : 'none' }};">
+                                <div class="summary-row" data-sponsor-summary-row>
                                     <span>Sponsor Amount</span>
                                     <strong data-sponsor-total>Rs 0</strong>
                                 </div>
                                 <div class="summary-row total">
                                     <span>Grand Total</span>
-                                    <strong data-grand-total>Rs 1000</strong>
+                                    <strong data-grand-total>Rs 0</strong>
                                 </div>
                             </div>
 
                             <button class="cta" type="submit">
                                 <span><span aria-hidden="true">&#x1F4E9;</span> Submit Contribution</span>
                             </button>
-                        </div>
+                            
                     </form>
                 </div>
 
@@ -1567,32 +1654,69 @@
         const paidTotalRow = document.querySelector('[data-paid-total-row]');
         const paidGrandTotal = document.querySelector('[data-paid-grand-total]');
         const contributionAmountLabel = document.querySelector('[data-contribution-amount-label]');
-        const contributionTotalLabel = document.querySelector('[data-contribution-total]');
-        const contributionRow = document.querySelector('[data-contribution-row]');
+        const extraCard = document.querySelector('[data-extra-card]');
         const extraToggle = document.querySelector('[data-extra-toggle]');
         const extraPanel = document.querySelector('[data-extra-panel]');
         const extraCount = document.querySelector('[data-extra-count]');
-        const sponsorToggle = document.querySelector('[data-sponsor-toggle]');
         const sponsorPanel = document.querySelector('[data-sponsor-panel]');
+        const sponsorModeInputs = Array.from(document.querySelectorAll('input[name="sponsor_description"]'));
+        const sponsorModeOptions = Array.from(document.querySelectorAll('[data-sponsor-mode-option]'));
+        const sponsorKindPanel = document.querySelector('[data-sponsor-kind-panel]');
+        const sponsorAmountPanel = document.querySelector('[data-sponsor-amount-panel]');
         const sponsorAmountInput = document.querySelector('[data-sponsor-amount]');
-        const sponsorPaymentOptions = Array.from(document.querySelectorAll('[data-sponsor-payment-option]'));
-        const sponsorPaymentPreviews = Array.from(document.querySelectorAll('[data-sponsor-payment-preview]'));
-        const extraTotalLabel = document.querySelector('[data-extra-total]');
+        const sponsorBreakdown = document.querySelector('[data-sponsor-breakdown]');
         const sponsorTotalLabel = document.querySelector('[data-sponsor-total]');
         const grandTotalLabel = document.querySelector('[data-grand-total]');
+        const paymentField = document.querySelector('[data-payment-field]');
+        const sponsorPaymentInputs = Array.from(document.querySelectorAll('input[name="sponsor_payment_method"]'));
+        const sponsorPaymentOptions = Array.from(document.querySelectorAll('[data-sponsor-payment-option]'));
+        const sponsorPaymentPreviews = Array.from(document.querySelectorAll('[data-sponsor-payment-preview]'));
         const musicToggle = document.querySelector('[data-music-toggle]');
         const musicIcon = document.querySelector('[data-music-icon]');
+        const ganpatiSong = document.getElementById('ganpatiSong');
         const upiCopyButton = document.querySelector('[data-upi-copy]');
         const upiValue = document.querySelector('[data-upi-value]');
         const baseCouponAmount = 1000;
         const extraCouponAmount = 250;
-        let currentContributionAmount = baseCouponAmount;
+        let currentHasPaidMainContribution = false;
+        let currentPaidDetails = {};
 
-        function setLookupMessage(message = '', tone = 'success') {
-            if (!lookupMessage) {
-                return;
+        function isSponsorResident() {
+            return residentTypeInput && residentTypeInput.value === 'sponsor';
+        }
+
+        function getSponsorMode() {
+            const activeMode = sponsorModeInputs.find((input) => input.checked);
+            return activeMode ? activeMode.value : '';
+        }
+
+        function getCurrentContributionAmount() {
+            if (currentHasPaidMainContribution || isSponsorResident()) {
+                return 0;
             }
 
+            return baseCouponAmount;
+        }
+
+        function getCurrentExtraTotal() {
+            if (isSponsorResident()) {
+                return 0;
+            }
+
+            const quantity = extraToggle && extraToggle.checked && extraCount ? Number(extraCount.value || 0) : 0;
+            return quantity * extraCouponAmount;
+        }
+
+        function getCurrentSponsorAmount() {
+            if (!isSponsorResident() || getSponsorMode() !== 'monetary' || !sponsorAmountInput) {
+                return 0;
+            }
+
+            return Number(sponsorAmountInput.value || 0);
+        }
+
+        function setLookupMessage(message = '', tone = 'success') {
+            if (!lookupMessage) return;
             lookupMessage.textContent = message;
             lookupMessage.classList.toggle('visible', Boolean(message));
             lookupMessage.classList.toggle('success', Boolean(message) && tone === 'success');
@@ -1600,169 +1724,139 @@
         }
 
         function setResidentFieldsLocked(isLocked) {
-            if (fullNameInput) {
-                fullNameInput.readOnly = isLocked;
-            }
-
-            if (mobileInput) {
-                mobileInput.readOnly = isLocked;
-            }
+            if (fullNameInput) fullNameInput.readOnly = isLocked;
+            if (mobileInput) mobileInput.readOnly = isLocked;
         }
 
         function updateExtraPanel() {
-            if (!extraToggle || !extraPanel) {
-                return;
-            }
-
-            extraPanel.classList.toggle('visible', extraToggle.checked);
+            if (!extraPanel) return;
+            extraPanel.classList.toggle('visible', !isSponsorResident() && Boolean(extraToggle && extraToggle.checked));
         }
 
-        function updateSponsorPanel() {
-            if (!sponsorToggle || !sponsorPanel) {
-                return;
-            }
+        function updateSponsorModeUI() {
+            const sponsorMode = getSponsorMode();
+            const showSponsor = isSponsorResident();
 
-            sponsorPanel.classList.toggle('visible', sponsorToggle.checked);
+            if (sponsorPanel) sponsorPanel.classList.toggle('visible', showSponsor);
+
+            sponsorModeOptions.forEach((option) => {
+                const input = option.querySelector('input');
+                option.classList.toggle('active', Boolean(input && input.checked));
+            });
+
+            if (sponsorKindPanel) sponsorKindPanel.classList.toggle('visible', showSponsor && sponsorMode === 'in_kind');
+            if (sponsorAmountPanel) sponsorAmountPanel.classList.toggle('visible', showSponsor && sponsorMode === 'monetary');
+        }
+
+        function updatePaymentRequirement() {
+            const isSponsor = isSponsorResident();
+            const totalPayable = isSponsor ? getCurrentSponsorAmount() : (getCurrentContributionAmount() + getCurrentExtraTotal());
+            const showPaymentField = isSponsor ? getSponsorMode() === 'monetary' : totalPayable > 0;
+            const paymentRequired = showPaymentField && totalPayable > 0;
+
+            if (paymentField) paymentField.style.display = showPaymentField ? '' : 'none';
+
+            sponsorPaymentInputs.forEach((input) => {
+                input.required = paymentRequired;
+                if (!paymentRequired) input.checked = false;
+            });
+
+            if (!paymentRequired) {
+                sponsorPaymentPreviews.forEach((preview) => preview.classList.remove('visible'));
+            }
+        }
+
+        function updateSponsorVisibility() {
+            const isSponsor = isSponsorResident();
+
+            if (extraCard) extraCard.style.display = isSponsor ? 'none' : 'flex';
+            if (extraToggle && isSponsor) extraToggle.checked = false;
+
+            if (sponsorBreakdown) sponsorBreakdown.style.display = isSponsor ? 'block' : 'none';
+
+            updateExtraPanel();
+            updateSponsorModeUI();
+            updatePaymentRequirement();
         }
 
         function updateSponsorPaymentPreview() {
+            const paymentVisible = paymentField && paymentField.style.display !== 'none';
             let activeSponsorPayment = null;
 
             sponsorPaymentOptions.forEach((option) => {
                 const input = option.querySelector('input');
-                if (input && input.checked) {
-                    activeSponsorPayment = option.dataset.sponsorPaymentOption;
-                }
+                if (input && input.checked) activeSponsorPayment = option.dataset.sponsorPaymentOption;
             });
 
             sponsorPaymentOptions.forEach((option) => {
                 const input = option.querySelector('input');
                 const isActive = option.dataset.sponsorPaymentOption === activeSponsorPayment;
                 option.classList.toggle('active', isActive);
-                if (input) {
-                    input.checked = isActive;
-                }
+                if (input) input.checked = isActive;
             });
 
             sponsorPaymentPreviews.forEach((preview) => {
-                preview.classList.toggle('visible', activeSponsorPayment !== null && activeSponsorPayment !== 'cash');
+                preview.classList.toggle('visible', paymentVisible && activeSponsorPayment === 'online');
             });
         }
 
         function updateTotals() {
-            const extraCountValue = extraToggle && extraToggle.checked && extraCount ? Number(extraCount.value || 0) : 0;
-            const extraTotal = extraCountValue * extraCouponAmount;
-            const sponsorAmount = sponsorToggle && sponsorToggle.checked && sponsorAmountInput ? Number(sponsorAmountInput.value || 0) : 0;
-            const grandTotal = currentContributionAmount + extraTotal + sponsorAmount;
+            const sponsorAmount = getCurrentSponsorAmount();
+            const grandTotal = isSponsorResident() ? sponsorAmount : (getCurrentContributionAmount() + getCurrentExtraTotal());
 
-            if (extraTotalLabel) {
-                extraTotalLabel.textContent = `Rs ${extraTotal}`;
-            }
+            if (sponsorTotalLabel) sponsorTotalLabel.textContent = `Rs ${sponsorAmount}`;
+            if (grandTotalLabel) grandTotalLabel.textContent = `Rs ${grandTotal}`;
+            if (contributionAmountLabel) contributionAmountLabel.textContent = `Rs ${baseCouponAmount}`;
 
-            if (sponsorTotalLabel) {
-                sponsorTotalLabel.textContent = `Rs ${sponsorAmount}`;
-            }
-
-            if (contributionTotalLabel) {
-                contributionTotalLabel.textContent = `Rs ${currentContributionAmount}`;
-            }
-
-            if (grandTotalLabel) {
-                grandTotalLabel.textContent = `Rs ${grandTotal}`;
-            }
+            updatePaymentRequirement();
+            updateSponsorPaymentPreview();
         }
 
-        function updateContributionState(hasPaid, paidAmount = baseCouponAmount, paidDetails = {}) {
-            currentContributionAmount = hasPaid ? 0 : baseCouponAmount;
+        function updateContributionState(hasPaid = currentHasPaidMainContribution, paidAmount = currentPaidDetails.paidAmount || baseCouponAmount, paidDetails = currentPaidDetails) {
+            currentHasPaidMainContribution = hasPaid;
+            currentPaidDetails = { ...paidDetails, paidAmount };
             const extraTotal = Number(paidDetails.extraCouponTotal || 0);
             const sponsorTotal = Number(paidDetails.sponsorAmount || 0);
             const totalPaid = Number(paidDetails.grandTotal || 0);
+            const isSponsor = isSponsorResident();
 
-            if (baseSummary) {
-                baseSummary.hidden = hasPaid;
-            }
-
-            if (paidSummary) {
-                paidSummary.hidden = !hasPaid;
-            }
-
-            if (paidContributionAmount) {
-                paidContributionAmount.textContent = `Rs ${paidAmount || baseCouponAmount}`;
-            }
-
-            if (paidExtraRow) {
-                paidExtraRow.hidden = !hasPaid || extraTotal <= 0;
-            }
-
-            if (paidExtraAmount) {
-                paidExtraAmount.textContent = `Rs ${extraTotal}`;
-            }
-
-            if (paidSponsorRow) {
-                paidSponsorRow.hidden = !hasPaid || sponsorTotal <= 0;
-            }
-
-            if (paidSponsorAmount) {
-                paidSponsorAmount.textContent = `Rs ${sponsorTotal}`;
-            }
-
-            if (paidTotalRow) {
-                paidTotalRow.hidden = !hasPaid || totalPaid <= 0;
-            }
-
-            if (paidGrandTotal) {
-                paidGrandTotal.textContent = `Rs ${totalPaid}`;
-            }
-
-            if (contributionAmountLabel) {
-                contributionAmountLabel.textContent = `Rs ${baseCouponAmount}`;
-            }
-
-            if (contributionRow) {
-                contributionRow.hidden = hasPaid;
-            }
+            if (baseSummary) baseSummary.hidden = isSponsor || hasPaid;
+            if (paidSummary) paidSummary.hidden = !hasPaid;
+            if (paidContributionAmount) paidContributionAmount.textContent = `Rs ${paidAmount || baseCouponAmount}`;
+            if (paidExtraRow) paidExtraRow.hidden = !hasPaid || extraTotal <= 0;
+            if (paidExtraAmount) paidExtraAmount.textContent = `Rs ${extraTotal}`;
+            if (paidSponsorRow) paidSponsorRow.hidden = !hasPaid || sponsorTotal <= 0;
+            if (paidSponsorAmount) paidSponsorAmount.textContent = `Rs ${sponsorTotal}`;
+            if (paidTotalRow) paidTotalRow.hidden = !hasPaid || totalPaid <= 0;
+            if (paidGrandTotal) paidGrandTotal.textContent = `Rs ${totalPaid}`;
 
             updateTotals();
         }
 
         async function lookupResidentDetails() {
-            if (!lookupUrl || !wingInput || !flatInput) {
-                return;
-            }
-
+            if (!lookupUrl || !wingInput || !flatInput) return;
             const wing = wingInput.value.trim();
             const flatNumber = flatInput.value.trim();
 
             if (!wing || !flatNumber) {
                 setLookupMessage('');
                 setResidentFieldsLocked(false);
-                updateContributionState(false);
+                updateContributionState(false, baseCouponAmount, {});
                 return;
             }
 
-            setLookupMessage('Checking resident details...', 'success');
+            setLookupMessage('Checking resident details...');
 
             try {
                 const response = await fetch(`${lookupUrl}?wing=${encodeURIComponent(wing)}&flat_number=${encodeURIComponent(flatNumber)}`, {
-                    headers: {
-                        'X-Requested-With': 'XMLHttpRequest',
-                        'Accept': 'application/json'
-                    }
+                    headers: { 'X-Requested-With': 'XMLHttpRequest', 'Accept': 'application/json' }
                 });
 
-                if (!response.ok) {
-                    throw new Error('Lookup request failed.');
-                }
-
+                if (!response.ok) throw new Error('Lookup request failed.');
                 const data = await response.json();
 
-                if (data.full_name && fullNameInput) {
-                    fullNameInput.value = data.full_name;
-                }
-
-                if (data.mobile_number && mobileInput) {
-                    mobileInput.value = data.mobile_number;
-                }
+                if (data.full_name && fullNameInput) fullNameInput.value = data.full_name;
+                if (data.mobile_number && mobileInput) mobileInput.value = data.mobile_number;
 
                 setResidentFieldsLocked(Boolean(data.full_name || data.mobile_number));
                 updateContributionState(Boolean(data.has_paid_main_contribution), Number(data.paid_contribution_amount || baseCouponAmount), {
@@ -1772,15 +1866,13 @@
                 });
 
                 if (data.has_paid_main_contribution) {
-                    setLookupMessage('Main contribution already paid. Only extra coupon or sponsor amount can be added.', 'success');
-                } else if (data.found) {
-                    setLookupMessage('');
+                    setLookupMessage('Main contribution already paid. Only extra coupon or sponsor amount can be added.');
                 } else {
                     setLookupMessage('');
                 }
             } catch (error) {
                 setResidentFieldsLocked(false);
-                updateContributionState(false);
+                updateContributionState(false, baseCouponAmount, {});
                 setLookupMessage('');
             }
         }
@@ -1792,13 +1884,11 @@
                 const input = option.querySelector('input');
                 if (input) {
                     input.checked = true;
-                    if (residentTypeInput) {
-                        residentTypeInput.value = input.value;
-                    }
+                    if (residentTypeInput) residentTypeInput.value = input.value;
                 }
-                if (bookingForm) {
-                    bookingForm.classList.add('visible');
-                }
+                if (bookingForm) bookingForm.classList.add('visible');
+                updateSponsorVisibility();
+                updateContributionState();
             });
         });
 
@@ -1822,27 +1912,24 @@
             extraCount.addEventListener('change', updateTotals);
         }
 
-        if (sponsorToggle) {
-            sponsorToggle.addEventListener('change', () => {
-                updateSponsorPanel();
+        sponsorModeInputs.forEach((input) => {
+            input.addEventListener('change', () => {
+                updateSponsorModeUI();
                 updateTotals();
             });
-        }
+        });
 
         if (sponsorAmountInput) {
             sponsorAmountInput.addEventListener('input', updateTotals);
         }
 
         sponsorPaymentOptions.forEach((option) => {
-            option.addEventListener('click', () => {
-                updateSponsorPaymentPreview();
-            });
+            option.addEventListener('click', updateSponsorPaymentPreview);
         });
 
         if (upiCopyButton && upiValue) {
             upiCopyButton.addEventListener('click', async () => {
                 const originalText = upiCopyButton.textContent;
-
                 try {
                     await navigator.clipboard.writeText(upiValue.textContent.trim());
                     upiCopyButton.textContent = 'Copied';
@@ -1850,7 +1937,6 @@
                 } catch (error) {
                     upiCopyButton.textContent = 'Copy failed';
                 }
-
                 setTimeout(() => {
                     upiCopyButton.textContent = originalText;
                     upiCopyButton.classList.remove('copied');
@@ -1861,7 +1947,6 @@
         if (musicToggle && musicIcon && ganpatiSong) {
             musicToggle.addEventListener('click', async () => {
                 const shouldPlay = ganpatiSong.paused;
-
                 try {
                     if (shouldPlay) {
                         ganpatiSong.muted = false;
@@ -1882,9 +1967,9 @@
                 } catch (error) {
                     musicToggle.classList.remove('is-playing');
                     musicToggle.setAttribute('aria-pressed', 'false');
-                        musicToggle.setAttribute('aria-label', 'Play music');
-                        musicToggle.setAttribute('title', 'Play music');
-                        musicIcon.innerHTML = '&#9835;';
+                    musicToggle.setAttribute('aria-label', 'Play music');
+                    musicToggle.setAttribute('title', 'Play music');
+                    musicIcon.innerHTML = '&#9835;';
                 }
             });
         }
@@ -1896,24 +1981,33 @@
 
         if (preselectedRole) {
             preselectedRole.classList.add('active');
-            if (residentTypeInput) {
-                const input = preselectedRole.querySelector('input');
-                residentTypeInput.value = input ? input.value : '';
-            }
-            if (bookingForm) {
-                bookingForm.classList.add('visible');
-            }
+            const input = preselectedRole.querySelector('input');
+            if (residentTypeInput) residentTypeInput.value = input ? input.value : '';
+            if (bookingForm) bookingForm.classList.add('visible');
         }
 
+        updateSponsorVisibility();
         updateExtraPanel();
-        updateSponsorPanel();
         updateSponsorPaymentPreview();
-        updateContributionState(false);
+        updateContributionState(false, baseCouponAmount, {});
         lookupResidentDetails();
     </script>
 </body>
 
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

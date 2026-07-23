@@ -451,7 +451,7 @@
                             <th>Resident</th>
                             <th>Name &amp; Contact</th>
                             <th>Contribution</th>
-                            <th>Sponsorship</th>
+                            <th>Sponsorship Details</th>
                             <th>Sponsor Amount</th>
                             <th>Payment</th>
                             <th>Payment Status</th>
@@ -468,13 +468,24 @@
                                     'already_paid' => 'already-paid',
                                     default => 'cash',
                                 };
+                                $sponsorItemLabels = [
+                                    'satyanarayan_pooja' => 'Satyanarayan Pooja',
+                                    'ukadiche_modak_prasad' => 'Ukadiche Modak Prasad - Day 1 Afternoon',
+                                    'aarti_prasad' => 'Aarti Prasad - Day 2 Afternoon',
+                                    'visarjan_snacks' => 'Visarjan Snacks',
+                                    'games_gifts' => 'Games Gifts',
+                                ];
+                                $selectedSponsorItems = collect($registration->sponsor_items ?? [])
+                                    ->map(fn ($item) => $sponsorItemLabels[$item] ?? $item)
+                                    ->filter()
+                                    ->values();
                             @endphp
                             <tr>
                                 <td data-order="{{ $registration->id }}">
                                     <span class="cell-main">#{{ $registration->id }}</span>
                                 </td>
                                 <td>
-                                    <span class="status-badge {{ $registration->resident_type === 'owner' ? 'owner' : 'tenant' }}">
+                                    <span class="status-badge {{ $registration->resident_type === 'owner' ? 'owner' : ($registration->resident_type === 'sponsor' ? 'sponsor' : 'tenant') }}">
                                         {{ ucfirst($registration->resident_type) }}
                                     </span>
                                     <span class="cell-main mt-2">{{ $registration->wing }} - {{ $registration->flat_number }}</span>
@@ -495,7 +506,16 @@
                                 <td>
                                     @if ($registration->is_sponsor)
                                         <span class="status-badge sponsor">Sponsor</span>
-                                        <span class="cell-sub description-cell">{{ $registration->sponsor_about ?: 'No description' }}</span>
+                                        <span class="cell-main mt-2">
+                                            {{ $registration->sponsor_description === 'monetary' ? 'Sponsorship Through Amount' : 'In-Kind Sponsorship' }}
+                                        </span>
+                                        @if ($registration->sponsor_description === 'in_kind')
+                                            <span class="cell-sub description-cell">
+                                                {{ $selectedSponsorItems->isNotEmpty() ? $selectedSponsorItems->implode(', ') : ($registration->sponsor_about ?: 'No item selected') }}
+                                            </span>
+                                        @else
+                                            <span class="cell-sub">Monetary sponsorship</span>
+                                        @endif
                                     @else
                                         <span class="status-badge standard">Standard</span>
                                         <span class="cell-sub">No sponsorship</span>
@@ -587,5 +607,7 @@
     </script>
 </body>
 </html>
+
+
 
 

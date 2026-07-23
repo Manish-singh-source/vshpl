@@ -39,8 +39,9 @@ class GaneshUtsavController extends Controller
                 'Extra Coupon Unit Amount',
                 'Extra Coupon Total',
                 'Is Sponsor',
-                'Sponsor Description',
-                'Sponsor About',
+                'Sponsorship Type',
+                'Selected Sponsorship Items',
+                'Sponsorship Details',
                 'Sponsor Amount',
                 'Payment Method',
                 'Payment Proof URL',
@@ -72,6 +73,7 @@ class GaneshUtsavController extends Controller
                     $registration->extra_coupon_total,
                     $registration->is_sponsor ? 'Yes' : 'No',
                     $registration->sponsor_description,
+                    implode(', ', $registration->sponsor_items ?? []),
                     $registration->sponsor_about,
                     $registration->sponsor_amount,
                     $registration->sponsor_payment_method
@@ -143,7 +145,7 @@ class GaneshUtsavController extends Controller
     public function store(Request $request): RedirectResponse
     {
         $validated = $request->validate([
-            'resident_type' => ['required', 'in:owner,tenant'],
+            'resident_type' => ['required', 'in:owner,tenant,sponsor'],
             'wing' => ['required', 'string', 'max:20'],
             'flat_number' => ['required', 'string', 'max:50'],
             'full_name' => ['required', 'string', 'max:255'],
@@ -151,13 +153,19 @@ class GaneshUtsavController extends Controller
             'has_extra_coupon' => ['nullable', 'boolean'],
             'extra_coupon_quantity' => ['nullable', 'integer', 'min:1', 'max:20'],
             'is_sponsor' => ['nullable', 'boolean'],
+            'sponsor_include_contribution' => ['nullable', 'boolean'],
+            'sponsor_description' => ['nullable', 'in:in_kind,monetary'],
+            'sponsor_items' => ['nullable', 'array'],
+            'sponsor_items.*' => ['string', 'in:satyanarayan_pooja,ukadiche_modak_prasad,aarti_prasad,visarjan_snacks,games_gifts'],
             'sponsor_about' => ['nullable', 'string'],
             'sponsor_amount' => ['nullable', 'integer', 'min:0'],
-            'sponsor_payment_method' => ['required', 'in:cash,online,already_paid'],
+            'sponsor_payment_method' => ['nullable', 'in:cash,online'],
             'sponsor_payment_screenshot' => ['nullable', 'image', 'max:4096'],
         ]);
 
-        $hasExtraCoupon = $request->boolean('has_extra_coupon');
+        $residentType = $validated['resident_type'];
+        $isSponsorResident = $residentType === 'sponsor';
+        $hasExtraCoupon = $isSponsorResident ? false : $request->boolean('has_extra_coupon');
         $extraCouponQuantity = $hasExtraCoupon ? (int) $request->input('extra_coupon_quantity', 1) : 0;
         $extraCouponUnitAmount = 250;
         $extraCouponTotal = $extraCouponQuantity * $extraCouponUnitAmount;
@@ -169,14 +177,43 @@ class GaneshUtsavController extends Controller
             ->where('is_accepted', true)
             ->where('contribution_amount', '>', 0)
             ->exists();
-        $contributionAmount = $hasPaidMainContribution ? 0 : 1000;
 
-        $isSponsor = $request->boolean('is_sponsor');
-        $sponsorAmount = $isSponsor ? (int) $request->input('sponsor_amount', 0) : 0;
-        $sponsorPaymentMethod = $validated['sponsor_payment_method'];
+        $contributionAmount = $hasPaidMainContribution ? 0 : ($isSponsorResident ? 0 : 1000);
+        $isSponsor = $isSponsorResident ? true : $request->boolean('is_sponsor');
+
+        $sponsorDescription = $isSponsor ? $request->input('sponsor_description') : null;
+        $sponsorItems = $isSponsor && $sponsorDescription === 'in_kind' ? array_values(array_filter((array) $request->input('sponsor_items', []))) : [];
+        $sponsorAmount = $isSponsor && $sponsorDescription === 'monetary' ? (int) $request->input('sponsor_amount', 0) : 0;
+
+        if ($isSponsorResident) {
+            $request->validate([
+                'sponsor_description' => ['required', 'in:in_kind,monetary'],
+                'sponsor_items' => $sponsorDescription === 'in_kind' ? ['required', 'array', 'min:1'] : ['nullable', 'array'],
+                'sponsor_amount' => $sponsorDescription === 'monetary' ? ['required', 'integer', 'min:1'] : ['nullable', 'integer', 'min:0'],
+            ]);
+        }
+
+        $sponsorItemLabels = [
+            'satyanarayan_pooja' => 'Satyanarayan Pooja',
+            'ukadiche_modak_prasad' => 'Ukadiche Modak Prasad - Day 1 Afternoon',
+            'aarti_prasad' => 'Aarti Prasad - Day 2 Afternoon',
+            'visarjan_snacks' => 'Visarjan Snacks',
+            'games_gifts' => 'Games Gifts',
+        ];
+        $sponsorAbout = $sponsorDescription === 'in_kind'
+            ? implode(', ', array_map(fn (string $item) => $sponsorItemLabels[$item] ?? $item, $sponsorItems))
+            : null;
+
         $grandTotal = $contributionAmount + $extraCouponTotal + $sponsorAmount;
+        $sponsorPaymentMethod = $grandTotal > 0 ? $request->input('sponsor_payment_method') : null;
 
-        if ($grandTotal > 0 && in_array($sponsorPaymentMethod, ['online', 'already_paid'], true)) {
+        if ($grandTotal > 0) {
+            $request->validate([
+                'sponsor_payment_method' => ['required', 'in:cash,online'],
+            ]);
+        }
+
+        if ($grandTotal > 0 && $sponsorPaymentMethod === 'online') {
             $request->validate([
                 'sponsor_payment_screenshot' => ['required', 'image', 'max:4096'],
             ]);
@@ -198,7 +235,7 @@ class GaneshUtsavController extends Controller
         }
 
         GaneshUtsavRegistration::create([
-            'resident_type' => $validated['resident_type'],
+            'resident_type' => $residentType,
             'wing' => $wing,
             'flat_number' => $flatNumber,
             'full_name' => $validated['full_name'],
@@ -209,8 +246,9 @@ class GaneshUtsavController extends Controller
             'extra_coupon_unit_amount' => $extraCouponUnitAmount,
             'extra_coupon_total' => $extraCouponTotal,
             'is_sponsor' => $isSponsor,
-            'sponsor_description' => null,
-            'sponsor_about' => $isSponsor ? $request->input('sponsor_about') : null,
+            'sponsor_description' => $sponsorDescription,
+            'sponsor_items' => $sponsorItems,
+            'sponsor_about' => $sponsorAbout,
             'sponsor_amount' => $sponsorAmount,
             'sponsor_payment_method' => $sponsorPaymentMethod,
             'sponsor_payment_screenshot' => $screenshotPath,
@@ -240,4 +278,12 @@ class GaneshUtsavController extends Controller
         return back()->with('success', 'Contribution record deleted successfully.');
     }
 }
+
+
+
+
+
+
+
+
 

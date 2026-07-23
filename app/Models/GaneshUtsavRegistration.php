@@ -19,6 +19,7 @@ class GaneshUtsavRegistration extends Model
         'extra_coupon_total',
         'is_sponsor',
         'sponsor_description',
+        'sponsor_items',
         'sponsor_about',
         'sponsor_amount',
         'sponsor_payment_method',
@@ -31,7 +32,11 @@ class GaneshUtsavRegistration extends Model
     protected $casts = [
         'has_extra_coupon' => 'boolean',
         'is_sponsor' => 'boolean',
+        'sponsor_items' => 'array',
         'is_accepted' => 'boolean',
         'accepted_at' => 'datetime',
     ];
 }
+
+
+
