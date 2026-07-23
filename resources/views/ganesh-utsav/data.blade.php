@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -92,6 +92,32 @@
         .back-link:hover {
             border-color: var(--brand);
             color: var(--brand);
+        }
+        .page-actions {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .export-link {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 44px;
+            padding: 0 18px;
+            border: 1px solid #17603a;
+            border-radius: 12px;
+            color: #fff;
+            background: #17603a;
+            font-weight: 700;
+            text-decoration: none;
+            box-shadow: 0 5px 18px rgba(23, 96, 58, 0.18);
+        }
+
+        .export-link:hover {
+            color: #fff;
+            background: #104b2d;
         }
 
         .stats-grid {
@@ -318,7 +344,8 @@
         @media (max-width: 640px) {
             .admin-shell { width: min(100% - 24px, 1600px); padding-top: 18px; }
             .page-bar { align-items: flex-start; flex-direction: column; }
-            .back-link { width: 100%; }
+            .page-actions { width: 100%; }
+            .back-link, .export-link { width: 100%; }
             .stats-grid { gap: 10px; }
             .stat-card { min-height: 98px; padding: 16px; }
             .card-heading { align-items: flex-start; padding: 17px; }
@@ -346,7 +373,10 @@
                 <h1>Ganesh Utsav Contributions 2026</h1>
                 <p class="page-copy">Search, sort and review all resident contribution records.</p>
             </div>
-            <a class="back-link" href="{{ route('ganesh.utsav.celebration') }}">Back to Contribution Form</a>
+            <div class="page-actions">
+                <a class="export-link" href="{{ route('ganesh.utsav.export') }}">Download Excel</a>
+                <a class="back-link" href="{{ route('ganesh.utsav.celebration') }}">Back to Contribution Form</a>
+            </div>
         </header>
 
         <section class="stats-grid" aria-label="Contribution summary">

@@ -16,6 +16,78 @@ class GaneshUtsavController extends Controller
         return view('ganesh-utsav.data', compact('registrations'));
     }
 
+    public function export()
+    {
+        $fileName = 'ganesh-utsav-contributions-' . now()->format('Y-m-d') . '.csv';
+
+        return response()->streamDownload(function (): void {
+            $file = fopen('php://output', 'w');
+            fwrite($file, "\xEF\xBB\xBF");
+
+            fputcsv($file, [
+                'ID',
+                'Resident Type',
+                'Wing',
+                'Flat Number',
+                'Full Name',
+                'Mobile Number',
+                'Contribution Amount',
+                'Has Extra Coupon',
+                'Extra Coupon Quantity',
+                'Extra Coupon Unit Amount',
+                'Extra Coupon Total',
+                'Is Sponsor',
+                'Sponsor Description',
+                'Sponsor About',
+                'Sponsor Amount',
+                'Payment Method',
+                'Payment Proof URL',
+                'Grand Total',
+                'Submitted At',
+                'Updated At',
+            ]);
+
+            $excelSafe = static function ($value): string {
+                $value = (string) ($value ?? '');
+
+                return preg_match('/^[=\-+@\t\r]/u', $value) ? "'" . $value : $value;
+            };
+
+            foreach (GaneshUtsavRegistration::latest()->cursor() as $registration) {
+                fputcsv($file, array_map($excelSafe, [
+                    $registration->id,
+                    $registration->resident_type,
+                    $registration->wing,
+                    $registration->flat_number,
+                    $registration->full_name,
+                    $registration->mobile_number,
+                    $registration->contribution_amount,
+                    $registration->has_extra_coupon ? 'Yes' : 'No',
+                    $registration->extra_coupon_quantity,
+                    $registration->extra_coupon_unit_amount,
+                    $registration->extra_coupon_total,
+                    $registration->is_sponsor ? 'Yes' : 'No',
+                    $registration->sponsor_description,
+                    $registration->sponsor_about,
+                    $registration->sponsor_amount,
+                    $registration->sponsor_payment_method
+                        ? ucwords(str_replace('_', ' ', $registration->sponsor_payment_method))
+                        : '',
+                    $registration->sponsor_payment_screenshot
+                        ? asset($registration->sponsor_payment_screenshot)
+                        : '',
+                    $registration->grand_total,
+                    $registration->created_at?->format('d-m-Y H:i:s'),
+                    $registration->updated_at?->format('d-m-Y H:i:s'),
+                ]));
+            }
+
+            fclose($file);
+        }, $fileName, [
+            'Content-Type' => 'text/csv; charset=UTF-8',
+            'Cache-Control' => 'no-store, no-cache',
+        ]);
+    }
     public function store(Request $request): RedirectResponse
     {
         $validated = $request->validate([

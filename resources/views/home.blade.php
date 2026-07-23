@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -84,8 +84,16 @@
             opacity: 0.96;
         }
 
-        .past-event-btn {
+        .event-actions {
             margin-top: 28px;
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .past-event-btn,
+        .upcoming-event-btn {
             display: inline-flex;
             align-items: center;
             justify-content: center;
@@ -102,7 +110,13 @@
             transition: transform .25s ease, box-shadow .25s ease;
         }
 
-        .past-event-btn:hover {
+        .upcoming-event-btn {
+            background: linear-gradient(120deg, #f4bd45, #d97816);
+            color: #42160d;
+        }
+
+        .past-event-btn:hover,
+        .upcoming-event-btn:hover {
             transform: translateY(-2px);
             box-shadow: 0 14px 30px rgba(0, 0, 0, 0.34);
         }
@@ -177,7 +191,10 @@
             <img src="{{ asset('assets/main.png') }}" alt="VSH Emblem" class="content-logo">
             <h1 class="building-name">Veena Smart Homes</h1>
             <p class="subtitle">Community Life, Celebrations, and Memorable Moments</p>
-            <a class="past-event-btn" href="{{ route('event.page') }}">Past Event</a>
+            <div class="event-actions">
+                <a class="upcoming-event-btn" href="{{ route('ganesh.utsav.celebration') }}">Upcoming Event</a>
+                <a class="past-event-btn" href="{{ route('event.page') }}">Past Event</a>
+            </div>
         </div>
     </section>
 
