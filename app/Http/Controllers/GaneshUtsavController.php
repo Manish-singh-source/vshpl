@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\GaneshUtsavRegistration;
+use App\Models\Registration;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
@@ -42,6 +44,8 @@ class GaneshUtsavController extends Controller
                 'Sponsor Amount',
                 'Payment Method',
                 'Payment Proof URL',
+                'Payment Collected',
+                'Accepted At',
                 'Grand Total',
                 'Submitted At',
                 'Updated At',
@@ -76,6 +80,8 @@ class GaneshUtsavController extends Controller
                     $registration->sponsor_payment_screenshot
                         ? asset($registration->sponsor_payment_screenshot)
                         : '',
+                    $registration->is_accepted ? 'Yes' : 'No',
+                    $registration->accepted_at?->format('d-m-Y H:i:s'),
                     $registration->grand_total,
                     $registration->created_at?->format('d-m-Y H:i:s'),
                     $registration->updated_at?->format('d-m-Y H:i:s'),
@@ -88,6 +94,52 @@ class GaneshUtsavController extends Controller
             'Cache-Control' => 'no-store, no-cache',
         ]);
     }
+
+    public function lookup(Request $request): JsonResponse
+    {
+        $validated = $request->validate([
+            'wing' => ['required', 'string', 'max:20'],
+            'flat_number' => ['required', 'string', 'max:50'],
+        ]);
+
+        $wing = trim($validated['wing']);
+        $flatNumber = trim($validated['flat_number']);
+
+        $resident = Registration::query()
+            ->where('wing', $wing)
+            ->where('house_number', $flatNumber)
+            ->first();
+
+        $latestGaneshRegistration = GaneshUtsavRegistration::query()
+            ->where('wing', $wing)
+            ->where('flat_number', $flatNumber)
+            ->latest()
+            ->first();
+
+        $acceptedRegistrations = GaneshUtsavRegistration::query()
+            ->where('wing', $wing)
+            ->where('flat_number', $flatNumber)
+            ->where('is_accepted', true);
+
+        $acceptedContributionTotal = (int) (clone $acceptedRegistrations)->sum('contribution_amount');
+        $acceptedExtraCouponQuantity = (int) (clone $acceptedRegistrations)->sum('extra_coupon_quantity');
+        $acceptedExtraCouponTotal = (int) (clone $acceptedRegistrations)->sum('extra_coupon_total');
+        $acceptedSponsorAmount = (int) (clone $acceptedRegistrations)->sum('sponsor_amount');
+        $acceptedGrandTotal = (int) (clone $acceptedRegistrations)->sum('grand_total');
+
+        return response()->json([
+            'found' => $resident !== null || $latestGaneshRegistration !== null,
+            'full_name' => $resident?->full_name ?? $latestGaneshRegistration?->full_name,
+            'mobile_number' => $resident?->contact_number ?? $latestGaneshRegistration?->mobile_number,
+            'has_paid_main_contribution' => $acceptedContributionTotal > 0,
+            'paid_contribution_amount' => $acceptedContributionTotal,
+            'paid_extra_coupon_quantity' => $acceptedExtraCouponQuantity,
+            'paid_extra_coupon_total' => $acceptedExtraCouponTotal,
+            'paid_sponsor_amount' => $acceptedSponsorAmount,
+            'paid_grand_total' => $acceptedGrandTotal,
+        ]);
+    }
+
     public function store(Request $request): RedirectResponse
     {
         $validated = $request->validate([
@@ -109,12 +161,22 @@ class GaneshUtsavController extends Controller
         $extraCouponQuantity = $hasExtraCoupon ? (int) $request->input('extra_coupon_quantity', 1) : 0;
         $extraCouponUnitAmount = 250;
         $extraCouponTotal = $extraCouponQuantity * $extraCouponUnitAmount;
+        $wing = trim($validated['wing']);
+        $flatNumber = trim($validated['flat_number']);
+        $hasPaidMainContribution = GaneshUtsavRegistration::query()
+            ->where('wing', $wing)
+            ->where('flat_number', $flatNumber)
+            ->where('is_accepted', true)
+            ->where('contribution_amount', '>', 0)
+            ->exists();
+        $contributionAmount = $hasPaidMainContribution ? 0 : 1000;
 
         $isSponsor = $request->boolean('is_sponsor');
         $sponsorAmount = $isSponsor ? (int) $request->input('sponsor_amount', 0) : 0;
         $sponsorPaymentMethod = $validated['sponsor_payment_method'];
+        $grandTotal = $contributionAmount + $extraCouponTotal + $sponsorAmount;
 
-        if (in_array($sponsorPaymentMethod, ['online', 'already_paid'], true)) {
+        if ($grandTotal > 0 && in_array($sponsorPaymentMethod, ['online', 'already_paid'], true)) {
             $request->validate([
                 'sponsor_payment_screenshot' => ['required', 'image', 'max:4096'],
             ]);
@@ -137,11 +199,11 @@ class GaneshUtsavController extends Controller
 
         GaneshUtsavRegistration::create([
             'resident_type' => $validated['resident_type'],
-            'wing' => $validated['wing'],
-            'flat_number' => $validated['flat_number'],
+            'wing' => $wing,
+            'flat_number' => $flatNumber,
             'full_name' => $validated['full_name'],
             'mobile_number' => $validated['mobile_number'],
-            'contribution_amount' => 1000,
+            'contribution_amount' => $contributionAmount,
             'has_extra_coupon' => $hasExtraCoupon,
             'extra_coupon_quantity' => $extraCouponQuantity,
             'extra_coupon_unit_amount' => $extraCouponUnitAmount,
@@ -152,9 +214,30 @@ class GaneshUtsavController extends Controller
             'sponsor_amount' => $sponsorAmount,
             'sponsor_payment_method' => $sponsorPaymentMethod,
             'sponsor_payment_screenshot' => $screenshotPath,
-            'grand_total' => 1000 + $extraCouponTotal + $sponsorAmount,
+            'grand_total' => $grandTotal,
+            'is_accepted' => false,
         ]);
 
         return back()->with('success', 'Ganesh Utsav contribution submitted successfully.');
     }
+
+    public function accept(GaneshUtsavRegistration $ganeshUtsavRegistration): RedirectResponse
+    {
+        if (! $ganeshUtsavRegistration->is_accepted) {
+            $ganeshUtsavRegistration->update([
+                'is_accepted' => true,
+                'accepted_at' => now(),
+            ]);
+        }
+
+        return back()->with('success', 'Payment accepted successfully.');
+    }
+
+    public function destroy(GaneshUtsavRegistration $ganeshUtsavRegistration): RedirectResponse
+    {
+        $ganeshUtsavRegistration->delete();
+
+        return back()->with('success', 'Contribution record deleted successfully.');
+    }
 }
+

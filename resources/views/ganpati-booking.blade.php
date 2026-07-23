@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -860,6 +860,56 @@
             color: rgba(76, 51, 39, 0.82);
         }
 
+        .upi-box {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+            padding: 12px 14px;
+            border-radius: 14px;
+            background: rgba(255, 255, 255, 0.92);
+            border: 1px solid rgba(188, 76, 18, 0.14);
+        }
+
+        .upi-copy-group {
+            display: grid;
+            gap: 3px;
+        }
+
+        .upi-copy-label {
+            color: #7b1916;
+            font-size: 0.76rem;
+            font-weight: 700;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+        }
+
+        .upi-copy-value {
+            color: #553227;
+            font-size: 0.95rem;
+            font-weight: 700;
+            word-break: break-all;
+        }
+
+        .upi-copy-btn {
+            flex: 0 0 auto;
+            min-height: 38px;
+            padding: 0 14px;
+            border: 0;
+            border-radius: 10px;
+            color: #fff;
+            background: #7b1916;
+            font: inherit;
+            font-size: 0.85rem;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        .upi-copy-btn.copied {
+            background: #17603a;
+        }
+
         .summary-card {
             display: grid;
             gap: 12px;
@@ -867,6 +917,35 @@
             border-radius: 20px;
             background: linear-gradient(180deg, rgba(255, 248, 236, 0.98), rgba(255, 240, 214, 0.92));
             border: 1px solid rgba(216, 121, 0, 0.18);
+        }
+
+        .lookup-note {
+            display: none;
+            padding: 12px 14px;
+            border-radius: 16px;
+            font-size: 0.92rem;
+            font-weight: 600;
+        }
+
+        .lookup-note.visible {
+            display: block;
+        }
+
+        .lookup-note.success {
+            color: #17603a;
+            background: #e9f8ef;
+            border: 1px solid rgba(23, 96, 58, 0.16);
+        }
+
+        .lookup-note.warning {
+            color: #7b1916;
+            background: #fff1ef;
+            border: 1px solid rgba(143, 18, 23, 0.14);
+        }
+
+        .summary-card[hidden],
+        .summary-row[hidden] {
+            display: none !important;
         }
 
         .summary-title {
@@ -894,6 +973,37 @@
             border-top: 1px dashed rgba(188, 76, 18, 0.24);
             font-size: 1.02rem;
             font-weight: 700;
+        }
+
+        input[type="file"].field-input {
+            display: flex;
+            align-items: center;
+            padding: 10px 18px;
+            line-height: 1.3;
+        }
+
+        input[type="file"].field-input::file-selector-button {
+            margin-right: 14px;
+            padding: 9px 14px;
+            border: 1px solid rgba(188, 76, 18, 0.24);
+            border-radius: 10px;
+            color: #553227;
+            background: #fff7ea;
+            font: inherit;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        input[type="file"].field-input::-webkit-file-upload-button {
+            margin-right: 14px;
+            padding: 9px 14px;
+            border: 1px solid rgba(188, 76, 18, 0.24);
+            border-radius: 10px;
+            color: #553227;
+            background: #fff7ea;
+            font: inherit;
+            font-weight: 600;
+            cursor: pointer;
         }
 
         textarea.field-input {
@@ -1089,11 +1199,49 @@
                 padding: 14px 4px;
             }
 
+            .music-toggle {
+                right: 14px;
+                bottom: 14px;
+                width: 46px;
+                height: 46px;
+
             .site-credit {
                 text-align: center;
                 margin-top: 20px;
             }
         }
+        .music-toggle {
+            position: fixed;
+            right: 22px;
+            bottom: 22px;
+            z-index: 30;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 52px;
+            height: 52px;
+            border: 1px solid rgba(188, 76, 18, 0.22);
+            border-radius: 50%;
+            color: #fff7e8;
+            background: linear-gradient(180deg, #9a161c 0%, #751014 100%);
+            box-shadow: 0 16px 28px rgba(92, 18, 20, 0.24);
+            cursor: pointer;
+        }
+        .music-toggle .music-icon {
+            font-size: 1.2rem;
+            line-height: 1;
+        }
+
+        .music-toggle.is-playing {
+            background: linear-gradient(180deg, #17603a 0%, #10492c 100%);
+            border-color: rgba(23, 96, 58, 0.24);
+        }
+
+        .music-toggle:focus-visible {
+            outline: 3px solid rgba(255, 204, 121, 0.42);
+            outline-offset: 3px;
+        }
+
     </style>
 </head>
 
@@ -1106,7 +1254,7 @@
         <section class="layout">
             <div class="visual-panel">
                 <div class="visual-overlay"></div>
-                {{-- <div class="mantra-badge">श्री<span>॥ श्री गणेशाय नमः ॥</span></div> --}}
+                {{-- <div class="mantra-badge">????<span>? ???? ?????? ??? ?</span></div> --}}
 
                 {{-- <div class="bottom-banner">
                     <span class="small">Celebrate devotion. Create memories.</span>
@@ -1118,7 +1266,7 @@
                 <div class="mini-ornament"><span></span></div>
                 {{-- <p class="eyebrow">Ganesh Utsav Celebration</p> --}}
                 <h1 class="title">VSH<br> <strong>Ganesh Utsav Celebration 2026</strong></h1>
-                {{-- <p class="sub-mantra">|| मंगलमूर्ति मोरया, पुढच्या वर्षी लवकर या ||</p> --}}
+                {{-- <p class="sub-mantra">|| ?????????? ?????, ??????? ????? ???? ?? ||</p> --}}
                 {{-- <p class="description">Book your Ganpati celebration with ease. Static preview ready hai, baad mein isi section ko dynamic form se connect kar sakte hain.</p> --}}
 
                 <div class="booking-card">
@@ -1161,7 +1309,7 @@
                         </div>
                     </div>
 
-                    <form class="booking-form-static" action="{{ route('ganesh.utsav.store') }}" method="POST" enctype="multipart/form-data">
+                    <form class="booking-form-static" action="{{ route('ganesh.utsav.store') }}" method="POST" enctype="multipart/form-data" data-lookup-url="{{ route('ganesh.utsav.lookup') }}">
                         @csrf
                         <input type="hidden" name="resident_type" value="{{ old('resident_type') }}" data-resident-type-input>
                         <p class="step-title">Basic details</p>
@@ -1172,7 +1320,7 @@
                                     <span>Select Wing <span class="required">*</span></span>
                                 </div>
                                 <div class="field-control">
-                                    <select class="field-input" name="wing" required>
+                                    <select class="field-input" name="wing" data-wing-input required>
                                         <option value="">Select Wing</option>
                                         <option value="Wing A" {{ old('wing') === 'Wing A' ? 'selected' : '' }}>Wing A</option>
                                         <option value="Wing B" {{ old('wing') === 'Wing B' ? 'selected' : '' }}>Wing B</option>
@@ -1189,7 +1337,7 @@
                                     <span>Flat Number <span class="required">*</span></span>
                                 </div>
                                 <div class="field-control">
-                                    <input class="field-input" type="text" name="flat_number" placeholder="Enter flat number" value="{{ old('flat_number') }}" required>
+                                    <input class="field-input" type="text" name="flat_number" placeholder="Enter flat number" value="{{ old('flat_number') }}" data-flat-input required>
                                 </div>
                             </div>
 
@@ -1199,7 +1347,7 @@
                                     <span>Name <span class="required">*</span></span>
                                 </div>
                                 <div class="field-control">
-                                    <input class="field-input" type="text" name="full_name" placeholder="Enter full name" value="{{ old('full_name') }}" required>
+                                    <input class="field-input" type="text" name="full_name" placeholder="Enter full name" value="{{ old('full_name') }}" data-full-name-input required>
                                 </div>
                             </div>
 
@@ -1209,22 +1357,46 @@
                                     <span>Number <span class="required">*</span></span>
                                 </div>
                                 <div class="field-control">
-                                    <input class="field-input" type="tel" name="mobile_number" placeholder="Enter mobile number" value="{{ old('mobile_number') }}" required>
+                                    <input class="field-input" type="tel" name="mobile_number" placeholder="Enter mobile number" value="{{ old('mobile_number') }}" data-mobile-input required>
                                 </div>
                             </div>
 
+                            <div class="lookup-note" data-lookup-message></div>
 
-                            <div class="summary-card">
+                            <div class="summary-card" data-base-summary>
                                 <div class="summary-row">
                                     <span class="summary-title">Contribution Amount</span>
-                                    <strong>Rs 1000</strong>
+                                    <strong data-contribution-amount-label>Rs 1000</strong>
+                                </div>
+                            </div>
+
+                            <div class="summary-card" data-paid-summary hidden>
+                                <div class="summary-row">
+                                    <span class="summary-title">Main Contribution Status</span>
+                                    <strong>Paid</strong>
+                                </div>
+                                <div class="summary-row">
+                                    <span>Your main contribution has already been paid</span>
+                                    <strong data-paid-contribution-amount>Rs 1000</strong>
+                                </div>
+                                <div class="summary-row" data-paid-extra-row hidden>
+                                    <span>Previous Extra Coupon</span>
+                                    <strong data-paid-extra-amount>Rs 0</strong>
+                                </div>
+                                <div class="summary-row" data-paid-sponsor-row hidden>
+                                    <span>Previous Sponsor Amount</span>
+                                    <strong data-paid-sponsor-amount>Rs 0</strong>
+                                </div>
+                                <div class="summary-row" data-paid-total-row hidden>
+                                    <span>Previous Total Paid</span>
+                                    <strong data-paid-grand-total>Rs 0</strong>
                                 </div>
                             </div>
 
                             <div class="checkbox-card">
                                 <label>
                                     <input type="checkbox" name="has_extra_coupon" value="1" data-extra-toggle {{ old('has_extra_coupon') ? 'checked' : '' }}>
-                                    <span>Extra Coupon</span>
+                                    <span>Extra Coupon Amount</span>
                                 </label>
                                 <span class="checkbox-note">Rs 250</span>
                             </div>
@@ -1308,15 +1480,22 @@
                                             <span class="payment-dot"></span>
                                             <span>Online</span>
                                         </label>
-                                        <label class="payment-option" data-sponsor-payment-option="already-paid">
+                                        {{-- <label class="payment-option" data-sponsor-payment-option="already-paid">
                                             <input type="radio" name="sponsor_payment_method" value="already_paid" required {{ old('sponsor_payment_method') === 'already_paid' ? 'checked' : '' }}>
                                             <span class="payment-dot"></span>
                                             <span>Already Paid</span>
-                                        </label>
+                                        </label> --}}
                                     </div>
 
                                     <div class="sponsor-payment-preview" data-sponsor-payment-preview="proof">
                                         <div class="scanner-box">
+                                            <div class="upi-box">
+                                                <div class="upi-copy-group">
+                                                    <span class="upi-copy-label">UPI ID</span>
+                                                    <span class="upi-copy-value" data-upi-value>gopallgiri@oksbi</span>
+                                                </div>
+                                                <button class="upi-copy-btn" type="button" data-upi-copy>Copy</button>
+                                            </div>
                                             <img src="{{ asset('assets/ganptiqrcode.jpeg') }}" alt="Scanner QR Code">
                                             <p>Scan or download the QR code before uploading the payment screenshot.</p>
                                             <a class="qr-download" href="{{ asset('assets/ganptiqrcode.jpeg') }}" download="ganpati-qr-code.jpeg">Download QR Code</a>
@@ -1326,12 +1505,11 @@
                                 </div>
                             </div>
 
-
                             <div class="summary-card">
                                 <p class="summary-title">Total Amount</p>
-                                <div class="summary-row">
+                                <div class="summary-row" data-contribution-row>
                                     <span>Contribution Amount</span>
-                                    <strong>Rs 1000</strong>
+                                    <strong data-contribution-total>Rs 1000</strong>
                                 </div>
                                 <div class="summary-row">
                                     <span>Extra Coupon Total</span>
@@ -1362,10 +1540,35 @@
             </div>
         </section>
     </main>
+    <audio id="ganpatiSong" preload="none" loop>
+        <source src="{{ asset('assets/ganptisong.mpeg') }}" type="audio/mpeg">
+    </audio>
+    <button class="music-toggle" type="button" data-music-toggle aria-pressed="false" aria-label="Play music" title="Play music">
+        <span class="music-icon" aria-hidden="true" data-music-icon>&#9835;</span>
+    </button>
+
         <script>
         const bookingForm = document.querySelector('.booking-form-static');
         const roleOptions = Array.from(document.querySelectorAll('[data-role-option]'));
         const residentTypeInput = document.querySelector('[data-resident-type-input]');
+        const lookupUrl = bookingForm ? bookingForm.dataset.lookupUrl : '';
+        const wingInput = document.querySelector('[data-wing-input]');
+        const flatInput = document.querySelector('[data-flat-input]');
+        const fullNameInput = document.querySelector('[data-full-name-input]');
+        const mobileInput = document.querySelector('[data-mobile-input]');
+        const lookupMessage = document.querySelector('[data-lookup-message]');
+        const baseSummary = document.querySelector('[data-base-summary]');
+        const paidSummary = document.querySelector('[data-paid-summary]');
+        const paidContributionAmount = document.querySelector('[data-paid-contribution-amount]');
+        const paidExtraRow = document.querySelector('[data-paid-extra-row]');
+        const paidExtraAmount = document.querySelector('[data-paid-extra-amount]');
+        const paidSponsorRow = document.querySelector('[data-paid-sponsor-row]');
+        const paidSponsorAmount = document.querySelector('[data-paid-sponsor-amount]');
+        const paidTotalRow = document.querySelector('[data-paid-total-row]');
+        const paidGrandTotal = document.querySelector('[data-paid-grand-total]');
+        const contributionAmountLabel = document.querySelector('[data-contribution-amount-label]');
+        const contributionTotalLabel = document.querySelector('[data-contribution-total]');
+        const contributionRow = document.querySelector('[data-contribution-row]');
         const extraToggle = document.querySelector('[data-extra-toggle]');
         const extraPanel = document.querySelector('[data-extra-panel]');
         const extraCount = document.querySelector('[data-extra-count]');
@@ -1377,8 +1580,34 @@
         const extraTotalLabel = document.querySelector('[data-extra-total]');
         const sponsorTotalLabel = document.querySelector('[data-sponsor-total]');
         const grandTotalLabel = document.querySelector('[data-grand-total]');
+        const musicToggle = document.querySelector('[data-music-toggle]');
+        const musicIcon = document.querySelector('[data-music-icon]');
+        const upiCopyButton = document.querySelector('[data-upi-copy]');
+        const upiValue = document.querySelector('[data-upi-value]');
         const baseCouponAmount = 1000;
         const extraCouponAmount = 250;
+        let currentContributionAmount = baseCouponAmount;
+
+        function setLookupMessage(message = '', tone = 'success') {
+            if (!lookupMessage) {
+                return;
+            }
+
+            lookupMessage.textContent = message;
+            lookupMessage.classList.toggle('visible', Boolean(message));
+            lookupMessage.classList.toggle('success', Boolean(message) && tone === 'success');
+            lookupMessage.classList.toggle('warning', Boolean(message) && tone === 'warning');
+        }
+
+        function setResidentFieldsLocked(isLocked) {
+            if (fullNameInput) {
+                fullNameInput.readOnly = isLocked;
+            }
+
+            if (mobileInput) {
+                mobileInput.readOnly = isLocked;
+            }
+        }
 
         function updateExtraPanel() {
             if (!extraToggle || !extraPanel) {
@@ -1424,7 +1653,7 @@
             const extraCountValue = extraToggle && extraToggle.checked && extraCount ? Number(extraCount.value || 0) : 0;
             const extraTotal = extraCountValue * extraCouponAmount;
             const sponsorAmount = sponsorToggle && sponsorToggle.checked && sponsorAmountInput ? Number(sponsorAmountInput.value || 0) : 0;
-            const grandTotal = baseCouponAmount + extraTotal + sponsorAmount;
+            const grandTotal = currentContributionAmount + extraTotal + sponsorAmount;
 
             if (extraTotalLabel) {
                 extraTotalLabel.textContent = `Rs ${extraTotal}`;
@@ -1434,8 +1663,125 @@
                 sponsorTotalLabel.textContent = `Rs ${sponsorAmount}`;
             }
 
+            if (contributionTotalLabel) {
+                contributionTotalLabel.textContent = `Rs ${currentContributionAmount}`;
+            }
+
             if (grandTotalLabel) {
                 grandTotalLabel.textContent = `Rs ${grandTotal}`;
+            }
+        }
+
+        function updateContributionState(hasPaid, paidAmount = baseCouponAmount, paidDetails = {}) {
+            currentContributionAmount = hasPaid ? 0 : baseCouponAmount;
+            const extraTotal = Number(paidDetails.extraCouponTotal || 0);
+            const sponsorTotal = Number(paidDetails.sponsorAmount || 0);
+            const totalPaid = Number(paidDetails.grandTotal || 0);
+
+            if (baseSummary) {
+                baseSummary.hidden = hasPaid;
+            }
+
+            if (paidSummary) {
+                paidSummary.hidden = !hasPaid;
+            }
+
+            if (paidContributionAmount) {
+                paidContributionAmount.textContent = `Rs ${paidAmount || baseCouponAmount}`;
+            }
+
+            if (paidExtraRow) {
+                paidExtraRow.hidden = !hasPaid || extraTotal <= 0;
+            }
+
+            if (paidExtraAmount) {
+                paidExtraAmount.textContent = `Rs ${extraTotal}`;
+            }
+
+            if (paidSponsorRow) {
+                paidSponsorRow.hidden = !hasPaid || sponsorTotal <= 0;
+            }
+
+            if (paidSponsorAmount) {
+                paidSponsorAmount.textContent = `Rs ${sponsorTotal}`;
+            }
+
+            if (paidTotalRow) {
+                paidTotalRow.hidden = !hasPaid || totalPaid <= 0;
+            }
+
+            if (paidGrandTotal) {
+                paidGrandTotal.textContent = `Rs ${totalPaid}`;
+            }
+
+            if (contributionAmountLabel) {
+                contributionAmountLabel.textContent = `Rs ${baseCouponAmount}`;
+            }
+
+            if (contributionRow) {
+                contributionRow.hidden = hasPaid;
+            }
+
+            updateTotals();
+        }
+
+        async function lookupResidentDetails() {
+            if (!lookupUrl || !wingInput || !flatInput) {
+                return;
+            }
+
+            const wing = wingInput.value.trim();
+            const flatNumber = flatInput.value.trim();
+
+            if (!wing || !flatNumber) {
+                setLookupMessage('');
+                setResidentFieldsLocked(false);
+                updateContributionState(false);
+                return;
+            }
+
+            setLookupMessage('Checking resident details...', 'success');
+
+            try {
+                const response = await fetch(`${lookupUrl}?wing=${encodeURIComponent(wing)}&flat_number=${encodeURIComponent(flatNumber)}`, {
+                    headers: {
+                        'X-Requested-With': 'XMLHttpRequest',
+                        'Accept': 'application/json'
+                    }
+                });
+
+                if (!response.ok) {
+                    throw new Error('Lookup request failed.');
+                }
+
+                const data = await response.json();
+
+                if (data.full_name && fullNameInput) {
+                    fullNameInput.value = data.full_name;
+                }
+
+                if (data.mobile_number && mobileInput) {
+                    mobileInput.value = data.mobile_number;
+                }
+
+                setResidentFieldsLocked(Boolean(data.full_name || data.mobile_number));
+                updateContributionState(Boolean(data.has_paid_main_contribution), Number(data.paid_contribution_amount || baseCouponAmount), {
+                    extraCouponTotal: Number(data.paid_extra_coupon_total || 0),
+                    sponsorAmount: Number(data.paid_sponsor_amount || 0),
+                    grandTotal: Number(data.paid_grand_total || 0)
+                });
+
+                if (data.has_paid_main_contribution) {
+                    setLookupMessage('Main contribution already paid. Only extra coupon or sponsor amount can be added.', 'success');
+                } else if (data.found) {
+                    setLookupMessage('');
+                } else {
+                    setLookupMessage('');
+                }
+            } catch (error) {
+                setResidentFieldsLocked(false);
+                updateContributionState(false);
+                setLookupMessage('');
             }
         }
 
@@ -1455,6 +1801,15 @@
                 }
             });
         });
+
+        if (wingInput) {
+            wingInput.addEventListener('change', lookupResidentDetails);
+        }
+
+        if (flatInput) {
+            flatInput.addEventListener('blur', lookupResidentDetails);
+            flatInput.addEventListener('change', lookupResidentDetails);
+        }
 
         if (extraToggle) {
             extraToggle.addEventListener('change', () => {
@@ -1484,6 +1839,56 @@
             });
         });
 
+        if (upiCopyButton && upiValue) {
+            upiCopyButton.addEventListener('click', async () => {
+                const originalText = upiCopyButton.textContent;
+
+                try {
+                    await navigator.clipboard.writeText(upiValue.textContent.trim());
+                    upiCopyButton.textContent = 'Copied';
+                    upiCopyButton.classList.add('copied');
+                } catch (error) {
+                    upiCopyButton.textContent = 'Copy failed';
+                }
+
+                setTimeout(() => {
+                    upiCopyButton.textContent = originalText;
+                    upiCopyButton.classList.remove('copied');
+                }, 1600);
+            });
+        }
+
+        if (musicToggle && musicIcon && ganpatiSong) {
+            musicToggle.addEventListener('click', async () => {
+                const shouldPlay = ganpatiSong.paused;
+
+                try {
+                    if (shouldPlay) {
+                        ganpatiSong.muted = false;
+                        await ganpatiSong.play();
+                        musicToggle.classList.add('is-playing');
+                        musicToggle.setAttribute('aria-pressed', 'true');
+                        musicToggle.setAttribute('aria-label', 'Pause music');
+                        musicToggle.setAttribute('title', 'Pause music');
+                        musicIcon.innerHTML = '&#10074;&#10074;';
+                    } else {
+                        ganpatiSong.pause();
+                        musicToggle.classList.remove('is-playing');
+                        musicToggle.setAttribute('aria-pressed', 'false');
+                        musicToggle.setAttribute('aria-label', 'Play music');
+                        musicToggle.setAttribute('title', 'Play music');
+                        musicIcon.innerHTML = '&#9835;';
+                    }
+                } catch (error) {
+                    musicToggle.classList.remove('is-playing');
+                    musicToggle.setAttribute('aria-pressed', 'false');
+                        musicToggle.setAttribute('aria-label', 'Play music');
+                        musicToggle.setAttribute('title', 'Play music');
+                        musicIcon.innerHTML = '&#9835;';
+                }
+            });
+        }
+
         const preselectedRole = roleOptions.find((option) => {
             const input = option.querySelector('input');
             return input && input.checked;
@@ -1503,11 +1908,16 @@
         updateExtraPanel();
         updateSponsorPanel();
         updateSponsorPaymentPreview();
-        updateTotals();
+        updateContributionState(false);
+        lookupResidentDetails();
     </script>
 </body>
 
 </html>
+
+
+
+
 
 
 

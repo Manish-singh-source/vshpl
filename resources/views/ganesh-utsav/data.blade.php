@@ -301,6 +301,41 @@
         .status-badge.cash { color: #17603a; background: #e6f6ed; }
         .status-badge.online { color: #1552a1; background: #e9f2ff; }
         .status-badge.already-paid { color: #6544a8; background: #f1ebff; }
+        .status-badge.accepted { color: #17603a; background: #e6f6ed; }
+        .status-badge.pending { color: #7b1916; background: #fff0f1; }
+
+        .action-stack {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .inline-action {
+            margin: 0;
+        }
+
+        .icon-button {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 36px;
+            height: 36px;
+            border: 0;
+            border-radius: 10px;
+            color: #fff;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        .icon-button.accept { background: #17603a; }
+        .icon-button.delete { background: #a50f18; }
+        .accepted-text {
+            color: #17603a;
+            font-size: 12px;
+            font-weight: 700;
+        }
 
         .proof-link {
             display: inline-flex;
@@ -364,6 +399,7 @@
         $sponsorCount = $registrations->where('is_sponsor', true)->count();
         $sponsorCollection = $registrations->sum('sponsor_amount');
         $digitalPayments = $registrations->whereIn('sponsor_payment_method', ['online', 'already_paid'])->count();
+        $acceptedPayments = $registrations->where('is_accepted', true)->count();
     @endphp
 
     <main class="admin-shell">
@@ -404,7 +440,7 @@
                     <h2>Contribution Records</h2>
                     <p>Resident, coupon, sponsorship and payment details.</p>
                 </div>
-                <span class="record-count">{{ $digitalPayments }} digital payments</span>
+                <span class="record-count">{{ $acceptedPayments }} accepted payments | {{ $digitalPayments }} digital payments</span>
             </div>
 
             <div class="table-area">
@@ -418,8 +454,10 @@
                             <th>Sponsorship</th>
                             <th>Sponsor Amount</th>
                             <th>Payment</th>
+                            <th>Payment Status</th>
                             <th>Grand Total</th>
                             <th>Submitted At</th>
+                            <th>Action</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -479,12 +517,40 @@
                                         <a class="proof-link" href="{{ asset($registration->sponsor_payment_screenshot) }}" target="_blank" rel="noopener">View Payment Proof</a>
                                     @endif
                                 </td>
+                                <td data-order="{{ $registration->is_accepted ? 1 : 0 }}">
+                                    @if ($registration->is_accepted)
+                                        <span class="status-badge accepted">Accepted</span>
+                                        <span class="cell-sub">{{ $registration->accepted_at?->format('d M Y h:i A') }}</span>
+                                    @else
+                                        <span class="status-badge pending">Pending</span>
+                                        <span class="cell-sub">Collection not confirmed</span>
+                                    @endif
+                                </td>
                                 <td data-order="{{ $registration->grand_total }}">
                                     <span class="grand-total">Rs {{ number_format($registration->grand_total) }}</span>
                                 </td>
                                 <td data-order="{{ $registration->created_at?->timestamp }}">
                                     <span class="cell-main">{{ $registration->created_at?->format('d M Y') }}</span>
                                     <span class="cell-sub">{{ $registration->created_at?->format('h:i A') }}</span>
+                                </td>
+                                <td>
+                                    <div class="action-stack">
+                                        @if (! $registration->is_accepted)
+                                            <form class="inline-action" action="{{ route('ganesh.utsav.accept', $registration) }}" method="POST">
+                                                @csrf
+                                                @method('PATCH')
+                                                <button class="icon-button accept" type="submit" title="Accept payment">&#10003;</button>
+                                            </form>
+                                        @else
+                                            <span class="accepted-text">Accepted</span>
+                                        @endif
+
+                                        <form class="inline-action" action="{{ route('ganesh.utsav.destroy', $registration) }}" method="POST" onsubmit="return confirm('Are you sure you want to delete this contribution record?');">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button class="icon-button delete" type="submit" title="Delete record">&#128465;</button>
+                                        </form>
+                                    </div>
                                 </td>
                             </tr>
                         @endforeach
@@ -521,3 +587,5 @@
     </script>
 </body>
 </html>
+
+

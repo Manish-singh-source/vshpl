@@ -75,8 +75,11 @@ Route::get('/ganesh-utsav-2026', function () {
     return view('ganpati-booking');
 })->name('ganesh.utsav.celebration');
 Route::post('/ganesh-utsav-2026', [GaneshUtsavController::class, 'store'])->name('ganesh.utsav.store');
+Route::get('/ganesh-utsav-2026/lookup', [GaneshUtsavController::class, 'lookup'])->name('ganesh.utsav.lookup');
 Route::get('/ganesh-utsav-2026/data', [GaneshUtsavController::class, 'index'])->name('ganesh.utsav.data');
 Route::get('/ganesh-utsav-2026/data/export', [GaneshUtsavController::class, 'export'])->name('ganesh.utsav.export');
+Route::patch('/ganesh-utsav-2026/data/{ganeshUtsavRegistration}/accept', [GaneshUtsavController::class, 'accept'])->name('ganesh.utsav.accept');
+Route::delete('/ganesh-utsav-2026/data/{ganeshUtsavRegistration}', [GaneshUtsavController::class, 'destroy'])->name('ganesh.utsav.destroy');
 // Route intentionally disabled: /holicelebration
 Route::post('/holicelebration', [App\Http\Controllers\HoliCelebrationController::class, 'store'])->name('holicelebration.store');
 Route::get('/holicelebration/data', [App\Http\Controllers\HoliCelebrationController::class, 'index'])->name('holicelebration.data');
@@ -93,3 +96,4 @@ Route::get('/test', function () {
 Route::get('/cricket/gallery', function () {
     return view('gallery');
 });
+

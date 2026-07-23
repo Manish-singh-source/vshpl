@@ -24,10 +24,14 @@ class GaneshUtsavRegistration extends Model
         'sponsor_payment_method',
         'sponsor_payment_screenshot',
         'grand_total',
+        'is_accepted',
+        'accepted_at',
     ];
 
     protected $casts = [
         'has_extra_coupon' => 'boolean',
         'is_sponsor' => 'boolean',
+        'is_accepted' => 'boolean',
+        'accepted_at' => 'datetime',
     ];
 }
