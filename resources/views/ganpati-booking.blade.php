@@ -126,7 +126,7 @@
             overflow: hidden;
             background:
                 linear-gradient(180deg, rgba(76, 28, 8, 0), rgba(76, 28, 8, 0)),
-                url('{{ asset('assets/ganpti.png') }}') center/cover no-repeat;
+                url('{{ asset('assets/ganpti1.png') }}') center/cover no-repeat;
             box-shadow: inset 0 0 0 1px rgba(255, 232, 198, 0.22);
         }
         .mantra-badge {
