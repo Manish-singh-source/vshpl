@@ -1164,7 +1164,7 @@
             }
 
             .role-options {
-                grid-template-columns: repeat(3, minmax(0, 1fr));
+                grid-template-columns: 1fr;
                 gap: 10px;
             }
 
@@ -1233,6 +1233,14 @@
 
             .payment-choice-row .payment-option:last-child {
                 grid-column: 1 / -1;
+            }
+
+            [data-payment-field] .payment-choice-row {
+                grid-template-columns: 1fr;
+            }
+
+            [data-payment-field] .payment-choice-row .payment-option:last-child {
+                grid-column: auto;
             }
 
             
