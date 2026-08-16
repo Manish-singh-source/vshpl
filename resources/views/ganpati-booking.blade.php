@@ -1608,7 +1608,7 @@
                                             <div class="upi-box">
                                                 <div class="upi-copy-group">
                                                     <span class="upi-copy-label">UPI ID</span>
-                                                    <span class="upi-copy-value" data-upi-value>gopallgiri@oksbi</span>
+                                                    <span class="upi-copy-value" data-upi-value>gopallgiri@okaxis</span>
                                                 </div>
                                                 <button class="upi-copy-btn" type="button" data-upi-copy>Copy</button>
                                             </div>
