@@ -218,6 +218,54 @@
 
         .table-area { padding: 18px 20px 20px; }
 
+        .filter-toolbar {
+            display: flex;
+            align-items: end;
+            justify-content: space-between;
+            gap: 16px;
+            margin-bottom: 14px;
+            padding: 14px 16px;
+            border: 1px solid var(--line);
+            border-radius: 12px;
+            background: #fafbfc;
+        }
+
+        .filter-field {
+            display: grid;
+            gap: 6px;
+            width: min(100%, 260px);
+        }
+
+        .filter-field label {
+            color: var(--ink);
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        .filter-select {
+            width: 100%;
+            min-height: 42px;
+            padding: 0 38px 0 12px;
+            border: 1px solid var(--line);
+            border-radius: 10px;
+            color: var(--ink);
+            background-color: var(--surface);
+            font: inherit;
+            font-size: 14px;
+        }
+
+        .filter-select:focus {
+            border-color: var(--brand);
+            outline: 0;
+            box-shadow: 0 0 0 3px rgba(165, 15, 24, 0.1);
+        }
+
+        .filter-summary {
+            color: var(--muted);
+            font-size: 12px;
+            font-weight: 700;
+        }
+
         div.dataTables_wrapper div.dataTables_length select {
             min-width: 72px;
             margin: 0 6px;
@@ -307,8 +355,16 @@
         .action-stack {
             display: flex;
             align-items: center;
+            justify-content: center;
             gap: 8px;
             flex-wrap: wrap;
+        }
+
+        #ganeshDataTable th.action-column,
+        #ganeshDataTable td.action-column {
+            min-width: 92px;
+            text-align: center;
+            white-space: nowrap;
         }
 
         .inline-action {
@@ -379,12 +435,21 @@
         @media (max-width: 640px) {
             .admin-shell { width: min(100% - 24px, 1600px); padding-top: 18px; }
             .page-bar { align-items: flex-start; flex-direction: column; }
+            h1 { overflow-wrap: anywhere; }
             .page-actions { width: 100%; }
             .back-link, .export-link { width: 100%; }
             .stats-grid { gap: 10px; }
-            .stat-card { min-height: 98px; padding: 16px; }
-            .card-heading { align-items: flex-start; padding: 17px; }
+            .stat-card { min-width: 0; min-height: 98px; padding: 16px; }
+            .stat-value { font-size: 22px; }
+            .card-heading { align-items: flex-start; flex-direction: column; padding: 17px; }
+            .record-count { max-width: 100%; white-space: normal; }
             .table-area { padding: 13px; }
+            .filter-toolbar { align-items: stretch; flex-direction: column; padding: 13px; }
+            .filter-field { width: 100%; }
+            #ganeshDataTable .cell-main { white-space: normal; }
+            #ganeshDataTable th.action-column,
+            #ganeshDataTable td.action-column { min-width: 84px; width: 84px; }
+            .action-stack { flex-wrap: nowrap; }
             div.dataTables_wrapper div.dataTables_length,
             div.dataTables_wrapper div.dataTables_filter { text-align: left; }
             div.dataTables_wrapper div.dataTables_filter { margin-top: 12px; }
@@ -410,7 +475,12 @@
                 <p class="page-copy">Search, sort and review all resident contribution records.</p>
             </div>
             <div class="page-actions">
-                <a class="export-link" href="{{ route('ganesh.utsav.export') }}">Download Excel</a>
+                <a
+                    id="ganeshExportLink"
+                    class="export-link"
+                    href="{{ route('ganesh.utsav.export') }}"
+                    data-base-url="{{ route('ganesh.utsav.export') }}"
+                >Download Excel</a>
                 <a class="back-link" href="{{ route('ganesh.utsav.celebration') }}">Back to Contribution Form</a>
             </div>
         </header>
@@ -444,7 +514,22 @@
             </div>
 
             <div class="table-area">
-                <table id="ganeshDataTable" class="table table-hover align-middle nowrap" style="width:100%">
+                <div class="filter-toolbar">
+                    <div class="filter-field">
+                        <label for="wingFilter">Filter by Wing</label>
+                        <select id="wingFilter" class="filter-select">
+                            <option value="">All Wings</option>
+                            <option value="Wing A">Wing A</option>
+                            <option value="Wing B">Wing B</option>
+                            <option value="Wing C">Wing C</option>
+                            <option value="Wing D">Wing D</option>
+                            <option value="Wing E">Wing E</option>
+                        </select>
+                    </div>
+                    <span id="wingFilterSummary" class="filter-summary" aria-live="polite">All wings</span>
+                </div>
+
+                <table id="ganeshDataTable" class="table table-hover align-middle" style="width:100%">
                     <thead>
                         <tr>
                             <th>ID</th>
@@ -587,9 +672,22 @@
     <script src="https://cdn.datatables.net/responsive/2.5.0/js/responsive.bootstrap5.min.js"></script>
     <script>
         $(function () {
-            $('#ganeshDataTable').DataTable({
+            const table = $('#ganeshDataTable').DataTable({
                 responsive: true,
                 autoWidth: false,
+                columnDefs: [
+                    {
+                        targets: -1,
+                        className: 'all action-column',
+                        orderable: false,
+                        searchable: false,
+                        responsivePriority: 1
+                    },
+                    { targets: 1, responsivePriority: 2 },
+                    { targets: 2, className: 'min-tablet-p', responsivePriority: 3 },
+                    { targets: 8, responsivePriority: 4 },
+                    { targets: 7, responsivePriority: 5 }
+                ],
                 pageLength: 10,
                 lengthMenu: [[10, 25, 50, 100], [10, 25, 50, 100]],
                 order: [[0, 'desc']],
@@ -603,11 +701,48 @@
                     emptyTable: 'No Ganesh Utsav contributions submitted yet'
                 }
             });
+
+            const wingFilter = $('#wingFilter');
+            const exportLink = document.getElementById('ganeshExportLink');
+            const filterSummary = document.getElementById('wingFilterSummary');
+            const initialWing = new URL(window.location.href).searchParams.get('wing') || '';
+            const allowedWings = ['Wing A', 'Wing B', 'Wing C', 'Wing D', 'Wing E'];
+
+            function applyWingFilter(selectedWing) {
+                const wing = allowedWings.includes(selectedWing) ? selectedWing : '';
+                const searchTerm = wing ? $.fn.dataTable.util.escapeRegex(wing) : '';
+
+                table.column(1).search(searchTerm, true, false).draw();
+
+                const exportUrl = new URL(exportLink.dataset.baseUrl, window.location.origin);
+                const pageUrl = new URL(window.location.href);
+
+                if (wing) {
+                    exportUrl.searchParams.set('wing', wing);
+                    pageUrl.searchParams.set('wing', wing);
+                } else {
+                    pageUrl.searchParams.delete('wing');
+                }
+
+                exportLink.href = exportUrl.toString();
+                exportLink.textContent = wing ? `Download ${wing} Excel` : 'Download Excel';
+                filterSummary.textContent = wing
+                    ? `${table.rows({ search: 'applied' }).count()} records in ${wing}`
+                    : `${table.rows({ search: 'applied' }).count()} records in all wings`;
+                window.history.replaceState({}, '', pageUrl);
+            }
+
+            wingFilter.on('change', function () {
+                applyWingFilter(this.value);
+            });
+
+            if (allowedWings.includes(initialWing)) {
+                wingFilter.val(initialWing);
+            }
+
+            applyWingFilter(wingFilter.val());
         });
     </script>
 </body>
 </html>
-
-
-
 

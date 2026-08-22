@@ -7,6 +7,7 @@ use App\Models\Registration;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 use Illuminate\View\View;
 
 class GaneshUtsavController extends Controller
@@ -18,11 +19,17 @@ class GaneshUtsavController extends Controller
         return view('ganesh-utsav.data', compact('registrations'));
     }
 
-    public function export()
+    public function export(Request $request)
     {
-        $fileName = 'ganesh-utsav-contributions-' . now()->format('Y-m-d') . '.csv';
+        $validated = $request->validate([
+            'wing' => ['nullable', 'string', Rule::in(['Wing A', 'Wing B', 'Wing C', 'Wing D', 'Wing E'])],
+        ]);
 
-        return response()->streamDownload(function (): void {
+        $wing = $validated['wing'] ?? null;
+        $wingSuffix = $wing ? '-' . strtolower(str_replace(' ', '-', $wing)) : '';
+        $fileName = 'ganesh-utsav-contributions' . $wingSuffix . '-' . now()->format('Y-m-d') . '.csv';
+
+        return response()->streamDownload(function () use ($wing): void {
             $file = fopen('php://output', 'w');
             fwrite($file, "\xEF\xBB\xBF");
 
@@ -58,7 +65,12 @@ class GaneshUtsavController extends Controller
                 return preg_match('/^[=\-+@\t\r]/u', $value) ? "'" . $value : $value;
             };
 
-            foreach (GaneshUtsavRegistration::latest()->cursor() as $registration) {
+            $registrations = GaneshUtsavRegistration::query()
+                ->when($wing, fn ($query) => $query->where('wing', $wing))
+                ->latest()
+                ->cursor();
+
+            foreach ($registrations as $registration) {
                 fputcsv($file, array_map($excelSafe, [
                     $registration->id,
                     $registration->resident_type,
@@ -278,7 +290,6 @@ class GaneshUtsavController extends Controller
         return back()->with('success', 'Contribution record deleted successfully.');
     }
 }
-
 
 
 
