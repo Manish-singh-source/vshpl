@@ -192,7 +192,7 @@
             <h1 class="building-name">Veena Smart Homes</h1>
             <p class="subtitle">Community Life, Celebrations, and Memorable Moments</p>
             <div class="event-actions">
-                <a class="upcoming-event-btn" href="{{ route('ganesh.utsav.celebration') }}">Upcoming Event</a>
+                <a class="upcoming-event-btn" href="{{ route('navratri.utsav') }}">Upcoming Event</a>
                 <a class="past-event-btn" href="{{ route('event.page') }}">Past Event</a>
             </div>
         </div>
