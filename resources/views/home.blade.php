@@ -1,207 +1,162 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Veena Smart Homes | Home</title>
+    <title>Veena Smart Homes | Navratri Utsav</title>
     <link rel="icon" type="image/x-icon" href="{{ asset('assets/main.png') }}">
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&display=swap" rel="stylesheet">
     <style>
-        :root {
-            --brand-primary: #0d4a8d;
-            --brand-accent: #00a8d7;
-            --text-light: #f6fbff;
+        * {
+            box-sizing: border-box;
         }
 
         body {
             margin: 0;
-            padding: 0;
-            font-family: 'Montserrat', sans-serif;
-            color: var(--text-light);
             min-height: 100vh;
-            background: #0a1f35;
+            font-family: 'Montserrat', sans-serif;
+            color: #fff;
+            overflow: hidden;
+            background: #120706;
         }
 
-        .hero {
+        .video-bg {
             position: fixed;
-            top: 0;
-            left: 0;
+            inset: 0;
             width: 100%;
-            height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            background-image: linear-gradient(145deg, rgba(4, 24, 43, 0.75), rgba(11, 57, 102, 0.45)), url('{{ asset('assets/home.jpg') }}');
-            background-size: cover;
-            background-position: center;
-            padding: 24px;
-            text-align: center;
-            box-sizing: border-box;
+            height: 100%;
+            object-fit: cover;
+            z-index: 0;
         }
 
-        .floating-logo {
-            position: absolute;
+        .overlay {
+            position: fixed;
+            inset: 0;
+            z-index: 1;
+            background:
+                radial-gradient(circle at 50% 45%, rgba(245, 160, 42, 0.18), transparent 34%),
+                linear-gradient(135deg, rgba(18, 7, 6, 0.7), rgba(54, 10, 4, 0.35));
+        }
+
+        .top-actions {
+            position: fixed;
+            top: 22px;
+            left: 22px;
+            z-index: 3;
+        }
+
+        .logo {
+            width: 98px;
+            height: auto;
+            filter: drop-shadow(0 8px 20px rgba(0, 0, 0, 0.5));
+        }
+
+        .events-link {
+            position: fixed;
             top: 24px;
-            left: 24px;
-            width: 96px;
-            height: auto;
-            filter: drop-shadow(0 6px 20px rgba(0, 0, 0, 0.45));
-        }
-
-        .content {
-            max-width: 720px;
-            padding: 34px 30px;
-            border-radius: 18px;
-            background: rgba(7, 28, 48, 0.42);
-            backdrop-filter: blur(5px);
-            border: 1px solid rgba(255, 255, 255, 0.24);
-            box-shadow: 0 18px 40px rgba(0, 0, 0, 0.28);
-        }
-
-        .content-logo {
-            width: 140px;
-            max-width: 34vw;
-            height: auto;
-            margin-bottom: 14px;
-            filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.36));
-        }
-
-        .building-name {
-            margin: 0 0 8px;
-            font-size: clamp(1.9rem, 3.4vw, 3rem);
-            font-weight: 800;
-            letter-spacing: 1px;
-            text-transform: uppercase;
-            text-shadow: 0 8px 18px rgba(0, 0, 0, 0.34);
-        }
-
-        .subtitle {
-            margin: 0;
-            font-size: clamp(0.95rem, 1.6vw, 1.2rem);
-            font-weight: 500;
-            opacity: 0.96;
-        }
-
-        .event-actions {
-            margin-top: 28px;
-            display: flex;
-            justify-content: center;
-            gap: 12px;
-            flex-wrap: wrap;
-        }
-
-        .past-event-btn,
-        .upcoming-event-btn {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            background: linear-gradient(120deg, var(--brand-primary), var(--brand-accent));
+            right: 22px;
+            z-index: 3;
             color: #fff;
             text-decoration: none;
             font-weight: 700;
-            letter-spacing: 0.3px;
+            padding: 10px 18px;
+            border: 1px solid rgba(255, 255, 255, 0.45);
             border-radius: 999px;
-            padding: 12px 28px;
-            border: 1px solid rgba(255, 255, 255, 0.35);
-            box-shadow: 0 10px 24px rgba(0, 0, 0, 0.28);
-            transition: transform .25s ease, box-shadow .25s ease;
+            background: rgba(0, 0, 0, 0.22);
+            backdrop-filter: blur(5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.24);
+            transition: background .2s ease, transform .2s ease;
         }
 
-        .upcoming-event-btn {
-            background: linear-gradient(120deg, #f4bd45, #d97816);
-            color: #42160d;
+        .events-link:hover {
+            background: rgba(255, 255, 255, 0.18);
+            transform: translateY(-1px);
         }
 
-        .past-event-btn:hover,
-        .upcoming-event-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 14px 30px rgba(0, 0, 0, 0.34);
+        .content {
+            position: relative;
+            z-index: 2;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 120px 22px 48px;
+            text-align: center;
         }
 
-        .site-credit {
-            position: fixed;
-            right: 12px;
-            bottom: 10px;
-            z-index: 20;
-            font-size: 12px;
-            color: #1f2a44;
-            background: rgba(255, 255, 255, 0.78);
-            border: 1px solid rgba(255, 255, 255, 0.95);
-            padding: 6px 11px 5px;
-            border-radius: 12px;
-            backdrop-filter: blur(4px);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.18);
-            font-weight: 500;
-            line-height: 1.2;
+        .content-inner {
+            max-width: 860px;
+            text-shadow: 0 8px 24px rgba(0, 0, 0, 0.58);
         }
 
-        .site-credit a {
-            color: #036;
+        .eyebrow {
+            margin: 0 0 12px;
+            font-size: clamp(0.9rem, 2vw, 1.1rem);
             font-weight: 700;
-            text-decoration: none;
-        }
-
-        .site-credit .tagline {
-            display: block;
-            margin-top: 4px;
-            padding-top: 4px;
-            border-top: 1px solid rgba(0, 51, 102, 0.25);
-            font-size: 9px;
-            font-weight: 700;
-            color: #036;
-            letter-spacing: .7px;
+            letter-spacing: 3px;
             text-transform: uppercase;
-            background: linear-gradient(90deg, #036 0%, #00d0ff 100%);
-            -webkit-background-clip: text;
-            background-clip: text;
-            -webkit-text-fill-color: transparent;
+            color: #ffe2a8;
         }
 
-        @media (max-width: 768px) {
-            .hero {
-                padding: 20px;
-            }
+        h1 {
+            margin: 0;
+            font-size: clamp(2.4rem, 8vw, 6.6rem);
+            line-height: 0.95;
+            font-weight: 800;
+            letter-spacing: 0;
+            text-transform: uppercase;
+        }
 
-            .floating-logo {
-                width: 72px;
+        .subtext {
+            margin: 22px auto 0;
+            max-width: 640px;
+            font-size: clamp(1rem, 2.4vw, 1.45rem);
+            line-height: 1.6;
+            font-weight: 600;
+        }
+
+        @media (max-width: 640px) {
+            .top-actions {
                 top: 14px;
                 left: 14px;
             }
 
-            .content {
-                padding: 24px 18px;
+            .logo {
+                width: 74px;
             }
 
-            .site-credit {
-                font-size: 11px;
-                right: 8px;
-                bottom: 8px;
+            .events-link {
+                top: 16px;
+                right: 14px;
+                padding: 9px 14px;
+                font-size: 0.82rem;
+            }
+
+            .content {
+                padding-top: 105px;
             }
         }
     </style>
 </head>
 
 <body>
-    <section class="hero">
-        <img src="{{ asset('assets/main.png') }}" alt="Veena Smart Homes Logo" class="floating-logo">
-        <div class="content">
-            <img src="{{ asset('assets/main.png') }}" alt="VSH Emblem" class="content-logo">
-            <h1 class="building-name">Veena Smart Homes</h1>
-            <p class="subtitle">Community Life, Celebrations, and Memorable Moments</p>
-            <div class="event-actions">
-                <a class="upcoming-event-btn" href="{{ route('navratri.utsav') }}">Upcoming Event</a>
-                <a class="past-event-btn" href="{{ route('event.page') }}">Past Event</a>
-            </div>
-        </div>
-    </section>
-
-    <div class="site-credit">
-        Designed by <a href="https://technofra.com/" target="_blank">Technofra</a>
-        <span class="tagline">Web Presence &amp; Branding</span>
+    <video class="video-bg" autoplay muted loop playsinline>
+        <source src="{{ asset('assets/durga.mp4') }}" type="video/mp4">
+    </video>
+    <div class="overlay" aria-hidden="true"></div>
+    <div class="top-actions">
+        <img src="{{ asset('assets/main.png') }}" alt="Veena Smart Homes Logo" class="logo">
     </div>
+    <a class="events-link" href="{{ route('event.page') }}">Past Events</a>
+
+    <main class="content">
+        <div class="content-inner">
+            <p class="eyebrow">Upcoming Event</p>
+            <h1>Navratri Utsav</h1>
+            <p class="subtext">Celebrate devotion, dance, music, and community togetherness at Veena Smart Homes.</p>
+        </div>
+    </main>
 </body>
 
 </html>

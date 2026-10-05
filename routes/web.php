@@ -71,9 +71,7 @@ Route::get('/', function () {
 Route::get('/event', function () {
     return view('event');
 })->name('event.page');
-Route::get('/navratri-utsav', function () {
-    return view('navratri-utsav');
-})->name('navratri.utsav');
+// Route intentionally disabled: /navratri-utsav
 // Route intentionally disabled: /ganesh-utsav-2026
 // Route::get('/ganesh-utsav-2026', function () {
 //     return view('ganpati-booking');
