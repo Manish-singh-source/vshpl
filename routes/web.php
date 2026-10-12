@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\RegistrationController;
 use App\Http\Controllers\VehicleServiceController;
+use App\Http\Controllers\BusinessDirectoryController;
 // use App\Http\Controllers\GaneshUtsavController;
 
 Route::prefix('/vshpl')->group(function () {
@@ -14,10 +15,10 @@ Route::prefix('/vshpl')->group(function () {
     Route::get('/edit-player-details', function () {
         return view('edit-player-details');
     })->name('edit-player-details');
-    
+
     Route::post('/edit-registration', [RegistrationController::class, 'editPlayerDetails'])->name('edit.registration');
     Route::put('/update-user-registration/{id}', [RegistrationController::class, 'updatePlayerDetails'])->name('update.user.registration');
-    
+
     Route::get('/admin', function () {
         $registrations = \App\Models\Registration::all();
         return view('dashboard', compact('registrations'));
@@ -30,15 +31,15 @@ Route::prefix('/vshpl')->group(function () {
     Route::get('/admin/export', [RegistrationController::class, 'export'])->name('export.registrations.list');
     Route::put('/update-registration/{id}', [RegistrationController::class, 'update'])->name('update.registration');
     Route::delete('/delete/{id}', [RegistrationController::class, 'destroy'])->name('delete.registration');
-    
+
     Route::get('/vehicleregistration', function () {
         return view('vehicle-services');
     })->name('vshpl.vehicle.services');
 });
 
 Route::get('/cricket', function () {
-        $teams = \App\Models\Team::all();
-        return view('cricket', compact('teams'));
+    $teams = \App\Models\Team::all();
+    return view('cricket', compact('teams'));
 });
 Route::post('/cricket/join', [RegistrationController::class, 'storeTeam'])->name('team.join');
 Route::get('/cricket/team-members', [RegistrationController::class, 'getTeamMembers'])->name('team.members');
@@ -52,7 +53,7 @@ Route::get('/vehicleregistration/export', [VehicleServiceController::class, 'exp
 
 Route::get('/vehicle-services', function () {
     return redirect()->route('vehicle.services');
-}); 
+});
 Route::post('/vehicle-services', function () {
     return redirect()->route('vehicle.services');
 });
@@ -99,3 +100,9 @@ Route::get('/cricket/gallery', function () {
     return view('gallery');
 });
 
+Route::get('/business-registration', [BusinessDirectoryController::class, 'create'])->name('business-directory.create');
+Route::post('/business-registration', [BusinessDirectoryController::class, 'store'])->name('business-directory.store');
+Route::get('/business-registration/admin', [BusinessDirectoryController::class, 'admin'])->name('business-directory.admin');
+Route::get('/business-registration/{registration}/edit', [BusinessDirectoryController::class, 'edit'])->name('business-directory.edit');
+Route::put('/business-registration/{registration}', [BusinessDirectoryController::class, 'update'])->name('business-directory.update');
+Route::delete('/business-registration/{registration}', [BusinessDirectoryController::class, 'destroy'])->name('business-directory.destroy');
