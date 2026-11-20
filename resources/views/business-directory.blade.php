@@ -5,377 +5,308 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>{{ $registration ? 'Edit Business Directory Registration' : 'Business Directory Registration' }} | Veena
-        Smart Homes</title>
+    <title>{{ $registration ? 'Edit Business Directory Registration' : 'Business Directory Registration' }} | Veena Smart Homes</title>
     <link rel="icon" href="{{ asset('assets/main.png') }}" type="image/png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-        href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@500;600;700;800&display=swap"
-        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300..700;1,9..40,300..700&family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet">
     <style>
         :root {
-            color-scheme: light;
-            --ink: #172b27;
-            --muted: #5f726b;
-            --line: rgba(22, 52, 45, 0.1);
-            --surface: #ffffff;
-            --canvas: #edf4ef;
-            --accent: #176b58;
-            --accent-dark: #104c40;
-            --accent-soft: #eaf4ee;
-            --highlight: #d98a4a;
-            --error: #a53131;
-            --shadow: 0 28px 60px rgba(20, 42, 35, 0.12);
+            color-scheme: dark;
+            --primary: #38bdf8;
+            --accent: #34d399;
+            --text-heading: #ffffff;
+            --text-body: #ffffff;
+            --text-muted: rgba(255, 255, 255, 0.85);
+            --border-light: rgba(255, 255, 255, 0.45);
+            --border-focus: #38bdf8;
+            --required: #fbbf24;
+            --error: #f87171;
         }
 
         * {
             box-sizing: border-box;
+            margin: 0;
+            padding: 0;
         }
 
         body {
-            margin: 0;
             min-height: 100vh;
-            color: var(--ink);
-            background: linear-gradient(135deg, #edf4ef 0%, #f7f5ef 100%);
+            color: var(--text-body);
             font-family: 'DM Sans', sans-serif;
-        }
-
-        img {
-            max-width: 100%;
-            display: block;
-        }
-
-        .page-shell {
-            width: min(100% - 32px, 1320px);
-            min-height: calc(100vh - 64px);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto;
-            padding: 32px 0 56px;
-        }
-
-        .registration-layout {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            overflow: hidden;
-            border: 1px solid rgba(23, 107, 88, 0.12);
-            border-radius: 28px;
-            background: var(--surface);
-            box-shadow: var(--shadow);
-            animation: arrive 450ms ease-out both;
-            width: 100%;
-        }
-
-        .promo-panel {
-            position: relative;
+            background: linear-gradient(rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0.55)),
+                        url("{{ asset('assets/banner.png') }}") center center / cover no-repeat fixed;
             display: flex;
             flex-direction: column;
-            justify-content: center;
-            padding: 0;
-            background: linear-gradient(180deg, #fbf9ff 0%, #f2edff 52%, #e9e2ff 100%);
-            color: #1e1734;
+            align-items: center;
+            padding: 24px 16px 64px;
+            overflow-x: hidden;
         }
 
-        .promo-brand {
+        /* Top Brand Navigation Bar - Completely Transparent */
+        .top-navbar {
+            width: min(100%, 920px);
             display: flex;
             align-items: center;
-            gap: 14px;
-            margin-bottom: 18px;
-            display: none;
+            justify-content: space-between;
+            padding: 12px 0;
+            margin-bottom: 24px;
+            background: transparent;
+            border-bottom: 1px solid var(--border-light);
         }
 
-        .promo-brand img {
-            width: 54px;
-            height: 54px;
-            border-radius: 16px;
-            background: rgba(255, 255, 255, 0.08);
-            padding: 8px;
+        .nav-brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .nav-logo {
+            width: 44px;
+            height: 44px;
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.15);
+            padding: 5px;
             object-fit: contain;
+            border: 1px solid var(--border-light);
         }
 
-        .brand-name {
+        .nav-brand-title {
             font-family: 'Manrope', sans-serif;
             font-size: 15px;
             font-weight: 800;
-            letter-spacing: 0.04em;
-        }
-
-        .brand-caption {
-            margin-top: 3px;
-            color: rgba(30, 23, 52, 0.72);
-            font-size: 12px;
-            letter-spacing: 0.08em;
+            letter-spacing: 0.06em;
+            color: #ffffff;
             text-transform: uppercase;
+            text-shadow: 0 2px 5px rgba(0, 0, 0, 0.8);
         }
 
-        .promo-visual {
-            position: relative;
-            overflow: hidden;
-            border-radius: 0;
-            border: 0;
-            background: none;
-            box-shadow: none;
-            height: 100%;
-            min-height: 520px;
+        .nav-brand-sub {
+            font-size: 11px;
+            color: var(--text-muted);
+            letter-spacing: 0.04em;
+            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
         }
 
-        .promo-visual::before {
-            content: "";
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(135deg, rgba(246, 241, 255, 0.22), rgba(226, 217, 255, 0.08));
-            z-index: 1;
-        }
-
-        .promo-visual img {
-            width: 100%;
-            height: 100%;
-            min-height: 520px;
-            object-fit: cover;
-            display: block;
-            filter: saturate(0.88) contrast(0.96) brightness(1.14);
-        }
-
-        .promo-logo-overlay {
-            position: absolute;
-            top: 22px;
-            left: 22px;
-            z-index: 2;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            padding: 12px 16px;
-            border: 1px solid rgba(255, 255, 255, 0.72);
-            border-radius: 18px;
-            background: rgba(255, 255, 255, 0.88);
-            backdrop-filter: blur(6px);
-            -webkit-backdrop-filter: blur(6px);
-            box-shadow: 0 12px 30px rgba(51, 38, 91, 0.12);
-        }
-
-        .promo-logo-overlay img {
-            width: 45px;
-            height: 45px;
-            min-height: auto;
-            border-radius: 14px;
-            padding: 7px;
-            background: rgba(242, 237, 255, 0.9);
-            filter: none;
-            object-fit: contain;
-        }
-
-        .promo-logo-overlay .brand-name {
-            font-size: 12px;
-            letter-spacing: 0.08em;
-            color: #342663;
-        }
-
-        .promo-logo-overlay .brand-caption {
-            font-size: 10px;
-            letter-spacing: 0.1em;
-            color: #655b83;
-        }
-
-        .promo-banner-label {
-            position: absolute;
-            right: 18px;
-            bottom: 18px;
-            z-index: 2;
+        .nav-badge {
             display: inline-flex;
             align-items: center;
-            gap: 8px;
-            padding: 10px 14px;
+            gap: 6px;
+            padding: 6px 14px;
             border-radius: 999px;
-            background: rgba(255, 255, 255, 0.82);
-            border: 1px solid rgba(255, 255, 255, 0.9);
-            color: #342663;
+            background: rgba(0, 0, 0, 0.35);
+            border: 1px solid var(--primary);
+            color: #7dd3fc;
             font-size: 12px;
             font-weight: 700;
-            letter-spacing: 0.08em;
+            letter-spacing: 0.04em;
             text-transform: uppercase;
-            backdrop-filter: blur(4px);
-            -webkit-backdrop-filter: blur(4px);
-            box-shadow: 0 8px 24px rgba(51, 38, 91, 0.12);
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8);
         }
 
-        .promo-copy {
-            margin-top: 20px;
-            padding: 0 4px;
-        }
-
-        .eyebrow {
-            margin: 0 0 10px;
-            color: #d5f4e2;
-            font-size: 11px;
-            font-weight: 700;
-            letter-spacing: 0.12em;
-            text-transform: uppercase;
-        }
-
-        .promo-copy h2 {
-            margin: 0;
-            font-family: 'Manrope', sans-serif;
-            font-size: clamp(24px, 2vw, 36px);
-            line-height: 1.1;
-            letter-spacing: -0.04em;
-        }
-
-        .promo-copy p:last-child {
-            margin: 12px 0 0;
-            color: rgba(233, 248, 240, 0.8);
-            font-size: 14px;
-            line-height: 1.7;
-        }
-
-        .form-panel {
-            background: #fffefc;
-            padding: 28px 30px 34px;
+        /* Completely Transparent Form Container */
+        .registration-card {
+            width: min(100%, 920px);
+            background: transparent;
+            backdrop-filter: none;
+            -webkit-backdrop-filter: none;
+            border: none;
+            box-shadow: none;
+            padding: 10px 0 30px;
+            animation: fadeIn 450ms ease-out both;
         }
 
         .form-heading {
-            margin-bottom: 22px;
-            padding-bottom: 18px;
-            border-bottom: 1px solid var(--line);
+            margin-bottom: 30px;
+            padding-bottom: 22px;
+            border-bottom: 1.5px solid var(--border-light);
         }
 
-        .form-heading .eyebrow {
-            color: var(--accent);
-            letter-spacing: 0.12em;
+        .eyebrow {
+            display: inline-block;
+            color: var(--primary);
+            font-size: 13px;
+            font-weight: 700;
+            letter-spacing: 0.14em;
             text-transform: uppercase;
+            margin-bottom: 8px;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8);
         }
 
-        .form-heading h1 {
-            margin: 0;
+        .form-title {
             font-family: 'Manrope', sans-serif;
-            font-size: clamp(28px, 2vw, 42px);
-            line-height: 1.15;
-            letter-spacing: -0.05em;
+            font-size: clamp(26px, 3.5vw, 36px);
+            font-weight: 800;
+            line-height: 1.25;
+            letter-spacing: -0.03em;
+            color: #ffffff;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.85);
         }
 
-        .intro {
-            margin: 10px 0 0;
-            color: var(--muted);
-            font-size: 15px;
-            line-height: 1.7;
+        .form-intro {
+            margin-top: 10px;
+            color: #ffffff;
+            font-size: 15.5px;
+            line-height: 1.65;
+            text-shadow: 0 2px 6px rgba(0, 0, 0, 0.85);
         }
 
-        form {
-            display: grid;
-            gap: 18px;
-        }
-
+        /* Notices */
         .notice {
-            padding: 12px 14px;
+            padding: 14px 18px;
             border-radius: 12px;
             font-size: 14px;
+            margin-bottom: 26px;
+            backdrop-filter: blur(8px);
         }
 
         .notice-success {
-            color: #14513c;
-            background: #e8f5ed;
-            border: 1px solid #b9dfc6;
+            color: #ffffff;
+            background: rgba(16, 185, 129, 0.45);
+            border: 1.5px solid #10b981;
+            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
         }
 
         .notice-error {
-            color: var(--error);
-            background: #fff0ed;
-            border: 1px solid #f0c3bc;
+            color: #ffffff;
+            background: rgba(239, 68, 68, 0.45);
+            border: 1.5px solid #ef4444;
+            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
         }
 
-        .section {
-            padding: 20px 0 0;
+        /* Form Sections */
+        .form-section {
+            margin-bottom: 36px;
+            padding-bottom: 32px;
+            border-bottom: 1.5px solid var(--border-light);
         }
 
-        .form-step {
-            display: none;
+        .form-section:last-of-type {
+            border-bottom: none;
+            margin-bottom: 12px;
+            padding-bottom: 0;
         }
 
-        .form-step.active {
-            display: block;
-        }
-
-        .step-actions {
+        .section-header {
             display: flex;
-            justify-content: flex-end;
             align-items: center;
-            gap: 12px;
-            padding-top: 10px;
-        }
-
-        .step-actions .secondary {
-            min-height: 50px;
-            padding: 0 20px;
-            border: 1px solid #cfe0d9;
-            border-radius: 12px;
-            background: #f4faf7;
-            color: var(--accent);
-            font: 700 14px 'DM Sans', sans-serif;
-            cursor: pointer;
-        }
-
-        .step-actions .secondary:hover {
-            background: #ebf6f0;
+            justify-content: space-between;
+            margin-bottom: 22px;
         }
 
         .section-title {
-            display: flex;
-            align-items: baseline;
-            gap: 8px;
-            margin: 0 0 16px;
             font-family: 'Manrope', sans-serif;
-            font-size: 19px;
-            letter-spacing: -0.04em;
+            font-size: 21px;
+            font-weight: 700;
+            color: #ffffff;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.85);
         }
 
-        .section-title span {
-            color: var(--muted);
-            font-size: 12px;
-            font-weight: 600;
-            letter-spacing: 0.04em;
-            text-transform: uppercase;
+        .section-icon {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            background: rgba(0, 0, 0, 0.35);
+            border: 1px solid var(--border-light);
+            color: var(--primary);
+            font-size: 16px;
         }
 
-        .fields {
+        /* Grid */
+        .fields-grid {
             display: grid;
             grid-template-columns: repeat(2, minmax(0, 1fr));
-            gap: 18px 20px;
+            gap: 22px 26px;
         }
 
         .field {
             min-width: 0;
+            display: flex;
+            flex-direction: column;
         }
 
-        .field-wide {
+        .field-full {
             grid-column: 1 / -1;
         }
 
-        label,
-        .legend {
+        label, .legend-label {
             display: block;
             margin-bottom: 8px;
-            color: #2e433e;
-            font-size: 13px;
+            color: #ffffff;
+            font-size: 14px;
             font-weight: 700;
+            letter-spacing: 0.01em;
+            text-shadow: 0 1px 4px rgba(0, 0, 0, 0.85);
         }
 
         .required {
-            color: var(--highlight);
+            color: var(--required);
+            margin-left: 2px;
         }
 
-        input,
+        .optional-tag {
+            color: rgba(255, 255, 255, 0.75);
+            font-size: 12px;
+            font-weight: 400;
+            margin-left: 4px;
+        }
+
+        /* 100% Transparent Inputs, Selects, Textareas */
+        input[type="text"],
+        input[type="email"],
+        input[type="tel"],
+        input[type="url"],
         select,
         textarea {
             width: 100%;
-            min-height: 48px;
-            padding: 12px 14px;
-            border: 1px solid #ccd9d2;
+            min-height: 50px;
+            padding: 12px 16px;
+            border: 1.5px solid var(--border-light);
             border-radius: 12px;
-            background: #fff;
-            color: var(--ink);
-            font: 400 14px 'DM Sans', sans-serif;
-            transition: border-color 160ms ease, box-shadow 160ms ease;
+            background: transparent;
+            color: #ffffff;
+            font: 500 14.5px 'DM Sans', sans-serif;
+            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.7);
+            transition: all 0.2s ease;
+        }
+
+        input::placeholder,
+        textarea::placeholder {
+            color: rgba(255, 255, 255, 0.6);
+            text-shadow: none;
+        }
+
+        input:focus,
+        select:focus,
+        textarea:focus {
+            outline: none;
+            background: rgba(0, 0, 0, 0.25);
+            border-color: var(--border-focus);
+            box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.35);
+        }
+
+        select {
+            cursor: pointer;
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%237dd3fc' viewBox='0 0 16 16'%3E%3Cpath d='M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 16px center;
+            background-size: 12px;
+            padding-right: 42px;
+        }
+
+        select option {
+            background: #0b1524;
+            color: #ffffff;
+            padding: 12px;
         }
 
         textarea {
@@ -383,418 +314,573 @@
             resize: vertical;
         }
 
-        input:focus,
-        select:focus,
-        textarea:focus {
-            border-color: var(--accent);
-            box-shadow: 0 0 0 4px rgba(23, 107, 88, 0.12);
-            outline: none;
-        }
-
-        .choice-list {
+        /* Transparent File Upload Dropzone */
+        .file-upload-box {
+            position: relative;
             display: flex;
-            flex-wrap: wrap;
-            gap: 10px 18px;
-            padding: 8px 2px 0;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 18px 16px;
+            border: 1.5px dashed var(--border-light);
+            border-radius: 12px;
+            background: transparent;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-align: center;
         }
 
-        .choice {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            color: #334b45;
-            font-size: 14px;
+        .file-upload-box:hover {
+            background: rgba(0, 0, 0, 0.2);
+            border-color: var(--primary);
+        }
+
+        .file-upload-box input[type="file"] {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
             cursor: pointer;
         }
 
-        .choice input {
+        .file-upload-icon {
+            font-size: 24px;
+            margin-bottom: 4px;
+            color: var(--primary);
+        }
+
+        .file-upload-text {
+            font-size: 13.5px;
+            font-weight: 700;
+            color: #ffffff;
+            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
+        }
+
+        .file-upload-hint {
+            font-size: 11px;
+            color: var(--text-muted);
+            margin-top: 2px;
+        }
+
+        .file-preview-strip {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-top: 8px;
+            padding: 6px 12px;
+            border-radius: 8px;
+            background: rgba(0, 0, 0, 0.35);
+            border: 1px solid var(--border-light);
+            font-size: 12px;
+            color: #7dd3fc;
+        }
+
+        .preview-thumb {
+            width: 36px;
+            height: 36px;
+            border-radius: 6px;
+            object-fit: cover;
+            border: 1px solid var(--border-light);
+        }
+
+        /* Transparent Choice Checklist (Interested In) */
+        .choice-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px 18px;
+            padding-top: 4px;
+        }
+
+        .choice-item {
+            display: inline-flex;
+            align-items: center;
+            gap: 9px;
+            color: #ffffff;
+            font-size: 14.5px;
+            font-weight: 600;
+            cursor: pointer;
+            background: transparent;
+            padding: 9px 18px;
+            border-radius: 10px;
+            border: 1.5px solid var(--border-light);
+            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
+            transition: all 0.2s ease;
+        }
+
+        .choice-item:hover {
+            background: rgba(0, 0, 0, 0.25);
+            border-color: var(--primary);
+        }
+
+        .choice-item input[type="checkbox"] {
             width: 17px;
-            min-height: 17px;
             height: 17px;
-            margin: 0;
-            accent-color: var(--accent);
+            min-height: 17px;
+            accent-color: #0284c7;
+            cursor: pointer;
         }
 
         .field-error {
             display: block;
-            margin-top: 7px;
+            margin-top: 6px;
             color: var(--error);
             font-size: 12px;
-        }
-
-        .submit-row {
-            display: flex;
-            justify-content: flex-end;
-            align-items: center;
-            gap: 14px;
-            padding-top: 10px;
-        }
-
-        .page-link {
-            color: var(--accent);
             font-weight: 700;
-            text-decoration: none;
+            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
         }
 
-        button {
-            min-height: 50px;
-            padding: 0 24px;
+        /* Action Buttons */
+        .form-actions {
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            gap: 16px;
+            margin-top: 32px;
+            padding-top: 24px;
+            border-top: 1.5px solid var(--border-light);
+        }
+
+        .btn-submit {
+            min-height: 52px;
+            padding: 0 40px;
             border: 0;
             border-radius: 12px;
-            background: linear-gradient(135deg, var(--accent) 0%, #1b8a73 100%);
-            color: #fff;
-            font: 700 14px 'DM Sans', sans-serif;
+            background: linear-gradient(135deg, #0284c7 0%, #0d9488 100%);
+            color: #ffffff;
+            font: 700 15px 'DM Sans', sans-serif;
             letter-spacing: 0.03em;
             cursor: pointer;
-            transition: transform 160ms ease, box-shadow 160ms ease;
-            box-shadow: 0 12px 20px rgba(23, 107, 88, 0.2);
+            box-shadow: 0 8px 24px rgba(2, 132, 199, 0.45);
+            transition: all 0.2s ease;
         }
 
-        button:hover {
-            transform: translateY(-1px);
-            box-shadow: 0 16px 24px rgba(23, 107, 88, 0.24);
+        .btn-submit:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 30px rgba(2, 132, 199, 0.6);
+            filter: brightness(1.1);
         }
 
-        button:focus-visible {
-            outline: 3px solid rgba(23, 107, 88, 0.25);
-            outline-offset: 3px;
+        .btn-cancel {
+            color: #ffffff;
+            font-weight: 600;
+            font-size: 14.5px;
+            text-decoration: none;
+            padding: 0 14px;
+            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
+            transition: color 0.2s ease;
         }
 
-        @keyframes arrive {
+        .btn-cancel:hover {
+            color: var(--primary);
+            text-decoration: underline;
+        }
+
+        @keyframes fadeIn {
             from {
                 opacity: 0;
-                transform: translateY(10px);
+                transform: translateY(12px);
             }
-
             to {
                 opacity: 1;
                 transform: translateY(0);
             }
         }
 
-        @media (max-width: 980px) {
-            .registration-layout {
+        @media (max-width: 768px) {
+            body {
+                padding: 14px 10px 40px;
+            }
+
+            .fields-grid {
                 grid-template-columns: 1fr;
+                gap: 16px;
             }
 
-            .promo-panel {
-                padding-bottom: 18px;
-            }
-        }
-
-        @media (max-width: 620px) {
-            .page-shell {
-                width: min(100% - 18px, 1320px);
-                margin-top: 18px;
-            }
-
-            .promo-panel,
-            .form-panel {
-                padding-left: 18px;
-                padding-right: 18px;
-            }
-
-            .fields {
-                grid-template-columns: 1fr;
-            }
-
-            .submit-row {
+            .form-actions {
                 flex-direction: column-reverse;
                 align-items: stretch;
             }
 
-            .submit-row button {
+            .btn-submit {
                 width: 100%;
-            }
-        }
-
-        @media (prefers-reduced-motion: reduce) {
-
-            *,
-            *::before,
-            *::after {
-                animation-duration: .01ms !important;
-                transition-duration: .01ms !important;
+                text-align: center;
             }
         }
     </style>
 </head>
 
 <body>
-    <main class="page-shell">
-        <section class="registration-layout" aria-labelledby="form-title">
-            <aside class="promo-panel">
-                <div class="promo-visual">
-                    <div class="promo-logo-overlay">
-                        <img src="{{ asset('assets/main.png') }}" alt="Veena Smart Homes logo">
-                        <div>
-                            <div class="brand-name">VEENA SMART HOMES</div>
-                            <div class="brand-caption">Community network</div>
-                        </div>
-                    </div>
-                    <img src="{{ asset('assets/bannerimg.png') }}" alt="Business banner image">
-                    <div class="promo-banner-label">Business Network</div>
-                </div>
-            </aside>
-
-            <div class="form-panel">
-                <header class="form-heading">
-                    <p class="eyebrow">{{ $registration ? 'Manage registration' : 'Resident registration' }}</p>
-                    <h1 id="form-title">
-                        {{ $registration ? 'Edit business details' : 'Business Directory Registration Form [VSH Team]' }}
-                    </h1>
-                    <p class="intro">
-                        {{ $registration ? 'Update this resident and business listing.' : 'Share your business to connect with your neighbours.' }}
-                    </p>
-                </header>
-
-                <form
-                    action="{{ $registration ? route('business-directory.update', $registration) : route('business-directory.store') }}"
-                    method="POST">
-                    @csrf
-                    @if ($registration)
-                        @method('PUT')
-                    @endif
-
-                    @if (session('success'))
-                        <div class="notice notice-success" role="status">{{ session('success') }}</div>
-                    @endif
-                    @if ($errors->any())
-                        <div class="notice notice-error" role="alert">Please check the highlighted fields and submit
-                            again.</div>
-                    @endif
-
-                    <section class="section form-step active" data-step="1" aria-labelledby="personal-heading">
-                        <h2 class="section-title" id="personal-heading">Personal details</h2>
-                        <div class="fields">
-                            <div class="field">
-                                <label for="full_name">Full name <span class="required">*</span></label>
-                                <input id="full_name" name="full_name"
-                                    value="{{ old('full_name', $registration?->full_name) }}" autocomplete="name"
-                                    data-required-visible="1" required>
-                                @error('full_name')
-                                    <small class="field-error">{{ $message }}</small>
-                                @enderror
-                            </div>
-
-                            <div class="field">
-                                <label for="role">Your role <span class="required">*</span></label>
-                                <input id="role" name="role" value="{{ old('role', $registration?->role) }}"
-                                    placeholder="e.g. Founder, Consultant" data-required-visible="1" required>
-                                @error('role')
-                                    <small class="field-error">{{ $message }}</small>
-                                @enderror
-                            </div>
-
-                            <div class="field">
-                                <label for="wing">Wing <span class="required">*</span></label>
-                                <select id="wing" name="wing" data-required-visible="1" required>
-                                    <option value="">Select wing</option>
-                                    @foreach (['A', 'B', 'C', 'D', 'E'] as $wing)
-                                        <option value="{{ $wing }}" @selected(old('wing', $registration?->wing) === $wing)>
-                                            {{ $wing }}</option>
-                                    @endforeach
-                                </select>
-                                @error('wing')
-                                    <small class="field-error">{{ $message }}</small>
-                                @enderror
-                            </div>
-
-                            <div class="field">
-                                <label for="flat_number">Flat number <span class="required">*</span></label>
-                                <input id="flat_number" name="flat_number"
-                                    value="{{ old('flat_number', $registration?->flat_number) }}"
-                                    autocomplete="address-line2" data-required-visible="1" required>
-                                @error('flat_number')
-                                    <small class="field-error">{{ $message }}</small>
-                                @enderror
-                            </div>
-                        </div>
-                        <div class="step-actions">
-                            <button type="button" class="next-step">Next</button>
-                        </div>
-                    </section>
-
-                    <section class="section form-step" data-step="2" aria-labelledby="business-heading">
-                        <h2 class="section-title" id="business-heading">Business details</h2>
-                        <div class="fields">
-                            <div class="field">
-                                <label for="company_name">Company name <span class="required">*</span></label>
-                                <input id="company_name" name="company_name"
-                                    value="{{ old('company_name', $registration?->company_name) }}"
-                                    autocomplete="organization" data-required-visible="2" required>
-                                @error('company_name')
-                                    <small class="field-error">{{ $message }}</small>
-                                @enderror
-                            </div>
-
-                            <div class="field">
-                                <label for="business_category">Business category <span
-                                        class="required">*</span></label>
-                                <select id="business_category" name="business_category" data-required-visible="2"
-                                    required>
-                                    <option value="">Choose a category</option>
-                                    @foreach (['Services', 'Manufacturing', 'Both'] as $category)
-                                        <option value="{{ $category }}" @selected(old('business_category', $registration?->business_category) === $category)>
-                                            {{ $category }}</option>
-                                    @endforeach
-                                </select>
-                                @error('business_category')
-                                    <small class="field-error">{{ $message }}</small>
-                                @enderror
-                            </div>
-
-                            <div class="field field-wide">
-                                <label for="short_description">Short description <span
-                                        class="required">*</span></label>
-                                <textarea id="short_description" name="short_description" maxlength="1000"
-                                    placeholder="What does your business offer?" data-required-visible="2" required>{{ old('short_description', $registration?->short_description) }}</textarea>
-                                @error('short_description')
-                                    <small class="field-error">{{ $message }}</small>
-                                @enderror
-                            </div>
-                        </div>
-                        <div class="step-actions">
-                            <button type="button" class="secondary back-step">Back</button>
-                            <button type="button" class="next-step">Next</button>
-                        </div>
-                    </section>
-
-                    <section class="section form-step" data-step="3" aria-labelledby="contact-heading">
-                        <h2 class="section-title" id="contact-heading">Contact details <span>networking</span></h2>
-                        <div class="fields">
-                            <div class="field">
-                                <label for="mobile_number">Mobile number <span class="required">*</span></label>
-                                <input id="mobile_number" name="mobile_number" type="tel"
-                                    value="{{ old('mobile_number', $registration?->mobile_number) }}"
-                                    autocomplete="tel" data-required-visible="3" required>
-                                @error('mobile_number')
-                                    <small class="field-error">{{ $message }}</small>
-                                @enderror
-                            </div>
-
-                            <div class="field">
-                                <label for="email_address">Email address <span class="required">*</span></label>
-                                <input id="email_address" name="email_address" type="email"
-                                    value="{{ old('email_address', $registration?->email_address) }}"
-                                    autocomplete="email" data-required-visible="3" required>
-                                @error('email_address')
-                                    <small class="field-error">{{ $message }}</small>
-                                @enderror
-                            </div>
-
-                            <div class="field">
-                                <label for="website_url">Website URL</label>
-                                <input id="website_url" name="website_url" type="url"
-                                    value="{{ old('website_url', $registration?->website_url) }}"
-                                    placeholder="https://example.com">
-                                @error('website_url')
-                                    <small class="field-error">{{ $message }}</small>
-                                @enderror
-                            </div>
-
-                            <div class="field">
-                                <label for="business_profile">LinkedIn / Instagram / other business profile</label>
-                                <input id="business_profile" name="business_profile"
-                                    value="{{ old('business_profile', $registration?->business_profile) }}"
-                                    placeholder="Profile link or handle">
-                                @error('business_profile')
-                                    <small class="field-error">{{ $message }}</small>
-                                @enderror
-                            </div>
-
-                            <fieldset class="field field-wide" style="margin: 0; padding: 0; border: 0;">
-                                <legend class="legend">Interested in <span class="required">*</span></legend>
-                                <div class="choice-list">
-                                    @foreach (['Networking', 'Referrals', 'Collaboration'] as $interest)
-                                        <label class="choice">
-                                            <input type="checkbox" name="interested_in[]"
-                                                value="{{ $interest }}" @checked(in_array($interest, old('interested_in', $registration?->interested_in ?? []), true))>
-                                            {{ $interest }}
-                                        </label>
-                                    @endforeach
-                                </div>
-                                @error('interested_in')
-                                    <small class="field-error">{{ $message }}</small>
-                                @enderror
-                            </fieldset>
-
-                            <div class="field">
-                                <label for="preferred_contact_method">Preferred contact method <span
-                                        class="required">*</span></label>
-                                <select id="preferred_contact_method" name="preferred_contact_method"
-                                    data-required-visible="3" required>
-                                    <option value="">Choose a method</option>
-                                    @foreach (['Phone', 'Email', 'WhatsApp'] as $method)
-                                        <option value="{{ $method }}" @selected(old('preferred_contact_method', $registration?->preferred_contact_method) === $method)>
-                                            {{ $method }}</option>
-                                    @endforeach
-                                </select>
-                                @error('preferred_contact_method')
-                                    <small class="field-error">{{ $message }}</small>
-                                @enderror
-                            </div>
-                        </div>
-                        <div class="step-actions">
-                            <button type="button" class="secondary back-step">Back</button>
-                            @if ($registration)
-                                <a class="page-link" href="{{ route('business-directory.admin') }}">Cancel</a>
-                            @endif
-                            <button
-                                type="submit">{{ $registration ? 'Save changes' : 'Submit registration' }}</button>
-                        </div>
-                    </section>
-                </form>
+    <!-- Top Brand Navigation (Transparent) -->
+    <header class="top-navbar">
+        <a href="{{ url('/') }}" class="nav-brand">
+            <img src="{{ asset('assets/main.png') }}" alt="Veena Smart Homes" class="nav-logo">
+            <div>
+                <div class="nav-brand-title">VEENA SMART HOMES</div>
+                <div class="nav-brand-sub">Resident Business Directory</div>
             </div>
-        </section>
+        </a>
+        <div class="nav-badge">
+            <span>●</span> VSH Community
+        </div>
+    </header>
+
+    <!-- Main Transparent Form -->
+    <main class="registration-card">
+        <header class="form-heading">
+            <span class="eyebrow">{{ $registration ? 'Update Listing' : 'Resident Business Directory' }}</span>
+            <h1 class="form-title" id="form-title">
+                {{ $registration ? 'Edit Business Directory Registration' : 'Business Directory Registration Form [VSH Team]' }}
+            </h1>
+            <p class="form-intro">
+                {{ $registration ? 'Update your business and resident details in the community directory.' : 'Register your business, services, or trade to connect and collaborate with fellow residents of Veena Smart Homes.' }}
+            </p>
+        </header>
+
+        <form id="businessForm"
+              action="{{ $registration ? route('business-directory.update', $registration) : route('business-directory.store') }}"
+              method="POST"
+              enctype="multipart/form-data">
+            @csrf
+            @if ($registration)
+                @method('PUT')
+            @endif
+
+            @if (session('success'))
+                <div class="notice notice-success" role="status">
+                    ✓ {{ session('success') }}
+                </div>
+            @endif
+
+            @if (isset($errors) && $errors->any())
+                <div class="notice notice-error" role="alert">
+                    ⚠ Please review the highlighted fields below and try again.
+                </div>
+            @endif
+
+            <!-- SECTION 1: Personal Details -->
+            <section class="form-section" aria-labelledby="personal-heading">
+                <div class="section-header">
+                    <h2 class="section-title" id="personal-heading">
+                        <span class="section-icon">👤</span>
+                        Personal Details
+                    </h2>
+                </div>
+
+                <div class="fields-grid">
+                    <div class="field">
+                        <label for="full_name">Full Name <span class="required">*</span></label>
+                        <input id="full_name"
+                               name="full_name"
+                               type="text"
+                               value="{{ old('full_name', $registration?->full_name) }}"
+                               placeholder="Enter your full name"
+                               autocomplete="name"
+                               required>
+                        @error('full_name')
+                            <small class="field-error">{{ $message }}</small>
+                        @enderror
+                    </div>
+
+                    <div class="field">
+                        <label for="wing">Select Wing <span class="required">*</span></label>
+                        <select id="wing" name="wing" required>
+                            <option value="">Select Wing</option>
+                            @foreach (['A', 'B', 'C', 'D', 'E'] as $wing)
+                                <option value="{{ $wing }}" @selected(old('wing', $registration?->wing) === $wing)>Wing {{ $wing }}</option>
+                            @endforeach
+                        </select>
+                        @error('wing')
+                            <small class="field-error">{{ $message }}</small>
+                        @enderror
+                    </div>
+
+                    <div class="field">
+                        <label for="flat_number">Flat Number <span class="required">*</span></label>
+                        <input id="flat_number"
+                               name="flat_number"
+                               type="text"
+                               value="{{ old('flat_number', $registration?->flat_number) }}"
+                               placeholder="e.g. 502"
+                               autocomplete="address-line2"
+                               required>
+                        @error('flat_number')
+                            <small class="field-error">{{ $message }}</small>
+                        @enderror
+                    </div>
+
+                    <div class="field">
+                        <label for="your_image">Your Image <span class="optional-tag">(Resident Photo - Optional)</span></label>
+                        <div class="file-upload-box">
+                            <span class="file-upload-icon">📷</span>
+                            <span class="file-upload-text">Upload Your Photo</span>
+                            <span class="file-upload-hint">PNG, JPG or WebP (Max 5MB)</span>
+                            <input id="your_image" name="your_image" type="file" accept="image/png,image/jpeg,image/webp">
+                        </div>
+                        <div id="your_image_name" class="file-preview-strip" style="display: none;"></div>
+                        @if ($registration?->your_image)
+                            <div class="file-preview-strip">
+                                <img src="{{ asset($registration->your_image) }}" alt="Your photo" class="preview-thumb">
+                                <span>Current photo attached</span>
+                            </div>
+                        @endif
+                        @error('your_image')
+                            <small class="field-error">{{ $message }}</small>
+                        @enderror
+                    </div>
+                </div>
+            </section>
+
+            <!-- SECTION 2: Business Details -->
+            <section class="form-section" aria-labelledby="business-heading">
+                <div class="section-header">
+                    <h2 class="section-title" id="business-heading">
+                        <span class="section-icon">💼</span>
+                        Business Details
+                    </h2>
+                </div>
+
+                <div class="fields-grid">
+                    <div class="field">
+                        <label for="company_name">Business Name <span class="required">*</span></label>
+                        <input id="company_name"
+                               name="company_name"
+                               type="text"
+                               value="{{ old('company_name', $registration?->company_name) }}"
+                               placeholder="Enter your business, firm or brand name"
+                               autocomplete="organization"
+                               required>
+                        @error('company_name')
+                            <small class="field-error">{{ $message }}</small>
+                        @enderror
+                    </div>
+
+                    <div class="field">
+                        <label for="business_category">Business Category <span class="required">*</span></label>
+                        <select id="business_category" name="business_category" required>
+                            <option value="">Select Business Category</option>
+                            @php
+                                $categories = [
+                                    'IT, Software & Digital Marketing',
+                                    'Professional & Financial Services (CA, Legal, Tax, Wealth)',
+                                    'Real Estate, Architecture & Interior Design',
+                                    'Healthcare, Medical, Clinic & Pharmacy',
+                                    'Education, Coaching, Tuition & Training',
+                                    'Retail, Grocery & E-commerce',
+                                    'Food, Bakery, Sweets & Catering',
+                                    'Event Management, Photography & Entertainment',
+                                    'Travel, Tours, Transport & Logistics',
+                                    'Manufacturing & Industrial Supplies',
+                                    'Beauty, Salon, Spa & Personal Care',
+                                    'Home Services, Electrical, Plumbing & Maintenance',
+                                    'Apparel, Fashion, Boutique & Jewellery',
+                                    'Fitness, Yoga, Gym & Sports',
+                                    'General Services',
+                                    'Both (Products & Services)',
+                                    'Other Business',
+                                ];
+                            @endphp
+                            @foreach ($categories as $cat)
+                                <option value="{{ $cat }}" @selected(old('business_category', $registration?->business_category) === $cat)>
+                                    {{ $cat }}
+                                </option>
+                            @endforeach
+                        </select>
+                        @error('business_category')
+                            <small class="field-error">{{ $message }}</small>
+                        @enderror
+                    </div>
+
+                    <div class="field">
+                        <label for="business_logo">Business Logo <span class="optional-tag">(Optional)</span></label>
+                        <div class="file-upload-box">
+                            <span class="file-upload-icon">🏢</span>
+                            <span class="file-upload-text">Upload Business Logo</span>
+                            <span class="file-upload-hint">PNG, JPG, SVG or WebP (Max 5MB)</span>
+                            <input id="business_logo" name="business_logo" type="file" accept="image/png,image/jpeg,image/svg+xml,image/webp">
+                        </div>
+                        <div id="business_logo_name" class="file-preview-strip" style="display: none;"></div>
+                        @if ($registration?->business_logo)
+                            <div class="file-preview-strip">
+                                <img src="{{ asset($registration->business_logo) }}" alt="Business logo" class="preview-thumb">
+                                <span>Current logo attached</span>
+                            </div>
+                        @endif
+                        @error('business_logo')
+                            <small class="field-error">{{ $message }}</small>
+                        @enderror
+                    </div>
+
+                    <div class="field">
+                        <label for="gst_number">GST Number <span class="optional-tag">(Optional)</span></label>
+                        <input id="gst_number"
+                               name="gst_number"
+                               type="text"
+                               maxlength="30"
+                               value="{{ old('gst_number', $registration?->gst_number) }}"
+                               placeholder="e.g. 27AAAAA0000A1Z5"
+                               style="text-transform: uppercase;">
+                        @error('gst_number')
+                            <small class="field-error">{{ $message }}</small>
+                        @enderror
+                    </div>
+
+                    <div class="field field-full">
+                        <label for="short_description">Business Description <span class="optional-tag">(Optional)</span></label>
+                        <textarea id="short_description"
+                                  name="short_description"
+                                  maxlength="1000"
+                                  placeholder="Briefly describe what your business offers, key specialties, or services...">{{ old('short_description', $registration?->short_description) }}</textarea>
+                        @error('short_description')
+                            <small class="field-error">{{ $message }}</small>
+                        @enderror
+                    </div>
+                </div>
+            </section>
+
+            <!-- SECTION 3: Contact & Networking Details -->
+            <section class="form-section" aria-labelledby="contact-heading">
+                <div class="section-header">
+                    <h2 class="section-title" id="contact-heading">
+                        <span class="section-icon">🌐</span>
+                        Contact & Networking Details
+                    </h2>
+                </div>
+
+                <div class="fields-grid">
+                    <div class="field">
+                        <label for="mobile_number">Mobile Number <span class="required">*</span></label>
+                        <input id="mobile_number"
+                               name="mobile_number"
+                               type="tel"
+                               value="{{ old('mobile_number', $registration?->mobile_number) }}"
+                               placeholder="e.g. 9876543210"
+                               autocomplete="tel"
+                               required>
+                        @error('mobile_number')
+                            <small class="field-error">{{ $message }}</small>
+                        @enderror
+                    </div>
+
+                    <div class="field">
+                        <label for="email_address">Email Address <span class="required">*</span></label>
+                        <input id="email_address"
+                               name="email_address"
+                               type="email"
+                               value="{{ old('email_address', $registration?->email_address) }}"
+                               placeholder="e.g. name@domain.com"
+                               autocomplete="email"
+                               required>
+                        @error('email_address')
+                            <small class="field-error">{{ $message }}</small>
+                        @enderror
+                    </div>
+
+                    <div class="field">
+                        <label for="website_url">Website URL <span class="optional-tag">(Optional)</span></label>
+                        <input id="website_url"
+                               name="website_url"
+                               type="url"
+                               value="{{ old('website_url', $registration?->website_url) }}"
+                               placeholder="https://example.com">
+                        @error('website_url')
+                            <small class="field-error">{{ $message }}</small>
+                        @enderror
+                    </div>
+
+                    <div class="field">
+                        <label for="business_profile">LinkedIn / Instagram / Social Profile <span class="optional-tag">(Optional)</span></label>
+                        <input id="business_profile"
+                               name="business_profile"
+                               type="text"
+                               value="{{ old('business_profile', $registration?->business_profile) }}"
+                               placeholder="Profile link or social handle">
+                        @error('business_profile')
+                            <small class="field-error">{{ $message }}</small>
+                        @enderror
+                    </div>
+
+                    <div class="field field-full">
+                        <span class="legend-label">Interested in <span class="required">*</span></span>
+                        <div class="choice-list">
+                            @foreach (['Networking', 'Referrals', 'Collaboration'] as $interest)
+                                <label class="choice-item">
+                                    <input type="checkbox"
+                                           name="interested_in[]"
+                                           value="{{ $interest }}"
+                                           @checked(in_array($interest, old('interested_in', $registration?->interested_in ?? ['Networking', 'Referrals']), true))>
+                                    <span>{{ $interest }}</span>
+                                </label>
+                            @endforeach
+                        </div>
+                        @error('interested_in')
+                            <small class="field-error">{{ $message }}</small>
+                        @enderror
+                    </div>
+
+                    <div class="field field-full">
+                        <label for="preferred_contact_method">Preferred Contact Method <span class="required">*</span></label>
+                        <select id="preferred_contact_method" name="preferred_contact_method" required>
+                            <option value="">Select Preferred Contact Method</option>
+                            @foreach (['Phone', 'Email', 'WhatsApp'] as $method)
+                                <option value="{{ $method }}" @selected(old('preferred_contact_method', $registration?->preferred_contact_method ?? 'WhatsApp') === $method)>
+                                    {{ $method }}
+                                </option>
+                            @endforeach
+                        </select>
+                        @error('preferred_contact_method')
+                            <small class="field-error">{{ $message }}</small>
+                        @enderror
+                    </div>
+                </div>
+            </section>
+
+            <!-- Form Submit Row -->
+            <div class="form-actions">
+                @if ($registration)
+                    <a class="btn-cancel" href="{{ route('business-directory.admin') }}">Cancel</a>
+                @endif
+                <button type="submit" class="btn-submit">
+                    {{ $registration ? 'Save Changes ✓' : 'Submit Registration ✓' }}
+                </button>
+            </div>
+        </form>
     </main>
+
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            const steps = Array.from(document.querySelectorAll('.form-step'));
-            const nextButtons = Array.from(document.querySelectorAll('.next-step'));
-            const backButtons = Array.from(document.querySelectorAll('.back-step'));
-            const requiredFields = Array.from(document.querySelectorAll('[data-required-visible]'));
-            let currentStep = 0;
+            // File input name preview indicators
+            function bindFileInput(inputId, stripId) {
+                const input = document.getElementById(inputId);
+                const strip = document.getElementById(stripId);
+                if (!input || !strip) return;
 
-            function updateStep() {
-                steps.forEach((step, index) => {
-                    const isActive = index === currentStep;
-                    step.classList.toggle('active', isActive);
-                    step.hidden = !isActive;
-                });
-
-                requiredFields.forEach((field) => {
-                    const belongsToCurrentStep = field.closest('.form-step') && field.closest('.form-step')
-                        .classList.contains('active');
-                    field.required = belongsToCurrentStep;
+                input.addEventListener('change', function() {
+                    if (this.files && this.files[0]) {
+                        strip.style.display = 'flex';
+                        strip.innerHTML = '<span>📎 Selected: <strong>' + this.files[0].name + '</strong></span>';
+                    }
                 });
             }
 
-            nextButtons.forEach((button) => {
-                button.addEventListener('click', function() {
-                    const currentSection = steps[currentStep];
-                    const requiredInputs = Array.from(currentSection.querySelectorAll(
-                        'input[required], select[required], textarea[required]'));
-                    const invalidInput = requiredInputs.find((input) => !input.checkValidity());
+            bindFileInput('your_image', 'your_image_name');
+            bindFileInput('business_logo', 'business_logo_name');
 
-                    if (invalidInput) {
-                        invalidInput.reportValidity();
-                        return;
+            // Checkbox group validation on submit
+            const form = document.getElementById('businessForm');
+            if (form) {
+                form.addEventListener('submit', function(event) {
+                    const checkboxes = document.querySelectorAll('input[name="interested_in[]"]');
+                    const isChecked = Array.from(checkboxes).some(cb => cb.checked);
+                    if (!isChecked && checkboxes.length > 0) {
+                        event.preventDefault();
+                        checkboxes[0].setCustomValidity('Please select at least one networking interest.');
+                        checkboxes[0].reportValidity();
+                    } else if (checkboxes.length > 0) {
+                        checkboxes[0].setCustomValidity('');
                     }
-
-                    currentStep = Math.min(currentStep + 1, steps.length - 1);
-                    updateStep();
                 });
-            });
-
-            backButtons.forEach((button) => {
-                button.addEventListener('click', function() {
-                    currentStep = Math.max(currentStep - 1, 0);
-                    updateStep();
-                });
-            });
-
-            updateStep();
+            }
         });
     </script>
 </body>
