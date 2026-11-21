@@ -5,11 +5,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>{{ $registration ? 'Edit Business Directory Registration' : 'Business Directory Registration' }} | Veena Smart Homes</title>
+    <title>{{ $registration ? 'Edit Business Directory Registration' : 'Business Directory Registration' }} | Veena
+        Smart Homes</title>
     <link rel="icon" href="{{ asset('assets/main.png') }}" type="image/png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300..700;1,9..40,300..700&family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300..700;1,9..40,300..700&family=Manrope:wght@500;600;700;800&display=swap"
+        rel="stylesheet">
     <style>
         :root {
             color-scheme: dark;
@@ -34,8 +37,8 @@
             min-height: 100vh;
             color: var(--text-body);
             font-family: 'DM Sans', sans-serif;
-            background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)),
-                        url("{{ asset('assets/banner.png') }}") center center / cover no-repeat fixed;
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),
+                url("{{ asset('assets/banner.png') }}") center center / cover no-repeat fixed;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -237,7 +240,8 @@
             grid-column: 1 / -1;
         }
 
-        label, .legend-label {
+        label,
+        .legend-label {
             display: block;
             margin-bottom: 8px;
             color: #ffffff;
@@ -513,6 +517,7 @@
                 opacity: 0;
                 transform: translateY(12px);
             }
+
             to {
                 opacity: 1;
                 transform: translateY(0);
@@ -558,14 +563,13 @@
     <main class="registration-card">
         <header class="form-heading">
             <h1 class="form-title" id="form-title">
-                {{ $registration ? 'Edit Business Directory Registration' : 'Business Directory Registration Form [VSH Team]' }}
+                {{ $registration ? 'Edit Business Directory Registration' : 'Business Directory Registration [VSH Members]' }}
             </h1>
         </header>
 
         <form id="businessForm"
-              action="{{ $registration ? route('business-directory.update', $registration) : route('business-directory.store') }}"
-              method="POST"
-              enctype="multipart/form-data">
+            action="{{ $registration ? route('business-directory.update', $registration) : route('business-directory.store') }}"
+            method="POST" enctype="multipart/form-data">
             @csrf
             @if ($registration)
                 @method('PUT')
@@ -595,13 +599,9 @@
                 <div class="fields-grid">
                     <div class="field">
                         <label for="full_name">Full Name <span class="required">*</span></label>
-                        <input id="full_name"
-                               name="full_name"
-                               type="text"
-                               value="{{ old('full_name', $registration?->full_name) }}"
-                               placeholder="Enter your full name"
-                               autocomplete="name"
-                               required>
+                        <input id="full_name" name="full_name" type="text"
+                            value="{{ old('full_name', $registration?->full_name) }}" placeholder="Enter your full name"
+                            autocomplete="name" required>
                         @error('full_name')
                             <small class="field-error">{{ $message }}</small>
                         @enderror
@@ -612,7 +612,8 @@
                         <select id="wing" name="wing" required>
                             <option value="">Select Wing</option>
                             @foreach (['A', 'B', 'C', 'D', 'E'] as $wing)
-                                <option value="{{ $wing }}" @selected(old('wing', $registration?->wing) === $wing)>Wing {{ $wing }}</option>
+                                <option value="{{ $wing }}" @selected(old('wing', $registration?->wing) === $wing)>Wing
+                                    {{ $wing }}</option>
                             @endforeach
                         </select>
                         @error('wing')
@@ -622,30 +623,29 @@
 
                     <div class="field">
                         <label for="flat_number">Flat Number <span class="required">*</span></label>
-                        <input id="flat_number"
-                               name="flat_number"
-                               type="text"
-                               value="{{ old('flat_number', $registration?->flat_number) }}"
-                               placeholder="e.g. 502"
-                               autocomplete="address-line2"
-                               required>
+                        <input id="flat_number" name="flat_number" type="text"
+                            value="{{ old('flat_number', $registration?->flat_number) }}" placeholder="e.g. 502"
+                            autocomplete="address-line2" required>
                         @error('flat_number')
                             <small class="field-error">{{ $message }}</small>
                         @enderror
                     </div>
 
                     <div class="field">
-                        <label for="your_image">Your Image <span class="optional-tag">(Resident Photo - Optional)</span></label>
+                        <label for="your_image">Your Image <span class="optional-tag">(Resident Photo -
+                                Optional)</span></label>
                         <div class="file-upload-box">
                             <span class="file-upload-icon">📷</span>
                             <span class="file-upload-text">Upload Your Photo</span>
                             <span class="file-upload-hint">PNG, JPG or WebP (Max 5MB)</span>
-                            <input id="your_image" name="your_image" type="file" accept="image/png,image/jpeg,image/webp">
+                            <input id="your_image" name="your_image" type="file"
+                                accept="image/png,image/jpeg,image/webp">
                         </div>
                         <div id="your_image_name" class="file-preview-strip" style="display: none;"></div>
                         @if ($registration?->your_image)
                             <div class="file-preview-strip">
-                                <img src="{{ asset($registration->your_image) }}" alt="Your photo" class="preview-thumb">
+                                <img src="{{ asset($registration->your_image) }}" alt="Your photo"
+                                    class="preview-thumb">
                                 <span>Current photo attached</span>
                             </div>
                         @endif
@@ -668,13 +668,10 @@
                 <div class="fields-grid">
                     <div class="field">
                         <label for="company_name">Business Name <span class="required">*</span></label>
-                        <input id="company_name"
-                               name="company_name"
-                               type="text"
-                               value="{{ old('company_name', $registration?->company_name) }}"
-                               placeholder="Enter your business, firm or brand name"
-                               autocomplete="organization"
-                               required>
+                        <input id="company_name" name="company_name" type="text"
+                            value="{{ old('company_name', $registration?->company_name) }}"
+                            placeholder="Enter your business, firm or brand name" autocomplete="organization"
+                            required>
                         @error('company_name')
                             <small class="field-error">{{ $message }}</small>
                         @enderror
@@ -722,12 +719,14 @@
                             <span class="file-upload-icon">🏢</span>
                             <span class="file-upload-text">Upload Business Logo</span>
                             <span class="file-upload-hint">PNG, JPG, SVG or WebP (Max 5MB)</span>
-                            <input id="business_logo" name="business_logo" type="file" accept="image/png,image/jpeg,image/svg+xml,image/webp">
+                            <input id="business_logo" name="business_logo" type="file"
+                                accept="image/png,image/jpeg,image/svg+xml,image/webp">
                         </div>
                         <div id="business_logo_name" class="file-preview-strip" style="display: none;"></div>
                         @if ($registration?->business_logo)
                             <div class="file-preview-strip">
-                                <img src="{{ asset($registration->business_logo) }}" alt="Business logo" class="preview-thumb">
+                                <img src="{{ asset($registration->business_logo) }}" alt="Business logo"
+                                    class="preview-thumb">
                                 <span>Current logo attached</span>
                             </div>
                         @endif
@@ -738,24 +737,19 @@
 
                     <div class="field">
                         <label for="gst_number">GST Number <span class="optional-tag">(Optional)</span></label>
-                        <input id="gst_number"
-                               name="gst_number"
-                               type="text"
-                               maxlength="30"
-                               value="{{ old('gst_number', $registration?->gst_number) }}"
-                               placeholder="e.g. 27AAAAA0000A1Z5"
-                               style="text-transform: uppercase;">
+                        <input id="gst_number" name="gst_number" type="text" maxlength="30"
+                            value="{{ old('gst_number', $registration?->gst_number) }}"
+                            placeholder="e.g. 27AAAAA0000A1Z5" style="text-transform: uppercase;">
                         @error('gst_number')
                             <small class="field-error">{{ $message }}</small>
                         @enderror
                     </div>
 
                     <div class="field field-full">
-                        <label for="short_description">Business Description <span class="optional-tag">(Optional)</span></label>
-                        <textarea id="short_description"
-                                  name="short_description"
-                                  maxlength="1000"
-                                  placeholder="Briefly describe what your business offers, key specialties, or services...">{{ old('short_description', $registration?->short_description) }}</textarea>
+                        <label for="short_description">Business Description <span
+                                class="optional-tag">(Optional)</span></label>
+                        <textarea id="short_description" name="short_description" maxlength="1000"
+                            placeholder="Briefly describe what your business offers, key specialties, or services...">{{ old('short_description', $registration?->short_description) }}</textarea>
                         @error('short_description')
                             <small class="field-error">{{ $message }}</small>
                         @enderror
@@ -775,13 +769,9 @@
                 <div class="fields-grid">
                     <div class="field">
                         <label for="mobile_number">Mobile Number <span class="required">*</span></label>
-                        <input id="mobile_number"
-                               name="mobile_number"
-                               type="tel"
-                               value="{{ old('mobile_number', $registration?->mobile_number) }}"
-                               placeholder="e.g. 9876543210"
-                               autocomplete="tel"
-                               required>
+                        <input id="mobile_number" name="mobile_number" type="tel"
+                            value="{{ old('mobile_number', $registration?->mobile_number) }}"
+                            placeholder="e.g. 9876543210" autocomplete="tel" required>
                         @error('mobile_number')
                             <small class="field-error">{{ $message }}</small>
                         @enderror
@@ -789,13 +779,9 @@
 
                     <div class="field">
                         <label for="email_address">Email Address <span class="required">*</span></label>
-                        <input id="email_address"
-                               name="email_address"
-                               type="email"
-                               value="{{ old('email_address', $registration?->email_address) }}"
-                               placeholder="e.g. name@domain.com"
-                               autocomplete="email"
-                               required>
+                        <input id="email_address" name="email_address" type="email"
+                            value="{{ old('email_address', $registration?->email_address) }}"
+                            placeholder="e.g. name@domain.com" autocomplete="email" required>
                         @error('email_address')
                             <small class="field-error">{{ $message }}</small>
                         @enderror
@@ -803,23 +789,20 @@
 
                     <div class="field">
                         <label for="website_url">Website URL <span class="optional-tag">(Optional)</span></label>
-                        <input id="website_url"
-                               name="website_url"
-                               type="url"
-                               value="{{ old('website_url', $registration?->website_url) }}"
-                               placeholder="https://example.com">
+                        <input id="website_url" name="website_url" type="url"
+                            value="{{ old('website_url', $registration?->website_url) }}"
+                            placeholder="https://example.com">
                         @error('website_url')
                             <small class="field-error">{{ $message }}</small>
                         @enderror
                     </div>
 
                     <div class="field">
-                        <label for="business_profile">LinkedIn / Instagram / Social Profile <span class="optional-tag">(Optional)</span></label>
-                        <input id="business_profile"
-                               name="business_profile"
-                               type="text"
-                               value="{{ old('business_profile', $registration?->business_profile) }}"
-                               placeholder="Profile link or social handle">
+                        <label for="business_profile">LinkedIn / Instagram / Social Profile <span
+                                class="optional-tag">(Optional)</span></label>
+                        <input id="business_profile" name="business_profile" type="text"
+                            value="{{ old('business_profile', $registration?->business_profile) }}"
+                            placeholder="Profile link or social handle">
                         @error('business_profile')
                             <small class="field-error">{{ $message }}</small>
                         @enderror
@@ -830,10 +813,8 @@
                         <div class="choice-list">
                             @foreach (['Networking', 'Referrals', 'Collaboration'] as $interest)
                                 <label class="choice-item">
-                                    <input type="checkbox"
-                                           name="interested_in[]"
-                                           value="{{ $interest }}"
-                                           @checked(in_array($interest, old('interested_in', $registration?->interested_in ?? ['Networking', 'Referrals']), true))>
+                                    <input type="checkbox" name="interested_in[]" value="{{ $interest }}"
+                                        @checked(in_array($interest, old('interested_in', $registration?->interested_in ?? ['Networking', 'Referrals']), true))>
                                     <span>{{ $interest }}</span>
                                 </label>
                             @endforeach
@@ -844,7 +825,8 @@
                     </div>
 
                     <div class="field field-full">
-                        <label for="preferred_contact_method">Preferred Contact Method <span class="required">*</span></label>
+                        <label for="preferred_contact_method">Preferred Contact Method <span
+                                class="required">*</span></label>
                         <select id="preferred_contact_method" name="preferred_contact_method" required>
                             <option value="">Select Preferred Contact Method</option>
                             @foreach (['Phone', 'Email', 'WhatsApp'] as $method)
@@ -865,15 +847,17 @@
                 @if ($registration)
                     <a class="btn-cancel" href="{{ route('business-directory.admin') }}">Cancel</a>
                 @endif
-                <a class="btn-whatsapp"
-                   href="https://chat.whatsapp.com/GxxkxfrZU1c8YCsdrBAp4K"
-                   target="_blank"
-                   rel="noopener noreferrer">
+                <a class="btn-whatsapp" href="https://chat.whatsapp.com/GxxkxfrZU1c8YCsdrBAp4K" target="_blank"
+                    rel="noopener noreferrer">
                     <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
                         <path d="M20.3 11.6a8.3 8.3 0 0 1-12.4 7.2L3.7 20l1.2-4a8.3 8.3 0 1 1 15.4-4.4Z" />
-                        <path d="M9 8.5c.2-.4.4-.4.7-.4h.5c.2 0 .4.1.5.4l.7 1.7c.1.2.1.4 0 .6l-.5.6c-.1.1-.2.3-.1.4.4.7 1 1.3 1.7 1.7.2.1.3 0 .4-.1l.6-.7c.2-.2.4-.2.6-.1l1.7.8c.2.1.3.2.3.4 0 .3-.1.8-.4 1.1-.3.3-.7.5-1.1.5-.6 0-1.5-.3-2.7-1.1-1.4-.9-2.5-2.1-3.1-3.2-.6-.9-.8-1.6-.8-2.1 0-.4.2-.9.5-1.3Z" />
+                        <path
+                            d="M9 8.5c.2-.4.4-.4.7-.4h.5c.2 0 .4.1.5.4l.7 1.7c.1.2.1.4 0 .6l-.5.6c-.1.1-.2.3-.1.4.4.7 1 1.3 1.7 1.7.2.1.3 0 .4-.1l.6-.7c.2-.2.4-.2.6-.1l1.7.8c.2.1.3.2.3.4 0 .3-.1.8-.4 1.1-.3.3-.7.5-1.1.5-.6 0-1.5-.3-2.7-1.1-1.4-.9-2.5-2.1-3.1-3.2-.6-.9-.8-1.6-.8-2.1 0-.4.2-.9.5-1.3Z" />
                     </svg>
-                    Join the Veena Community
+                    Join the Veena Community 
+                    
+                    
+                    / Refer Someone
                 </a>
                 <button type="submit" class="btn-submit">
                     {{ $registration ? 'Save Changes ✓' : 'Submit Registration ✓' }}
@@ -893,7 +877,8 @@
                 input.addEventListener('change', function() {
                     if (this.files && this.files[0]) {
                         strip.style.display = 'flex';
-                        strip.innerHTML = '<span>📎 Selected: <strong>' + this.files[0].name + '</strong></span>';
+                        strip.innerHTML = '<span>📎 Selected: <strong>' + this.files[0].name +
+                            '</strong></span>';
                     }
                 });
             }

@@ -61,16 +61,16 @@
             text-decoration: none;
             font-weight: 700;
             padding: 10px 18px;
-            border: 1px solid rgba(255, 255, 255, 0.45);
+            border: 1px solid rgba(255, 255, 255, 0.35);
             border-radius: 999px;
-            background: rgba(0, 0, 0, 0.22);
+            background: linear-gradient(135deg, #56c5bd 0%, #3b5aa4 100%);
             backdrop-filter: blur(5px);
             box-shadow: 0 8px 20px rgba(0, 0, 0, 0.24);
-            transition: background .2s ease, transform .2s ease;
+            transition: filter .2s ease, transform .2s ease;
         }
 
         .events-link:hover {
-            background: rgba(255, 255, 255, 0.18);
+            filter: brightness(1.12);
             transform: translateY(-1px);
         }
 
@@ -148,7 +148,7 @@
     <div class="top-actions">
         <img src="{{ asset('assets/main.png') }}" alt="Veena Smart Homes Logo" class="logo">
     </div>
-    <a class="events-link" href="{{ route('event.page') }}">Past Events</a>
+    <a class="events-link" href="{{ route('event.page') }}">Events / Festivals</a>
 
     {{-- <main class="content">
         <div class="content-inner">
