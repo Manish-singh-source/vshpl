@@ -30,14 +30,14 @@
             z-index: 0;
         }
 
-        .overlay {
+        /* .overlay {
             position: fixed;
             inset: 0;
             z-index: 1;
             background:
                 radial-gradient(circle at 50% 45%, rgba(245, 160, 42, 0.18), transparent 34%),
                 linear-gradient(135deg, rgba(18, 7, 6, 0.7), rgba(54, 10, 4, 0.35));
-        }
+        } */
 
         .top-actions {
             position: fixed;
@@ -142,7 +142,7 @@
 
 <body>
     <video class="video-bg" autoplay muted loop playsinline>
-        <source src="{{ asset('assets/durga.mp4') }}" type="video/mp4">
+        <source src="{{ asset('assets/video.mp4') }}" type="video/mp4">
     </video>
     <div class="overlay" aria-hidden="true"></div>
     <div class="top-actions">
@@ -150,13 +150,13 @@
     </div>
     <a class="events-link" href="{{ route('event.page') }}">Past Events</a>
 
-    <main class="content">
+    {{-- <main class="content">
         <div class="content-inner">
             <p class="eyebrow">Upcoming Event</p>
             <h1>Navratri Utsav</h1>
             <p class="subtext">Celebrate devotion, dance, music, and community togetherness at Veena Smart Homes.</p>
         </div>
-    </main>
+    </main> --}}
 </body>
 
 </html>

@@ -34,7 +34,7 @@
             min-height: 100vh;
             color: var(--text-body);
             font-family: 'DM Sans', sans-serif;
-            background: linear-gradient(rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0.55)),
+            background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)),
                         url("{{ asset('assets/banner.png') }}") center center / cover no-repeat fixed;
             display: flex;
             flex-direction: column;
@@ -461,6 +461,38 @@
             filter: brightness(1.1);
         }
 
+        .btn-whatsapp {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            min-height: 52px;
+            padding: 0 24px;
+            border-radius: 12px;
+            background: #25d366;
+            color: #062b16;
+            font-size: 15px;
+            font-weight: 700;
+            text-decoration: none;
+            transition: all 0.2s ease;
+        }
+
+        .btn-whatsapp svg {
+            width: 18px;
+            height: 18px;
+            fill: none;
+            stroke: currentColor;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            stroke-width: 1.8;
+            flex-shrink: 0;
+        }
+
+        .btn-whatsapp:hover {
+            transform: translateY(-2px);
+            background: #20bd5a;
+        }
+
         .btn-cancel {
             color: #ffffff;
             font-weight: 600;
@@ -520,21 +552,14 @@
                 <div class="nav-brand-sub">Resident Business Directory</div>
             </div>
         </a>
-        <div class="nav-badge">
-            <span>●</span> VSH Community
-        </div>
     </header>
 
     <!-- Main Transparent Form -->
     <main class="registration-card">
         <header class="form-heading">
-            <span class="eyebrow">{{ $registration ? 'Update Listing' : 'Resident Business Directory' }}</span>
             <h1 class="form-title" id="form-title">
                 {{ $registration ? 'Edit Business Directory Registration' : 'Business Directory Registration Form [VSH Team]' }}
             </h1>
-            <p class="form-intro">
-                {{ $registration ? 'Update your business and resident details in the community directory.' : 'Register your business, services, or trade to connect and collaborate with fellow residents of Veena Smart Homes.' }}
-            </p>
         </header>
 
         <form id="businessForm"
@@ -840,6 +865,16 @@
                 @if ($registration)
                     <a class="btn-cancel" href="{{ route('business-directory.admin') }}">Cancel</a>
                 @endif
+                <a class="btn-whatsapp"
+                   href="https://chat.whatsapp.com/GxxkxfrZU1c8YCsdrBAp4K"
+                   target="_blank"
+                   rel="noopener noreferrer">
+                    <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                        <path d="M20.3 11.6a8.3 8.3 0 0 1-12.4 7.2L3.7 20l1.2-4a8.3 8.3 0 1 1 15.4-4.4Z" />
+                        <path d="M9 8.5c.2-.4.4-.4.7-.4h.5c.2 0 .4.1.5.4l.7 1.7c.1.2.1.4 0 .6l-.5.6c-.1.1-.2.3-.1.4.4.7 1 1.3 1.7 1.7.2.1.3 0 .4-.1l.6-.7c.2-.2.4-.2.6-.1l1.7.8c.2.1.3.2.3.4 0 .3-.1.8-.4 1.1-.3.3-.7.5-1.1.5-.6 0-1.5-.3-2.7-1.1-1.4-.9-2.5-2.1-3.1-3.2-.6-.9-.8-1.6-.8-2.1 0-.4.2-.9.5-1.3Z" />
+                    </svg>
+                    Join the Veena Community
+                </a>
                 <button type="submit" class="btn-submit">
                     {{ $registration ? 'Save Changes ✓' : 'Submit Registration ✓' }}
                 </button>
