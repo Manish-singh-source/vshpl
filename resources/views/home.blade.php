@@ -148,7 +148,7 @@
     <div class="top-actions">
         <img src="{{ asset('assets/main.png') }}" alt="Veena Smart Homes Logo" class="logo">
     </div>
-    <a class="events-link" href="{{ route('event.page') }}">Events / Festivals</a>
+    <a class="events-link" href="{{ route('event.page') }}">Events & Festivals</a>
 
     {{-- <main class="content">
         <div class="content-inner">
